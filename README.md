@@ -161,12 +161,18 @@ docker compose --profile classic      up -d t2-classic         # Classic        
 docker compose --profile construction up -d t2-construction    # Construction    (panel :8082)
 ```
 
-**Rulesets / `-mod`.** The mod is no longer baked into `LAUNCH_PARAMS`; instead the
-**`SERVER_RULESET`** env selects it and the supervisor inserts `-mod <ruleset>` between
-`-online` and `-dedicated`. Empty or `base` means **no** `-mod`. The derived images just set
-this env (`Classic`/`Construction`); the base image leaves it empty. root can also set the
-ruleset in the panel — during **first-time setup** (defaulting to the `SERVER_RULESET` value)
-and later from **Controls** (applied on the next restart).
+**Rulesets / `-mod`.** The derived Classic/Construction images still **install their mod files
+at build time** (the whole point of a baked image); what changed is only how the `-mod`
+parameter is *selected*. The **`SERVER_RULESET`** env picks the ruleset and the supervisor
+inserts `-mod <ruleset>` between `-online` and `-dedicated`. Empty or `base` means **no** `-mod`.
+The derived images set this env (`Classic`/`Construction`); the base image leaves it empty.
+
+root can also set the ruleset in the panel — during **first-time setup** (defaulting to the
+`SERVER_RULESET` value) and later from **Controls** (applied on the next restart). The panel
+**suggests the installed rulesets** it discovers (top-level `GameData` folders containing a
+`scripts/` dir — `base` plus any baked or uploaded mod) and lets you **type a newer ruleset**:
+upload its files via the Files page, then enter its name. So the baked images and ad-hoc
+rulesets coexist.
 
 `LAUNCH_PARAMS` ordering still matters for anything you put there: `-online` (or `-nologin`
 to host outside WON/Tribes 2 auth) **first**, `-dedicated` **last**.

@@ -181,6 +181,26 @@ public static class Endpoints
             return Results.Ok(new { ruleset = s.Ruleset });
         }).RequireAuthorization(Roles.PolicyRoot);
 
+        // Discover installed rulesets: top-level GameData folders that contain a scripts/ dir
+        // (base + any baked mod like Classic/Construction + anything uploaded). The panel shows
+        // these as suggestions while still allowing a brand-new ruleset name to be typed.
+        config.MapGet("/rulesets", (TribesServerPanel.Services.FileAccess fa) =>
+        {
+            var found = new List<string>();
+            try
+            {
+                foreach (var d in Directory.EnumerateDirectories(fa.GameDataRoot))
+                    if (Directory.Exists(Path.Combine(d, "scripts")))
+                        found.Add(Path.GetFileName(d));
+            }
+            catch { /* GameData missing -> empty */ }
+            if (!found.Any(n => n.Equals("base", StringComparison.OrdinalIgnoreCase))) found.Add("base");
+            var ordered = found.Distinct()
+                .OrderBy(n => n.Equals("base", StringComparison.OrdinalIgnoreCase) ? 0 : 1)
+                .ThenBy(n => n, StringComparer.OrdinalIgnoreCase);
+            return Results.Ok(ordered);
+        }).RequireAuthorization(Roles.PolicyUser);
+
         // root edits serverprefs.cs for the chosen ruleset; the editor saves via /api/files/save.
         // Path: GameData/<base|ruleset>/prefs/serverprefs.cs (the prefs dir is created if missing).
         config.MapGet("/serverprefs", (string? ruleset, TribesServerPanel.Services.FileAccess fa) =>

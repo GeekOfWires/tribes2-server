@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api, RANK } from "../api";
 import { useAuth } from "../auth";
 import StatusBar from "../components/StatusBar";
@@ -8,7 +8,9 @@ export default function Controls() {
   const [msg, setMsg] = useState<{ ok: boolean; t: string } | null>(null);
   const [cmd, setCmd] = useState("");
   const [ruleset, setRuleset] = useState(cfg?.ruleset ?? cfg?.defaultRuleset ?? "base");
+  const [installed, setInstalled] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
+  useEffect(() => { api.rulesets().then(setInstalled).catch(() => {}); }, []);
   if (!me) return null;
   const can = (rank: number) => me.rank >= rank;
 
@@ -63,9 +65,11 @@ export default function Controls() {
           <h3 style={{ marginTop: 0 }}>Ruleset / Mod</h3>
           <p className="muted" style={{ marginTop: 0, fontSize: 13 }}>Sets <code>-mod</code> (empty or <code>base</code> = none). Takes effect on the next restart.</p>
           <div className="row">
-            <input style={{ width: 240 }} value={ruleset} onChange={(e) => setRuleset(e.target.value)} placeholder="base" disabled={busy} />
+            <input style={{ width: 240 }} list="rulesets-c" value={ruleset} onChange={(e) => setRuleset(e.target.value)} placeholder="base" disabled={busy} />
+            <datalist id="rulesets-c">{installed.map((r) => <option key={r} value={r} />)}</datalist>
             <button className="btn primary" disabled={busy} onClick={applyRuleset}>Apply</button>
           </div>
+          <p className="muted" style={{ fontSize: 12, marginBottom: 0 }}>Installed: <code>{installed.join(", ") || "…"}</code> — or type a newer ruleset you've uploaded.</p>
         </div>
       )}
 

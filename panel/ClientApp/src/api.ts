@@ -75,6 +75,7 @@ export const api = {
     req<void>("/api/config/complete", { method: "POST", body: JSON.stringify({ autoStart, launchParams, ruleset }) }),
   setAutoStart: (enabled: boolean) =>
     req<void>("/api/config/auto-start", { method: "POST", body: JSON.stringify({ enabled }) }),
+  rulesets: () => req<string[]>("/api/config/rulesets"),
   setRuleset: (ruleset: string) =>
     req<{ ruleset: string }>("/api/config/ruleset", { method: "POST", body: JSON.stringify({ ruleset }) }),
   serverPrefs: (ruleset: string) =>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import Editor from "@monaco-editor/react";
 import { api, RANK } from "../api";
@@ -31,9 +31,12 @@ function FirstRunSetup({ onDone, onLogout }: { onDone: () => Promise<void>; onLo
   const { cfg } = useAuth();
   const [params, setParams] = useState(cfg?.launchParams || cfg?.defaultLaunchParams || "-online -dedicated");
   const [ruleset, setRuleset] = useState(cfg?.ruleset || cfg?.defaultRuleset || "base");
+  const [installed, setInstalled] = useState<string[]>([]);
   const [autoStart, setAutoStart] = useState(true);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
+
+  useEffect(() => { api.rulesets().then(setInstalled).catch(() => {}); }, []);
 
   // serverprefs.cs editing for the chosen ruleset
   const [prefsPath, setPrefsPath] = useState<string | null>(null);
@@ -69,9 +72,10 @@ function FirstRunSetup({ onDone, onLogout }: { onDone: () => Promise<void>; onLo
         <p className="muted" style={{ fontSize: 12 }}>Order: <code>-online</code> (or <code>-nologin</code>) first, <code>-dedicated</code> last. The ruleset's <code>-mod</code> is inserted automatically.</p>
 
         <label style={{ display: "block", margin: "10px 0 4px", fontSize: 13, color: "var(--muted)" }}>Ruleset / mod</label>
-        <input style={{ width: 280 }} value={ruleset} onChange={(e) => setRuleset(e.target.value)} placeholder="base" />
+        <input style={{ width: 280 }} list="rulesets" value={ruleset} onChange={(e) => setRuleset(e.target.value)} placeholder="base" />
+        <datalist id="rulesets">{installed.map((r) => <option key={r} value={r} />)}</datalist>
         <p className="muted" style={{ fontSize: 12 }}>
-          <code>base</code> or empty = no <code>-mod</code>. Otherwise sets <code>-mod {ruleset || "…"}</code>. Default from the image: <code>{cfg?.defaultRuleset || "base"}</code>.
+          <code>base</code> or empty = no <code>-mod</code>. Otherwise sets <code>-mod {ruleset || "…"}</code>. Installed: <code>{installed.join(", ") || "…"}</code>; type a new name to add a newer ruleset (upload its files first). Image default: <code>{cfg?.defaultRuleset || "base"}</code>.
         </p>
 
         <label style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 10 }}>
