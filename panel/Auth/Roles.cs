@@ -18,7 +18,9 @@ public static class Roles
         User => 10,
         Admin => 20,
         SuperAdmin => 30,
-        Root => 40,
+        // root is the unbounded ceiling: nothing can ever outrank it, and there is room
+        // to insert new roles below it. (Mirror this in the SPA's RANK map.)
+        Root => int.MaxValue,
         _ => 0,
     };
 

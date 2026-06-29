@@ -17,7 +17,7 @@ Roles have an integer **rank**; a higher rank inherits everything below it.
 | **User** | 10 | View the live server console; view status. |
 | **Admin** | 20 | + **Restart** (graceful `quit();`, auto-relaunch) / **Start**; view **Crash Reports**. |
 | **Super Admin** | 30 | + Graceful **Stop** + **Force-restart** (emergency kill + relaunch) + run **console commands**; view the **Audit log**. |
-| **root** | 40 | + **Force-shutdown the panel** (stops the container), **user management**, edit **any** file, **container terminal**, file-change **history + revert**, first-time **setup** and ruleset/Auto-Start config. |
+| **root** | max (`Int32.MaxValue`) | + **Force-shutdown the panel** (stops the container), **user management**, edit **any** file, **container terminal**, file-change **history + revert**, first-time **setup** and ruleset/Auto-Start config. |
 
 ### The Developer capability
 **Developer** is **not a rank** — it's an additive flag a root user assigns to *any* User/Admin/

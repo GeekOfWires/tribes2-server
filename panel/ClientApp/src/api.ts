@@ -37,7 +37,8 @@ export type Crash = {
   module: string | null; launchParams: string | null; details: string | null;
 };
 
-export const RANK: Record<string, number> = { User: 10, Admin: 20, SuperAdmin: 30, root: 40 };
+// root is the unbounded ceiling — 2147483647 == C# Int32.MaxValue (matches Roles.Rank).
+export const RANK: Record<string, number> = { User: 10, Admin: 20, SuperAdmin: 30, root: 2147483647 };
 export const ROLES = ["User", "Admin", "SuperAdmin", "root"];
 export const roleLabel = (r: string) => (r === "root" ? "root" : r === "SuperAdmin" ? "Super Admin" : r);
 

@@ -56,10 +56,10 @@ static int MaxRank(ClaimsPrincipal u) =>
     u.FindAll(ClaimTypes.Role).Select(c => Roles.Rank(c.Value)).DefaultIfEmpty(0).Max();
 
 builder.Services.AddAuthorizationBuilder()
-    .AddPolicy(Roles.PolicyUser, p => p.RequireAssertion(c => MaxRank(c.User) >= 10))
-    .AddPolicy(Roles.PolicyAdmin, p => p.RequireAssertion(c => MaxRank(c.User) >= 20))
-    .AddPolicy(Roles.PolicySuperAdmin, p => p.RequireAssertion(c => MaxRank(c.User) >= 30))
-    .AddPolicy(Roles.PolicyRoot, p => p.RequireAssertion(c => MaxRank(c.User) >= 40));
+    .AddPolicy(Roles.PolicyUser, p => p.RequireAssertion(c => MaxRank(c.User) >= Roles.Rank(Roles.User)))
+    .AddPolicy(Roles.PolicyAdmin, p => p.RequireAssertion(c => MaxRank(c.User) >= Roles.Rank(Roles.Admin)))
+    .AddPolicy(Roles.PolicySuperAdmin, p => p.RequireAssertion(c => MaxRank(c.User) >= Roles.Rank(Roles.SuperAdmin)))
+    .AddPolicy(Roles.PolicyRoot, p => p.RequireAssertion(c => MaxRank(c.User) >= Roles.Rank(Roles.Root)));
 
 // ---- game supervisor (singleton + hosted worker service) --------------------
 builder.Services.AddSingleton<ConsoleHub>();
