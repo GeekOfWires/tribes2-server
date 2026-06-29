@@ -84,7 +84,11 @@ SQLite provider on the Turso-compatible file is the robust local-only choice.)
 | User         | View live server console only |
 | Admin        | + **Restart** (graceful `quit();`, auto-relaunch) / Start |
 | Super Admin  | + Graceful **stop** + run console commands + **Force-restart** the game (emergency kill + relaunch) |
-| root         | + **Force-shutdown the panel** (stops the container; restart policy relaunches it) + **user management** |
+| root         | + **Force-shutdown the panel** (stops the container; restart policy relaunches it) + **user management** + edit **any** file + a **container terminal** |
+
+**Developer** is an *additive capability*, not a rank — root can grant it to any User/Admin/Super
+Admin. It unlocks the **Files** editor scoped to the **GameData** tree. root holds it implicitly
+and is unrestricted (any path in the container).
 
 All privileged actions are recorded in an **audit log** (visible to Super Admin+).
 
@@ -92,6 +96,17 @@ Every unexpected/unhandled game exit (access violations) is recorded to a read-o
 **Crash Reports** page (Admin+): server start + crash timestamps, exit code, the `0x` fault
 address, faulting instruction, module, launch params, and the console tail + `CRASHLOG.TXT`,
 so hosts can report reproducible crashes for the image to patch.
+
+## Files, editing & terminal
+
+The **Files** page is a Monaco editor (VS Code **Dark+** theme, with **TorqueScript** highlighting
+for the engine's `.cs`/`.gui`/`.mis` scripts plus shell/ini/yaml/json/etc.). Developers browse and
+edit under **GameData**; root anywhere. **Every change is written to a `FileEdits` table** with the
+pre-change snapshot, so root can **revert** any edit/create/delete from the **File History** page.
+Path access is canonicalized and scope-checked server-side (a `../` escape out of GameData is denied).
+
+root also gets a **Terminal** page — an interactive `bash` session on a real PTY inside the container
+(xterm.js over a WebSocket), so `vim`, `htop`, etc. work. Terminal sessions are audited.
 
 ## First-time setup & Auto-Start
 

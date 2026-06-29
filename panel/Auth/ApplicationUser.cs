@@ -8,6 +8,10 @@ public class ApplicationUser : IdentityUser
 {
     public bool IsActive { get; set; } = true;
     public long CreatedAt { get; set; }
+
+    // Additive capability, assignable on top of any base role: grants file editing
+    // under GameData. root has this implicitly. Orthogonal to the rank-based roles.
+    public bool IsDeveloper { get; set; }
 }
 
 public class ApplicationRole : IdentityRole

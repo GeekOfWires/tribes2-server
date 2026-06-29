@@ -11,6 +11,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, 
     public DbSet<AuditEntry> AuditEntries => Set<AuditEntry>();
     public DbSet<ServerSettings> ServerSettings => Set<ServerSettings>();
     public DbSet<CrashReport> Crashes => Set<CrashReport>();
+    public DbSet<FileEdit> FileEdits => Set<FileEdit>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -31,6 +32,12 @@ public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, 
             e.ToTable("Crashes");
             e.HasKey(x => x.Id);
             e.HasIndex(x => x.CrashedAt);
+        });
+        builder.Entity<FileEdit>(e =>
+        {
+            e.ToTable("FileEdits");
+            e.HasKey(x => x.Id);
+            e.HasIndex(x => x.Ts);
         });
     }
 }

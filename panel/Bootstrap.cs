@@ -32,6 +32,28 @@ public static class Bootstrap
             );
             """);
 
+        await db.Database.ExecuteSqlRawAsync("""
+            CREATE TABLE IF NOT EXISTS "FileEdits" (
+              "Id" INTEGER NOT NULL CONSTRAINT "PK_FileEdits" PRIMARY KEY AUTOINCREMENT,
+              "Ts" INTEGER NOT NULL,
+              "Actor" TEXT NOT NULL,
+              "ActorRole" TEXT NOT NULL,
+              "Path" TEXT NOT NULL,
+              "Action" TEXT NOT NULL,
+              "IsDirectory" INTEGER NOT NULL,
+              "PreviousExisted" INTEGER NOT NULL,
+              "PreviousContent" TEXT NULL,
+              "PreviousTruncated" INTEGER NOT NULL,
+              "NewSize" INTEGER NOT NULL,
+              "Reverted" INTEGER NOT NULL
+            );
+            """);
+
+        // EnsureCreated won't add a column to a pre-existing AspNetUsers; add it defensively.
+        // SQLite has no "ADD COLUMN IF NOT EXISTS", so ignore the duplicate-column error.
+        try { await db.Database.ExecuteSqlRawAsync(@"ALTER TABLE ""AspNetUsers"" ADD COLUMN ""IsDeveloper"" INTEGER NOT NULL DEFAULT 0;"); }
+        catch (Microsoft.Data.Sqlite.SqliteException) { /* column already exists */ }
+
         // Ensure the single server-settings row exists (unconfigured by default).
         if (await db.ServerSettings.FindAsync(1) is null)
         {

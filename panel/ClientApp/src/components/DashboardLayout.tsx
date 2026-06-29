@@ -15,10 +15,13 @@ export default function DashboardLayout() {
         <NavLink to="/" end className={cls}>Console</NavLink>
         {can(RANK.Admin) && <NavLink to="/controls" className={cls}>Controls</NavLink>}
         {can(RANK.Admin) && <NavLink to="/crashes" className={cls}>Crashes</NavLink>}
+        {(me.isDeveloper || can(RANK.root)) && <NavLink to="/files" className={cls}>Files</NavLink>}
+        {can(RANK.root) && <NavLink to="/terminal" className={cls}>Terminal</NavLink>}
+        {can(RANK.root) && <NavLink to="/file-history" className={cls}>File History</NavLink>}
         {can(RANK.root) && <NavLink to="/users" className={cls}>Users</NavLink>}
         {can(RANK.SuperAdmin) && <NavLink to="/audit" className={cls}>Audit Log</NavLink>}
         <div className="spacer" />
-        <div className="muted" style={{ fontSize: 13 }}>{me.userName}</div>
+        <div className="muted" style={{ fontSize: 13 }}>{me.userName}{me.isDeveloper ? " · dev" : ""}</div>
         <div className="badge" style={{ marginBottom: 8 }}>{roleLabel(me.role)}</div>
         <button className="btn" onClick={signOut}>Sign out</button>
       </nav>

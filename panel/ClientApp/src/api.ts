@@ -1,4 +1,4 @@
-export type Me = { userName: string; role: string; rank: number };
+export type Me = { userName: string; role: string; rank: number; isDeveloper: boolean };
 export type Status = {
   state: string;
   desired: string;
@@ -9,7 +9,14 @@ export type Status = {
   restarts: number;
   lastExit: number | null;
 };
-export type UserRow = { id: string; username: string; role: string; isActive: boolean };
+export type UserRow = { id: string; username: string; role: string; isActive: boolean; isDeveloper: boolean };
+export type DirEntry = { name: string; isDir: boolean; size: number; mtime: number };
+export type DirListing = { path: string; parent: string | null; gameDataRoot: string; entries: DirEntry[] };
+export type FileRead = { path: string; content?: string; isBinary?: boolean; tooLarge?: boolean; size: number };
+export type FileEditRow = {
+  id: number; ts: number; actor: string; actorRole: string; path: string; action: string;
+  isDirectory: boolean; previousExisted: boolean; newSize: number; reverted: boolean; canRevert: boolean;
+};
 export type Config = {
   configured: boolean;
   autoStart: boolean;
@@ -74,8 +81,28 @@ export const api = {
     req<void>(`/api/users/${id}/active`, { method: "POST", body: JSON.stringify({ active }) }),
   resetPassword: (id: string, password: string) =>
     req<void>(`/api/users/${id}/password`, { method: "POST", body: JSON.stringify({ password }) }),
+  setDeveloper: (id: string, enabled: boolean) =>
+    req<void>(`/api/users/${id}/developer`, { method: "POST", body: JSON.stringify({ enabled }) }),
   deleteUser: (id: string) => req<void>(`/api/users/${id}`, { method: "DELETE" }),
 
   audit: () => req<AuditRow[]>("/api/audit"),
   crashes: () => req<Crash[]>("/api/crashes"),
+
+  // ---- file browser / editor ----
+  listDir: (path?: string) => req<DirListing>(`/api/files/list${path ? `?path=${encodeURIComponent(path)}` : ""}`),
+  readFile: (path: string) => req<FileRead>(`/api/files/read?path=${encodeURIComponent(path)}`),
+  saveFile: (path: string, content: string) =>
+    req<{ saved: boolean; size: number }>("/api/files/save", { method: "POST", body: JSON.stringify({ path, content }) }),
+  createPath: (path: string, isDir: boolean) =>
+    req<void>("/api/files/create", { method: "POST", body: JSON.stringify({ path, isDir }) }),
+  deletePath: (path: string) =>
+    req<void>("/api/files/delete", { method: "POST", body: JSON.stringify({ path }) }),
+  fileEdits: () => req<FileEditRow[]>("/api/files/edits/"),
+  revertEdit: (id: number) => req<void>(`/api/files/edits/${id}/revert`, { method: "POST" }),
+};
+
+// WebSocket URL for the root container terminal (same-origin; cookie auth).
+export const terminalWsUrl = () => {
+  const proto = location.protocol === "https:" ? "wss:" : "ws:";
+  return `${proto}//${location.host}/api/terminal/ws`;
 };

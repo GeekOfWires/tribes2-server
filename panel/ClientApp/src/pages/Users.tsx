@@ -37,7 +37,7 @@ export default function Users() {
       </div>
       <div className="card">
         <table>
-          <thead><tr><th>Username</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>
+          <thead><tr><th>Username</th><th>Role</th><th>Developer</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody>
             {rows.map((u) => (
               <tr key={u.id}>
@@ -46,6 +46,10 @@ export default function Users() {
                   <select value={u.role} onChange={(e) => act(() => api.setRole(u.id, e.target.value), "set role")}>
                     {ROLES.map((r) => <option key={r} value={r}>{roleLabel(r)}</option>)}
                   </select>
+                </td>
+                <td title="Developers can edit files under GameData">
+                  <input type="checkbox" style={{ width: "auto" }} checked={u.isDeveloper}
+                    onChange={(e) => act(() => api.setDeveloper(u.id, e.target.checked), "set developer")} />
                 </td>
                 <td>{u.isActive ? <span className="ok">active</span> : <span className="muted">disabled</span>}</td>
                 <td className="row">

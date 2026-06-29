@@ -66,6 +66,9 @@ builder.Services.AddSingleton<ConsoleHub>();
 builder.Services.AddSingleton<GameSupervisor>();
 builder.Services.AddHostedService(sp => sp.GetRequiredService<GameSupervisor>());
 
+// ---- file browser/editor scope resolver -------------------------------------
+builder.Services.AddSingleton<TribesServerPanel.Services.FileAccess>();
+
 var app = builder.Build();
 
 // ---- migrate + seed roles and the root user --------------------------------
@@ -73,10 +76,13 @@ await Bootstrap.InitializeAsync(app.Services, cfg);
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
+app.UseWebSockets();           // root web terminal (PTY) rides on this
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapPanelEndpoints();
+app.MapFileEndpoints();
+app.MapTerminalEndpoints();
 app.MapFallbackToFile("index.html"); // SPA client-side routing
 
 app.Run();

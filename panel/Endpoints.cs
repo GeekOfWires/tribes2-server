@@ -15,6 +15,7 @@ public static class Endpoints
     public record CreateUserDto(string Username, string Password, string Role);
     public record SetRoleDto(string Role);
     public record SetActiveDto(bool Active);
+    public record SetDeveloperDto(bool Enabled);
     public record PasswordDto(string Password);
     public record CompleteConfigDto(bool AutoStart, string? LaunchParams);
     public record AutoStartDto(bool Enabled);
@@ -41,17 +42,18 @@ public static class Endpoints
             if (!check.Succeeded) return Results.Unauthorized();
             await signIn.SignInAsync(user, isPersistent: false);
             var role = (await users.GetRolesAsync(user)).FirstOrDefault() ?? Roles.User;
-            return Results.Ok(new { user.UserName, role, rank = Roles.Rank(role) });
+            return Results.Ok(new { user.UserName, role, rank = Roles.Rank(role), isDeveloper = user.IsDeveloper });
         });
         account.MapPost("/logout", async (SignInManager<ApplicationUser> signIn) =>
         {
             await signIn.SignOutAsync();
             return Results.Ok();
         }).RequireAuthorization();
-        account.MapGet("/me", (ClaimsPrincipal u) =>
+        account.MapGet("/me", async (ClaimsPrincipal u, UserManager<ApplicationUser> users) =>
         {
             var (name, role) = Actor(u);
-            return Results.Ok(new { userName = name, role, rank = Roles.Rank(role) });
+            var dev = (await users.GetUserAsync(u))?.IsDeveloper ?? false;
+            return Results.Ok(new { userName = name, role, rank = Roles.Rank(role), isDeveloper = dev });
         }).RequireAuthorization();
 
         // ---- live console (SSE), viewable by any authenticated user --------
@@ -180,7 +182,7 @@ public static class Endpoints
             foreach (var x in users.Users.ToList())
             {
                 var role = (await users.GetRolesAsync(x)).FirstOrDefault() ?? Roles.User;
-                list.Add(new { id = x.Id, username = x.UserName, role, isActive = x.IsActive });
+                list.Add(new { id = x.Id, username = x.UserName, role, isActive = x.IsActive, isDeveloper = x.IsDeveloper });
             }
             return Results.Ok(list);
         });
@@ -220,6 +222,16 @@ public static class Endpoints
             await users.UpdateAsync(user);
             await users.UpdateSecurityStampAsync(user); // invalidate existing sessions
             await Audit(db, u, dto.Active ? "user.activate" : "user.deactivate", user.UserName);
+            return Results.Ok();
+        });
+
+        usersApi.MapPost("/{id}/developer", async (string id, SetDeveloperDto dto, UserManager<ApplicationUser> users, AppDbContext db, ClaimsPrincipal u) =>
+        {
+            var user = await users.FindByIdAsync(id);
+            if (user is null) return Results.NotFound();
+            user.IsDeveloper = dto.Enabled;
+            await users.UpdateAsync(user);
+            await Audit(db, u, dto.Enabled ? "user.developer_on" : "user.developer_off", user.UserName);
             return Results.Ok();
         });
 
