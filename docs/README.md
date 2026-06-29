@@ -21,7 +21,8 @@ people come here for — **how to build your own mod image with a custom ruleset
 | [Web panel & roles](web-panel.md) | Every page in the panel, the role/permission model, and the Developer capability. |
 | [Rulesets & mods](rulesets-and-mods.md) | How `SERVER_RULESET` / `-mod` works and how the panel discovers and configures rulesets. |
 | [**Creating a custom mod image**](custom-mod-image.md) | **Step-by-step: derive from the base image, install your mod, set the ruleset, build, compose, CI.** |
-| [Building & deploying](building-and-deploying.md) | Local builds, Docker Compose, GHCR images, the GitHub Actions workflow. |
+| [Building & deploying](building-and-deploying.md) | Local builds, Docker Compose, GHCR images, the GitHub Actions workflow, VC++ runtime licensing. |
+| [Networking & client IPs](networking.md) | Make real player IPs reach the container (host networking / DNAT) so bans & admin work. |
 | [Internals: patch & headless](internals.md) | The PE patch, the no-xvfb headless approach, the PTY bridge, the modern-runtime DLLs, crash tracking. |
 | [Database](database.md) | The local Turso/SQLite database, its tables, and how schema changes are applied. |
 | [TLS](tls.md) | Self-signed and Let's Encrypt certificates. |

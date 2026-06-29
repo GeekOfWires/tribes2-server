@@ -8,6 +8,10 @@
 #
 # The ASP.NET Core panel is PID 1 and owns the game lifecycle. root can force-stop
 # the panel (which stops the container; restart policy relaunches it).
+#
+# NOTE: with the default bridge, UDP game traffic is NAT'd and the server sees the bridge
+# gateway instead of real player IPs (breaks bans/admin). For a public server use host
+# networking or disable Docker's userland proxy — see docs/networking.md.
 
 x-common-env: &common-env
   GRACE_SECONDS: ${GRACE_SECONDS:-20}

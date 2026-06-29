@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-nav_order: 11
+nav_order: 12
 ---
 
 # Troubleshooting
@@ -50,6 +50,12 @@ case-sensitive on Linux). You can still **type** the name manually. See
 Developers are scoped to the **GameData** tree; only **root** can touch paths elsewhere. Paths are
 canonicalized, so `../` escapes are rejected. Use a root account for system paths, or the
 **Terminal**.
+
+## Players/bans all show the same IP (e.g. 172.17.0.1)
+
+The default Docker bridge NATs UDP traffic so the container sees the bridge gateway instead of each
+player's real IP. Use **host networking** or **disable the userland proxy** — see
+[Networking & client IPs](networking.md).
 
 ## The game keeps crash-looping
 

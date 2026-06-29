@@ -26,6 +26,7 @@ In-depth guides:
 - [Rulesets & mods](docs/rulesets-and-mods.md) — how `SERVER_RULESET` / `-mod` works; baking vs uploading.
 - [Web panel & roles](docs/web-panel.md) — every page, the role model, the Developer capability, the API.
 - [Configuration reference](docs/configuration.md) — every env var and build arg.
+- [Networking & client IPs](docs/networking.md) — make real player IPs reach the container (so bans/admin work).
 - [Building & deploying](docs/building-and-deploying.md) · [Internals: patch & headless](docs/internals.md) · [Database](docs/database.md) · [TLS](docs/tls.md) · [Troubleshooting](docs/troubleshooting.md)
 
 ## What the build does

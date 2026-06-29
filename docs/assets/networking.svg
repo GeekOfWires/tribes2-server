@@ -1,0 +1,58 @@
+<svg viewBox="0 0 760 312" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t d">
+  <title id="t">Preserving client source IPs into the container</title>
+  <desc id="d">With the default Docker bridge and userland proxy, UDP game traffic is NAT'd and the container sees the bridge gateway (172.17.0.1) instead of the player's IP. With host networking, or with the Docker userland proxy disabled (pure DNAT), the container sees the real player IP (203.0.113.7).</desc>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M2 1 L8 5 L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="760" height="312" rx="16" fill="#0a1410"/>
+
+  <g font-family="ui-sans-serif, 'Segoe UI', Roboto, sans-serif" fill="#e2e8ee" text-anchor="middle">
+
+    <!-- Row 1: default bridge NAT -->
+    <text x="24" y="46" text-anchor="start" font-size="13" fill="#e5534b">Default bridge + userland-proxy — source IP lost</text>
+
+    <rect x="24" y="64" width="140" height="46" rx="8" fill="#16291f" stroke="#283d31"/>
+    <text x="94" y="84" font-size="13">Player</text>
+    <text x="94" y="101" font-size="11" fill="#8fb3a6">203.0.113.7</text>
+
+    <line x1="164" y1="87" x2="205" y2="87" stroke="#4a6b5e" stroke-width="1.6" marker-end="url(#ah)"/>
+
+    <rect x="206" y="64" width="120" height="46" rx="8" fill="#16291f" stroke="#283d31"/>
+    <text x="266" y="84" font-size="13">Host</text>
+    <text x="266" y="101" font-size="11" fill="#8fb3a6">:28000/udp</text>
+
+    <line x1="326" y1="87" x2="367" y2="87" stroke="#4a6b5e" stroke-width="1.6" marker-end="url(#ah)"/>
+
+    <rect x="368" y="58" width="176" height="58" rx="8" fill="#1f1413" stroke="#e5534b" stroke-opacity=".7"/>
+    <text x="456" y="82" font-size="13">Docker bridge NAT</text>
+    <text x="456" y="100" font-size="11" fill="#8fb3a6">userland-proxy (UDP)</text>
+
+    <line x1="544" y1="87" x2="585" y2="87" stroke="#4a6b5e" stroke-width="1.6" marker-end="url(#ah)"/>
+
+    <rect x="586" y="64" width="150" height="46" rx="8" fill="#16291f" stroke="#283d31"/>
+    <text x="661" y="91" font-size="13">Game</text>
+    <text x="661" y="134" font-size="12" fill="#e5534b">sees 172.17.0.1  ✗</text>
+
+    <!-- Row 2: host net / no userland-proxy -->
+    <text x="24" y="196" text-anchor="start" font-size="13" fill="#03e0a3">host network  —or—  userland-proxy=false (DNAT) — source IP preserved</text>
+
+    <rect x="24" y="214" width="140" height="46" rx="8" fill="#16291f" stroke="#283d31"/>
+    <text x="94" y="234" font-size="13">Player</text>
+    <text x="94" y="251" font-size="11" fill="#8fb3a6">203.0.113.7</text>
+
+    <line x1="164" y1="237" x2="205" y2="237" stroke="#4a6b5e" stroke-width="1.6" marker-end="url(#ah)"/>
+
+    <rect x="206" y="214" width="120" height="46" rx="8" fill="#16291f" stroke="#283d31"/>
+    <text x="266" y="240" font-size="13">Host</text>
+
+    <line x1="326" y1="237" x2="585" y2="237" stroke="#03e0a3" stroke-opacity=".75" stroke-width="1.6" marker-end="url(#ah)"/>
+    <text x="455" y="228" font-size="11" fill="#8fb3a6">no NAT rewrite</text>
+
+    <rect x="586" y="214" width="150" height="46" rx="8" fill="#16291f" stroke="#03e0a3" stroke-opacity=".5"/>
+    <text x="661" y="241" font-size="13">Game</text>
+    <text x="661" y="284" font-size="12" fill="#03e0a3">sees 203.0.113.7  ✓</text>
+  </g>
+</svg>

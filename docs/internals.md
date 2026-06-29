@@ -1,6 +1,6 @@
 ---
 title: Internals
-nav_order: 8
+nav_order: 9
 ---
 
 # Internals: patch & headless
@@ -74,8 +74,8 @@ the image's distro/codename.
 2. **app-build** (`dotnet/sdk`) — restores + publishes the panel (framework-dependent) and copies
    in the SPA.
 3. **runtime** (`dotnet/aspnet`, Ubuntu) — i386 multiarch + WineHQ + Wine; `wineboot` headless;
-   drop the vcrun22 DLLs; bind-mount + extract the game; overlay the QoL patch; run the PE
-   patcher; copy in the published panel. Entrypoint = the panel under `tini`.
+   fetch + unpack the official VC++ runtime DLLs; bind-mount + extract the game; overlay the QoL
+   patch; run the PE patcher; copy in the published panel. Entrypoint = the panel under `tini`.
 
 ## Crash tracking
 
