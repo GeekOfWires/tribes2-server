@@ -18,6 +18,23 @@ build context:
 Everything else a mod needs (`content/classic_v152.zip`, `content/Construction_v0.70a.exe`) **is**
 committed.
 
+## A note on the VC++ runtime licensing
+
+The image needs Microsoft's Visual C++ 2022 runtime DLLs (`msvcp140`, `vcruntime140`, `concrt140`,
+…). Rather than committing those binaries, the build **downloads Microsoft's official
+redistributable** (`VCREDIST_URL`, default `https://aka.ms/vs/17/release/vc_redist.x86.exe`) and
+unpacks it with `cabextract` (the redist is a WiX "Burn" bundle whose payload cabs hold the DLLs as
+`*.dll_x86`; only the needed set is copied into the Wine `system32`). This keeps **Microsoft as the
+distributor** and keeps Microsoft binaries out of this repository and its history.
+
+These files are Microsoft "Distributable Code." Redistribution is governed by the Visual Studio
+2022 license terms (the `REDIST.TXT` list), which broadly permit shipping them *as part of an
+application* subject to conditions (add significant functionality, flow-down terms, keep notices,
+indemnify Microsoft, don't open-source-contaminate them). Note two caveats for this project: the
+terms are written around running on **Windows** (here they run under **Wine on Linux**, a gray
+area), and you should review the current terms yourself. To pin a specific build, set
+`VCREDIST_SHA256`. *This is not legal advice.*
+
 ## Local builds
 
 Build the **base first**; the mod images derive from it.

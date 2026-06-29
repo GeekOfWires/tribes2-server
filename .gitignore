@@ -27,3 +27,8 @@ tribes2-patched-install-reference/
 # Ignoring it here only keeps it out of git; the Docker build still uses it from
 # the build context. See README "Game data".
 content/tribesinstall.7z
+
+# --- Microsoft VC++ runtime (never vendored; fetched from MS at build time) ---
+# Licensing: keep Microsoft binaries out of the repo and its history. The Dockerfile
+# downloads the official vc_redist at build time instead. See docs/building-and-deploying.md.
+content/vcrun22.zip

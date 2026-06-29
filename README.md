@@ -270,9 +270,10 @@ default 8443). Pick at most one cert source via env (see `.env.example`):
 - **Root seeding**: `ROOT_PASSWORD` (plaintext) is used once on first boot to create the root
   user (hashed by Identity). Change it in the panel afterward.
 - **Game UDP ports** for your mod (default exposes 28000/udp).
-- **`vcrun22`**: the modern VC++ 2022 runtime DLLs are **vendored** in
-  [`content/vcrun22.zip`](content/vcrun22.zip) (originally from `files.playt2.com`) and bind-mounted
-  at build time — no network fetch. Replace that file to use a different runtime set.
+- **VC++ runtime**: the modern VC++ 2022 DLLs are fetched from **Microsoft's official
+  redistributable** (`VCREDIST_URL`, default `aka.ms/vs/17/release/vc_redist.x86.exe`) at build
+  time and unpacked with `cabextract` — nothing is vendored in the repo. See
+  [docs: licensing](docs/building-and-deploying.md#a-note-on-the-vc-runtime-licensing).
 - **CPU pinning**: set `GAME_CPU_AFFINITY` (e.g. `0`) to `taskset` the single-threaded server
   onto one core.
 - **Auth/master**: `-online` registers with the Tribes 2 master; use `-nologin` to host

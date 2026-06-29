@@ -36,6 +36,10 @@ USER root
 
 ARG PATCH_URL="https://www.tribesnext.com/files/TribesNEXT_20250922_preview.exe"
 ARG PATCH_SHA256=""
+# Microsoft VC++ 2022 x86 redistributable (official). Fetched at build time so Microsoft
+# is the distributor and no Microsoft binaries are vendored in this repo.
+ARG VCREDIST_URL="https://aka.ms/vs/17/release/vc_redist.x86.exe"
+ARG VCREDIST_SHA256=""
 ARG WINE_BRANCH=stable
 # Pinned to Wine 10 (the Tribes 2-on-Wine community's proven version); Wine 11
 # regresses the T2 mission-start path. Blank = latest for the branch.
@@ -77,16 +81,23 @@ RUN mkdir -pm755 /etc/apt/keyrings \
 # 3. initialize the 32-bit prefix headlessly (no winetricks, no xvfb)
 RUN wineboot --init && wineserver -w
 
-# 4. NEWER Windows APIs the QoL patch needs: real VC++ 2022 runtime DLLs into system32.
+# 4. NEWER Windows APIs the QoL patch needs: the real Microsoft VC++ 2022 runtime DLLs.
 #    (OLDER VC++6 comes from the game's bundled MSVCRT.dll + Tribes2.exe.local.)
-#    vcrun22.zip is vendored in content/ (originally from files.playt2.com) and bind-mounted
-#    so the archive never becomes an image layer.
-RUN --mount=type=bind,source=content/vcrun22.zip,target=/tmp/vcrun22.zip \
-    mkdir -p /tmp/vcr && 7z x -y /tmp/vcrun22.zip -o/tmp/vcr >/dev/null \
- && for f in /tmp/vcr/dlls/*.dll_x86; do \
-        cp -f "$f" "${WINEPREFIX}/drive_c/windows/system32/$(basename "$f" .dll_x86).dll"; \
+#    The redist is a WiX "Burn" bundle; cabextract pulls its payload cabs, which hold the
+#    runtime as *.dll_x86. We copy only the set the QoL patch needs into system32.
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends cabextract \
+ && rm -rf /var/lib/apt/lists/* \
+ && wget -O /tmp/vc.exe "${VCREDIST_URL}" \
+ && if [ -n "${VCREDIST_SHA256}" ]; then echo "${VCREDIST_SHA256}  /tmp/vc.exe" | sha256sum -c -; fi \
+ && cabextract -q -d /tmp/ce /tmp/vc.exe \
+ && for c in /tmp/ce/a*; do cabextract -q -d /tmp/vcr "$c" 2>/dev/null || true; done \
+ && for n in concrt140 msvcp140 msvcp140_1 msvcp140_2 msvcp140_atomic_wait \
+             msvcp140_codecvt_ids vcamp140 vccorlib140 vcomp140 vcruntime140; do \
+        cp -f "/tmp/vcr/${n}.dll_x86" "${WINEPREFIX}/drive_c/windows/system32/${n}.dll"; \
     done \
- && rm -rf /tmp/vcr \
+ && apt-get purge -y cabextract && apt-get autoremove -y \
+ && rm -rf /tmp/vc.exe /tmp/ce /tmp/vcr \
  && test -f "${WINEPREFIX}/drive_c/windows/system32/vcruntime140.dll"
 
 # 5. extract the game; 7z root is GameData/, so extract into the parent (bind-mounted,

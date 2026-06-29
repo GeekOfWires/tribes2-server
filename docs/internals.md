@@ -53,9 +53,11 @@ Both must be satisfied in the Wine prefix:
 - **Old VC++6 runtime** — comes from the game's own bundled `MSVCRT.dll` plus a
   `Tribes2.exe.local` redirection (so Wine loads the local copy).
 - **New VC++ 2022 runtime** — real Microsoft DLLs (`msvcp140`, `vcruntime140`, `concrt140`, …)
-  come from [`content/vcrun22.zip`](https://github.com/GeekOfWires/tribes2-server/blob/main/content/vcrun22.zip) (a `vcrun22.zip` of `*.dll_x86`,
-  vendored in-repo, originally from files.playt2.com), renamed to `.dll` and dropped into the Wine
-  `system32`, with `WINEDLLOVERRIDES` set to prefer the native copies.
+  fetched at build time from Microsoft's **official** redistributable (`VCREDIST_URL`,
+  `vc_redist.x86.exe`). It's a WiX "Burn" bundle, so `cabextract` pulls its payload cabs (the DLLs
+  are stored as `*.dll_x86`); the needed set is renamed to `.dll` and dropped into the Wine
+  `system32`, with `WINEDLLOVERRIDES` set to prefer the native copies. Nothing is committed to the
+  repo. See [Building & deploying → licensing](building-and-deploying.md#a-note-on-the-vc-runtime-licensing).
 
 No **winetricks** and no **Ruby** are involved — the 2025 QoL feature set is native code in
 `IFC22.dll` (≈2 MB), overlaid from the patch.

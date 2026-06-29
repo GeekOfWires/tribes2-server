@@ -15,13 +15,15 @@ supervisor) and a few **build args** (baked at image build time). With Docker Co
 |-----|---------|---------|
 | `PATCH_URL` | the community QoL patch URL | NSIS installer `.exe`; its payload is 7z-extracted over `GameData`. |
 | `PATCH_SHA256` | *(empty)* | If set, the downloaded patch is checksum-verified. |
+| `VCREDIST_URL` | `https://aka.ms/vs/17/release/vc_redist.x86.exe` | Microsoft's **official** VC++ 2022 x86 redistributable, fetched at build time and unpacked with `cabextract`; the runtime DLLs land in the Wine `system32`. |
+| `VCREDIST_SHA256` | *(empty)* | If set, the downloaded redist is checksum-verified. |
 | `WINE_BRANCH` | `stable` | WineHQ branch (`stable`/`staging`/`devel`). |
 | `WINE_VERSION` | `10.0.0.0` | Pinned Wine version (Wine 11 regresses the mission-start path). Blank = latest for the branch. |
 | `BASE_IMAGE` | `tribes2-server:base` | *(mod images only)* the base image to derive from. |
 
-The modern VC++ 2022 runtime is **not** a build arg — it's vendored in
-[`content/vcrun22.zip`](https://github.com/GeekOfWires/tribes2-server/blob/main/content/vcrun22.zip) and bind-mounted at build time (no network
-fetch). Replace that file to change the runtime set.
+The VC++ runtime is fetched **from Microsoft** at build time (so Microsoft is the distributor and
+no Microsoft binaries are committed to this repo). See
+[Building & deploying → licensing](building-and-deploying.md#a-note-on-the-vc-runtime-licensing).
 
 See [Building & deploying](building-and-deploying.md) for how to pass these.
 
