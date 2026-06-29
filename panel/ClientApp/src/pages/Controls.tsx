@@ -7,6 +7,7 @@ export default function Controls() {
   const { me, cfg, reload } = useAuth();
   const [msg, setMsg] = useState<{ ok: boolean; t: string } | null>(null);
   const [cmd, setCmd] = useState("");
+  const [ruleset, setRuleset] = useState(cfg?.ruleset ?? cfg?.defaultRuleset ?? "base");
   const [busy, setBusy] = useState(false);
   if (!me) return null;
   const can = (rank: number) => me.rank >= rank;
@@ -26,6 +27,10 @@ export default function Controls() {
   };
   const toggleAutoStart = async (enabled: boolean) => {
     await run(() => api.setAutoStart(enabled), `auto-start ${enabled ? "on" : "off"}`);
+    await reload();
+  };
+  const applyRuleset = async () => {
+    await run(() => api.setRuleset(ruleset), `ruleset "${ruleset || "base"}"`);
     await reload();
   };
 
@@ -50,6 +55,17 @@ export default function Controls() {
             <input type="checkbox" disabled={busy} checked={cfg.autoStart} onChange={(e) => toggleAutoStart(e.target.checked)} style={{ width: "auto" }} />
             <span>Launch the Tribes 2 server automatically when the panel starts</span>
           </label>
+        </div>
+      )}
+
+      {can(RANK.root) && cfg && (
+        <div className="card">
+          <h3 style={{ marginTop: 0 }}>Ruleset / Mod</h3>
+          <p className="muted" style={{ marginTop: 0, fontSize: 13 }}>Sets <code>-mod</code> (empty or <code>base</code> = none). Takes effect on the next restart.</p>
+          <div className="row">
+            <input style={{ width: 240 }} value={ruleset} onChange={(e) => setRuleset(e.target.value)} placeholder="base" disabled={busy} />
+            <button className="btn primary" disabled={busy} onClick={applyRuleset}>Apply</button>
+          </div>
         </div>
       )}
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
 import { api, type DirListing, type FileRead } from "../api";
 import { DARK_PLUS, langFor, setupMonaco } from "../monaco-setup";
@@ -13,6 +13,7 @@ export default function Files() {
   const [orig, setOrig] = useState("");
   const [msg, setMsg] = useState<{ ok: boolean; t: string } | null>(null);
   const [busy, setBusy] = useState(false);
+  const fileInput = useRef<HTMLInputElement>(null);
 
   const dirty = read?.content !== undefined && content !== orig;
 
@@ -49,6 +50,17 @@ export default function Files() {
     catch (e) { setMsg({ ok: false, t: (e as Error).message }); }
   };
 
+  const upload = async (files: FileList | null) => {
+    if (!files || !files.length || !listing) return;
+    setBusy(true);
+    try {
+      const r = await api.uploadFiles(listing.path, files);
+      setMsg({ ok: true, t: `Uploaded ${r.uploaded.length} file(s) (audited).` });
+      await loadDir(listing.path);
+    } catch (e) { setMsg({ ok: false, t: (e as Error).message }); }
+    finally { setBusy(false); if (fileInput.current) fileInput.current.value = ""; }
+  };
+
   const del = async (path: string, isDir: boolean) => {
     if (!window.confirm(`Delete ${isDir ? "folder" : "file"} "${path}"? (audited; root can revert)`)) return;
     try {
@@ -76,6 +88,8 @@ export default function Files() {
             <button className="btn" onClick={() => loadDir(listing?.path)}>↻</button>
             <button className="btn" onClick={() => create(false)}>+ File</button>
             <button className="btn" onClick={() => create(true)}>+ Folder</button>
+            <button className="btn" disabled={busy} onClick={() => fileInput.current?.click()}>↥ Upload</button>
+            <input ref={fileInput} type="file" multiple style={{ display: "none" }} onChange={(e) => upload(e.target.files)} />
           </div>
           <div className="filelist">
             {listing?.entries.length === 0 && <div className="muted" style={{ padding: 8 }}>empty</div>}

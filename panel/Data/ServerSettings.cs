@@ -11,4 +11,8 @@ public class ServerSettings
     public bool Configured { get; set; }
     public bool AutoStart { get; set; }
     public string? LaunchParams { get; set; } // optional override of the LAUNCH_PARAMS env
+
+    // Selected ruleset/mod. null = not chosen yet (fall back to SERVER_RULESET env);
+    // "base" or "" = no -mod; any other value -> "-mod <value>".
+    public string? Ruleset { get; set; }
 }

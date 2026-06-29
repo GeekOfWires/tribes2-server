@@ -17,8 +17,9 @@ public static class Endpoints
     public record SetActiveDto(bool Active);
     public record SetDeveloperDto(bool Enabled);
     public record PasswordDto(string Password);
-    public record CompleteConfigDto(bool AutoStart, string? LaunchParams);
+    public record CompleteConfigDto(bool AutoStart, string? LaunchParams, string? Ruleset);
     public record AutoStartDto(bool Enabled);
+    public record RulesetDto(string? Ruleset);
 
     private static (string name, string role) Actor(ClaimsPrincipal u) =>
         (u.Identity?.Name ?? "?", u.FindFirstValue(ClaimTypes.Role) ?? Roles.User);
@@ -133,6 +134,8 @@ public static class Endpoints
                 autoStart = s?.AutoStart ?? false,
                 launchParams = s?.LaunchParams,
                 defaultLaunchParams = appCfg["LAUNCH_PARAMS"] ?? "-online -dedicated",
+                ruleset = s?.Ruleset,
+                defaultRuleset = NormalizeRuleset(appCfg["SERVER_RULESET"]),
             });
         }).RequireAuthorization(Roles.PolicyUser);
 
@@ -145,11 +148,13 @@ public static class Endpoints
             s.Configured = true;
             s.AutoStart = dto.AutoStart;
             s.LaunchParams = string.IsNullOrWhiteSpace(dto.LaunchParams) ? null : dto.LaunchParams.Trim();
+            s.Ruleset = NormalizeRuleset(dto.Ruleset);
             await db.SaveChangesAsync();
             g.MarkConfigured();
             g.SetLaunchParams(s.LaunchParams);
+            g.SetRuleset(s.Ruleset);
             await g.StartAsync();
-            await Audit(db, u, "config.complete", detail: $"autoStart={dto.AutoStart}; params={s.LaunchParams}");
+            await Audit(db, u, "config.complete", detail: $"autoStart={dto.AutoStart}; ruleset={s.Ruleset}; params={s.LaunchParams}");
             return Results.Ok();
         }).RequireAuthorization(Roles.PolicyRoot);
 
@@ -162,6 +167,32 @@ public static class Endpoints
             await db.SaveChangesAsync();
             await Audit(db, u, dto.Enabled ? "config.auto_start_on" : "config.auto_start_off");
             return Results.Ok();
+        }).RequireAuthorization(Roles.PolicyRoot);
+
+        // root changes the ruleset/mod (-mod param); takes effect on the next (re)start.
+        config.MapPost("/ruleset", async (RulesetDto dto, AppDbContext db, GameSupervisor g, ClaimsPrincipal u) =>
+        {
+            var s = await db.ServerSettings.FindAsync(1);
+            if (s is null || !s.Configured) return Results.BadRequest(new { error = "complete first-time setup first" });
+            s.Ruleset = NormalizeRuleset(dto.Ruleset);
+            await db.SaveChangesAsync();
+            g.SetRuleset(s.Ruleset);
+            await Audit(db, u, "config.ruleset", detail: s.Ruleset.Length == 0 ? "base" : s.Ruleset);
+            return Results.Ok(new { ruleset = s.Ruleset });
+        }).RequireAuthorization(Roles.PolicyRoot);
+
+        // root edits serverprefs.cs for the chosen ruleset; the editor saves via /api/files/save.
+        // Path: GameData/<base|ruleset>/prefs/serverprefs.cs (the prefs dir is created if missing).
+        config.MapGet("/serverprefs", (string? ruleset, TribesServerPanel.Services.FileAccess fa) =>
+        {
+            var dir = NormalizeRuleset(ruleset);
+            dir = dir.Length == 0 ? "base" : dir;
+            var prefsDir = Path.Combine(fa.GameDataRoot, dir, "prefs");
+            var path = Path.Combine(prefsDir, "serverprefs.cs");
+            try { Directory.CreateDirectory(prefsDir); } catch { /* best effort */ }
+            var exists = File.Exists(path);
+            var content = exists ? File.ReadAllText(path) : "";
+            return Results.Ok(new { path, content, exists });
         }).RequireAuthorization(Roles.PolicyRoot);
 
         // ---- panel/container lifecycle (root only) -------------------------
@@ -275,6 +306,13 @@ public static class Endpoints
                 c.FaultInstruction, c.Module, c.LaunchParams, c.Details,
             }));
         }).RequireAuthorization(Roles.PolicyAdmin);
+    }
+
+    // "" / "base" (any case) => no mod. Anything else => the mod/ruleset folder name.
+    private static string NormalizeRuleset(string? r)
+    {
+        r = r?.Trim();
+        return string.IsNullOrEmpty(r) || r.Equals("base", StringComparison.OrdinalIgnoreCase) ? "" : r;
     }
 
     private static async Task<bool> IsLastRoot(UserManager<ApplicationUser> users)

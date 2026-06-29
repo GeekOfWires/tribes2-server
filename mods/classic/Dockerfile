@@ -13,7 +13,8 @@
 #      directly in base/, not in subfolders, so the CTF/DM/LCTF/Lak folders are
 #      flattened).
 #
-# Launches: -online -mod Classic -dedicated
+# Sets SERVER_RULESET=Classic so the panel/supervisor launches with -mod Classic
+# (override at runtime via the SERVER_RULESET env or the panel setup screen).
 ###############################################################################
 ARG BASE_IMAGE=tribes2-server:base
 FROM ${BASE_IMAGE}
@@ -48,4 +49,4 @@ RUN apt-get update \
  && apt-get purge -y git && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* \
  && ls "${GAME_DIR}/base/"*.vl2 >/dev/null
 
-ENV LAUNCH_PARAMS="-online -mod Classic -dedicated"
+ENV SERVER_RULESET="Classic"

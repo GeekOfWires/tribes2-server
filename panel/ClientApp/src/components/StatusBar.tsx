@@ -15,6 +15,7 @@ export default function StatusBar() {
     <div className="row" style={{ marginBottom: 12 }}>
       <span className="badge" style={{ color, borderColor: color }}>● {s?.running ? "running" : s?.state ?? "…"}</span>
       {s?.pid && <span className="muted">pid {s.pid}</span>}
+      {s?.ruleset && <span className="muted">ruleset: <code>{s.ruleset}</code></span>}
       {s?.params && <span className="muted">params: <code>{s.params}</code></span>}
       <span className="muted">commands: {s?.commandsReady ? "ready" : "—"}</span>
       {s && <span className="muted">restarts: {s.restarts}</span>}

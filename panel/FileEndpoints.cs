@@ -116,6 +116,36 @@ public static class FileEndpoints
             return Results.Ok(new { deleted = true });
         });
 
+        // Upload one or more files into a directory (multipart). Same scope as the editor:
+        // Developers under GameData, root anywhere. Binary allowed; each write is audited.
+        files.MapPost("/upload", async (HttpRequest req, ClaimsPrincipal u, UserManager<ApplicationUser> um, FileAccess fa, AppDbContext db) =>
+        {
+            if (!req.HasFormContentType) return Results.BadRequest(new { error = "multipart/form-data required" });
+            var form = await req.ReadFormAsync();
+            var dirA = await Resolve(form["path"].ToString(), u, um, fa);
+            if (!dirA.ok) return dirA.deny;
+            if (!Directory.Exists(dirA.canon)) return Results.BadRequest(new { error = "target is not a directory" });
+            if (form.Files.Count == 0) return Results.BadRequest(new { error = "no files" });
+
+            var saved = new List<object>();
+            foreach (var file in form.Files)
+            {
+                var name = Path.GetFileName(file.FileName);   // strip any path components
+                if (string.IsNullOrWhiteSpace(name)) continue;
+                var target = await Resolve(Path.Combine(dirA.canon, name), u, um, fa);
+                if (!target.ok) return target.deny;
+                if (Directory.Exists(target.canon)) return Results.BadRequest(new { error = $"{name} is a directory" });
+
+                var existed = File.Exists(target.canon);
+                var (prev, trunc) = existed ? await Snapshot(target.canon) : (null, false);
+                await using (var fs = File.Create(target.canon)) await file.CopyToAsync(fs);
+                var size = new FileInfo(target.canon).Length;
+                await Record(db, target, existed ? "edit" : "create", isDir: false, existed, prev, trunc, size, detail: "upload");
+                saved.Add(new { name, size });
+            }
+            return Results.Ok(new { uploaded = saved });
+        }).DisableAntiforgery();
+
         // ---- file-change audit + revert (root only) ----------------------------
         var edits = app.MapGroup("/api/files/edits").RequireAuthorization(Roles.PolicyRoot);
 

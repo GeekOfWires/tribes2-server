@@ -69,6 +69,10 @@ builder.Services.AddHostedService(sp => sp.GetRequiredService<GameSupervisor>())
 // ---- file browser/editor scope resolver -------------------------------------
 builder.Services.AddSingleton<TribesServerPanel.Services.FileAccess>();
 
+// Allow large file uploads through the panel (mod packs, maps). Admin-only surface.
+builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(o => o.MultipartBodyLengthLimit = long.MaxValue);
+builder.WebHost.ConfigureKestrel(k => k.Limits.MaxRequestBodySize = null);
+
 var app = builder.Build();
 
 // ---- migrate + seed roles and the root user --------------------------------

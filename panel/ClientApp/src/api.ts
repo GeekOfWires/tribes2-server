@@ -8,6 +8,7 @@ export type Status = {
   commandsReady: boolean;
   restarts: number;
   lastExit: number | null;
+  ruleset: string;
 };
 export type UserRow = { id: string; username: string; role: string; isActive: boolean; isDeveloper: boolean };
 export type DirEntry = { name: string; isDir: boolean; size: number; mtime: number };
@@ -22,7 +23,10 @@ export type Config = {
   autoStart: boolean;
   launchParams: string | null;
   defaultLaunchParams: string;
+  ruleset: string | null;
+  defaultRuleset: string;
 };
+export type ServerPrefs = { path: string; content: string; exists: boolean };
 export type AuditRow = {
   ts: number; actor: string; actorRole: string; action: string;
   target: string | null; detail: string | null; success: boolean;
@@ -67,10 +71,14 @@ export const api = {
   shutdownPanel: () => req<void>("/api/panel/shutdown", { method: "POST" }),
 
   config: () => req<Config>("/api/config/"),
-  completeConfig: (autoStart: boolean, launchParams: string) =>
-    req<void>("/api/config/complete", { method: "POST", body: JSON.stringify({ autoStart, launchParams }) }),
+  completeConfig: (autoStart: boolean, launchParams: string, ruleset: string) =>
+    req<void>("/api/config/complete", { method: "POST", body: JSON.stringify({ autoStart, launchParams, ruleset }) }),
   setAutoStart: (enabled: boolean) =>
     req<void>("/api/config/auto-start", { method: "POST", body: JSON.stringify({ enabled }) }),
+  setRuleset: (ruleset: string) =>
+    req<{ ruleset: string }>("/api/config/ruleset", { method: "POST", body: JSON.stringify({ ruleset }) }),
+  serverPrefs: (ruleset: string) =>
+    req<ServerPrefs>(`/api/config/serverprefs?ruleset=${encodeURIComponent(ruleset)}`),
 
   users: () => req<UserRow[]>("/api/users/"),
   createUser: (username: string, password: string, role: string) =>
@@ -99,6 +107,18 @@ export const api = {
     req<void>("/api/files/delete", { method: "POST", body: JSON.stringify({ path }) }),
   fileEdits: () => req<FileEditRow[]>("/api/files/edits/"),
   revertEdit: (id: number) => req<void>(`/api/files/edits/${id}/revert`, { method: "POST" }),
+  uploadFiles: async (dir: string, files: FileList | File[]) => {
+    const fd = new FormData();
+    fd.append("path", dir);
+    for (const f of Array.from(files)) fd.append("files", f);
+    const res = await fetch("/api/files/upload", { method: "POST", credentials: "include", body: fd });
+    if (!res.ok) {
+      let msg = res.statusText;
+      try { const j = await res.json(); if (j?.error) msg = j.error; } catch { /* ignore */ }
+      throw new Error(msg);
+    }
+    return res.json() as Promise<{ uploaded: { name: string; size: number }[] }>;
+  },
 };
 
 // WebSocket URL for the root container terminal (same-origin; cookie auth).

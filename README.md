@@ -105,6 +105,9 @@ edit under **GameData**; root anywhere. **Every change is written to a `FileEdit
 pre-change snapshot, so root can **revert** any edit/create/delete from the **File History** page.
 Path access is canonicalized and scope-checked server-side (a `../` escape out of GameData is denied).
 
+The Files page also supports **uploads** (multipart): Developers may upload into the GameData
+tree (any depth), root anywhere. Each uploaded file is audited like an edit.
+
 root also gets a **Terminal** page — an interactive `bash` session on a real PTY inside the container
 (xterm.js over a WebSocket), so `vim`, `htop`, etc. work. Terminal sessions are audited.
 
@@ -134,11 +137,11 @@ docker compose logs -f                  # watch the panel + game console
 
 Three images are defined. The derived ones build `FROM` the base, so **build the base first**.
 
-| Image | Mod | Builds from | LAUNCH_PARAMS |
-|-------|-----|-------------|---------------|
-| `tribes2-server:base` | base | [Dockerfile](Dockerfile) | `-online -dedicated` |
-| `tribes2-server:classic` | Classic | [mods/classic/Dockerfile](mods/classic/Dockerfile) | `-online -mod Classic -dedicated` |
-| `tribes2-server:construction` | Construction | [mods/construction/Dockerfile](mods/construction/Dockerfile) | `-online -mod Construction -dedicated` |
+| Image | Mod | Builds from | `SERVER_RULESET` |
+|-------|-----|-------------|------------------|
+| `tribes2-server:base` | base | [Dockerfile](Dockerfile) | *(empty → no `-mod`)* |
+| `tribes2-server:classic` | Classic | [mods/classic/Dockerfile](mods/classic/Dockerfile) | `Classic` |
+| `tribes2-server:construction` | Construction | [mods/construction/Dockerfile](mods/construction/Dockerfile) | `Construction` |
 
 - **Classic** overlays `content/classic_v152.zip` (a zip-in-a-zip; its lowercase `classic/`
   is **merged into** the case-sensitive `Classic/`), then clones
@@ -158,9 +161,19 @@ docker compose --profile classic      up -d t2-classic         # Classic        
 docker compose --profile construction up -d t2-construction    # Construction    (panel :8082)
 ```
 
-`LAUNCH_PARAMS` ordering matters: `-online` (or `-nologin` to host outside WON/Tribes 2
-auth) **first**, `-dedicated` **last**, mods in between. The mod images bake the correct
-value; override the env only if needed.
+**Rulesets / `-mod`.** The mod is no longer baked into `LAUNCH_PARAMS`; instead the
+**`SERVER_RULESET`** env selects it and the supervisor inserts `-mod <ruleset>` between
+`-online` and `-dedicated`. Empty or `base` means **no** `-mod`. The derived images just set
+this env (`Classic`/`Construction`); the base image leaves it empty. root can also set the
+ruleset in the panel — during **first-time setup** (defaulting to the `SERVER_RULESET` value)
+and later from **Controls** (applied on the next restart).
+
+`LAUNCH_PARAMS` ordering still matters for anything you put there: `-online` (or `-nologin`
+to host outside WON/Tribes 2 auth) **first**, `-dedicated` **last**.
+
+During first-time setup root also edits **`serverprefs.cs`** for the chosen ruleset
+(`GameData/<base|ruleset>/prefs/serverprefs.cs`, created if missing) right in the Monaco
+editor; the save goes through the audited file pipeline.
 
 ## Verifying the patch (inside the built image)
 

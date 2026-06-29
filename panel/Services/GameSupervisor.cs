@@ -30,7 +30,8 @@ public sealed class GameSupervisor : BackgroundService
     private readonly ILogger<GameSupervisor> _log;
     private readonly IServiceScopeFactory _scopes;
 
-    private readonly string _gameDir, _winePrefix, _wineBin, _exePathWin, _launchParams;
+    private readonly string _gameDir, _winePrefix, _wineBin, _exePathWin, _launchParams, _ruleset;
+    private volatile string? _rulesetOverride;   // null = use the SERVER_RULESET env default
     private readonly int _graceSeconds, _restartBackoff;
     private readonly bool _restartOnCrash;
     private string _bridgePath = "";
@@ -56,6 +57,7 @@ public sealed class GameSupervisor : BackgroundService
         _wineBin = cfg["WINE_BIN"] ?? "wine";
         _exePathWin = cfg["EXE_PATH_WIN"] ?? @"C:\Dynamix\Tribes2\GameData\Tribes2.exe";
         _launchParams = cfg["LAUNCH_PARAMS"] ?? "-online -dedicated";
+        _ruleset = NormalizeRuleset(cfg["SERVER_RULESET"]);   // env default ("" => base/no -mod)
         _graceSeconds = cfg.GetValue("GRACE_SECONDS", 20);
         _restartBackoff = cfg.GetValue("RESTART_BACKOFF", 5);
         _restartOnCrash = cfg.GetValue("RESTART_ON_CRASH", true);
@@ -88,7 +90,35 @@ public sealed class GameSupervisor : BackgroundService
 
     public void MarkConfigured() => _configured = true;
     public void SetLaunchParams(string? p) => _launchOverride = Nonempty(p);
+    public void SetRuleset(string? r) => _rulesetOverride = NormalizeRuleset(r);
     private string EffectiveLaunchParams => Nonempty(_launchOverride) ?? _launchParams;
+
+    // "" / "base" (any case) => no mod. Anything else => the mod/ruleset folder name.
+    private static string NormalizeRuleset(string? r)
+    {
+        r = r?.Trim();
+        return string.IsNullOrEmpty(r) || r.Equals("base", StringComparison.OrdinalIgnoreCase) ? "" : r;
+    }
+
+    // Override wins once set (even "" to force base); otherwise the SERVER_RULESET env default.
+    private string EffectiveRuleset => _rulesetOverride ?? _ruleset;
+
+    // Final launch args = base params with "-mod &lt;ruleset&gt;" inserted before -dedicated
+    // (Tribes 2 convention: -online first, mods in the middle, -dedicated last).
+    private List<string> ComposeArgs()
+    {
+        var tokens = EffectiveLaunchParams.Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList();
+        var rs = EffectiveRuleset;
+        if (rs.Length > 0 && !tokens.Contains("-mod"))   // respect an explicit -mod in params
+        {
+            var idx = tokens.FindIndex(t => t.Equals("-dedicated", StringComparison.OrdinalIgnoreCase));
+            if (idx >= 0) tokens.InsertRange(idx, new[] { "-mod", rs });
+            else { tokens.Add("-mod"); tokens.Add(rs); }
+        }
+        return tokens;
+    }
+
+    private string FinalLaunchLine => string.Join(' ', ComposeArgs());
 
     /// <summary>Send a console command to the game over its stdin (PTY).</summary>
     public async Task<bool> SendCommandAsync(string cmd)
@@ -117,7 +147,8 @@ public sealed class GameSupervisor : BackgroundService
             configured = _configured,
             running,
             pid = running ? p!.Id : (int?)null,
-            @params = EffectiveLaunchParams,
+            @params = FinalLaunchLine,
+            ruleset = EffectiveRuleset.Length == 0 ? "base" : EffectiveRuleset,
             commandsReady = running,   // stdin command channel available while running
             restarts = _restarts,
             lastExit = _lastExit,
@@ -209,7 +240,7 @@ public sealed class GameSupervisor : BackgroundService
             }
             psi.ArgumentList.Add(_wineBin);
             psi.ArgumentList.Add(_exePathWin);
-            foreach (var a in EffectiveLaunchParams.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+            foreach (var a in ComposeArgs())
                 psi.ArgumentList.Add(a);
             psi.Environment["WINEPREFIX"] = _winePrefix;
             psi.Environment["WINEDEBUG"] = Environment.GetEnvironmentVariable("WINEDEBUG") ?? "-all";
@@ -218,7 +249,7 @@ public sealed class GameSupervisor : BackgroundService
             proc.OutputDataReceived += (_, e) => { if (e.Data != null) _hub.Publish(e.Data); };
             proc.ErrorDataReceived += (_, e) => { if (e.Data != null) _hub.Publish(e.Data); };
 
-            _hub.Publish($"[panel] launching Tribes2.exe {EffectiveLaunchParams}");
+            _hub.Publish($"[panel] launching Tribes2.exe {FinalLaunchLine}");
             proc.Start();
             proc.BeginOutputReadLine();
             proc.BeginErrorReadLine();
@@ -322,6 +353,7 @@ public sealed class GameSupervisor : BackgroundService
             var s = await db.ServerSettings.AsNoTracking().FirstOrDefaultAsync(x => x.Id == 1);
             _configured = s?.Configured ?? false;
             _launchOverride = Nonempty(s?.LaunchParams);
+            if (s?.Ruleset != null) SetRuleset(s.Ruleset);   // persisted choice wins over the env default
             if (_configured && (s?.AutoStart ?? false))
             {
                 _desired = "run"; _state = "starting";

@@ -115,8 +115,11 @@ COPY --from=app-build /app/publish /app/panel
 RUN mkdir -p /data
 WORKDIR /app/panel
 
+# SERVER_RULESET selects the -mod parameter at runtime (empty/"base" => no -mod).
+# Derived mod images override this (Classic, Construction); the panel can also set it
+# during first-time setup, defaulting to this value.
 ENV LAUNCH_PARAMS="-online -dedicated" \
-    TELNET_PORT=23000 \
+    SERVER_RULESET="" \
     HTTP_PORT=8080 \
     HTTPS_PORT=8443 \
     PANEL_DB_PATH=/data/panel.db

@@ -10,7 +10,8 @@
 # RAR extraction needs the full 7-Zip port (`7zz` from the `7zip` package);
 # the base image's p7zip-full lacks the RAR codec.
 #
-# Launches: -online -mod Construction -dedicated
+# Sets SERVER_RULESET=Construction so the panel/supervisor launches with
+# -mod Construction (override via the SERVER_RULESET env or the panel setup screen).
 ###############################################################################
 ARG BASE_IMAGE=tribes2-server:base
 FROM ${BASE_IMAGE}
@@ -24,4 +25,4 @@ RUN apt-get update \
  && apt-get purge -y 7zip && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* \
  && test -d "${GAME_DIR}/Construction/scripts"
 
-ENV LAUNCH_PARAMS="-online -mod Construction -dedicated"
+ENV SERVER_RULESET="Construction"

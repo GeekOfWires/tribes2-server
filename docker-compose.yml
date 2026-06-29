@@ -10,9 +10,6 @@
 # the panel (which stops the container; restart policy relaunches it).
 
 x-common-env: &common-env
-  TELNET_PORT: ${TELNET_PORT:-23000}
-  TELNET_CONSOLE_PASS: ${TELNET_CONSOLE_PASS:-}
-  TELNET_LISTEN_PASS: ${TELNET_LISTEN_PASS:-}
   GRACE_SECONDS: ${GRACE_SECONDS:-20}
   RESTART_ON_CRASH: ${RESTART_ON_CRASH:-true}
   PANEL_DB_PATH: /data/panel.db
@@ -48,6 +45,7 @@ services:
     environment:
       <<: *common-env
       LAUNCH_PARAMS: ${LAUNCH_PARAMS:--online -dedicated}
+      SERVER_RULESET: ${SERVER_RULESET:-}   # empty = base (no -mod)
     ports:
       - "${PANEL_HTTP_PORT:-8080}:8080"
       - "${PANEL_HTTPS_PORT:-8443}:8443"
@@ -66,7 +64,8 @@ services:
     container_name: tribes2-classic
     restart: on-failure
     environment:
-      <<: *common-env   # LAUNCH_PARAMS baked into the image
+      <<: *common-env
+      SERVER_RULESET: ${SERVER_RULESET:-Classic}   # image default; override here if desired
     ports:
       - "${CLASSIC_HTTP_PORT:-8081}:8080"
       - "${CLASSIC_HTTPS_PORT:-8444}:8443"
@@ -85,7 +84,8 @@ services:
     container_name: tribes2-construction
     restart: on-failure
     environment:
-      <<: *common-env   # LAUNCH_PARAMS baked into the image
+      <<: *common-env
+      SERVER_RULESET: ${SERVER_RULESET:-Construction}   # image default; override here if desired
     ports:
       - "${CONSTRUCTION_HTTP_PORT:-8082}:8080"
       - "${CONSTRUCTION_HTTPS_PORT:-8445}:8443"
