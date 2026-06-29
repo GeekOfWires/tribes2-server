@@ -1,25 +1,23 @@
 <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ttl dsc">
   <title id="ttl">Tribes 2 server emblem</title>
-  <desc id="dsc">Two forked vertical posts standing on a base bar — a twin-fork mark in teal and mint on a dark rounded tile.</desc>
+  <desc id="dsc">A twin-fork mark: two raised bent arms rising from a crossbar over a central post that forks into two legs, with two rivets at the shoulders, in metallic teal.</desc>
   <defs>
-    <radialGradient id="field" cx=".5" cy=".4" r=".82">
-      <stop offset="0" stop-color="#0f2c24"/>
-      <stop offset="1" stop-color="#04100b"/>
-    </radialGradient>
-    <linearGradient id="post" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0afabb"/>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16ffc6"/>
       <stop offset=".5" stop-color="#09cf9f"/>
-      <stop offset="1" stop-color="#067a5e"/>
+      <stop offset="1" stop-color="#05926e"/>
     </linearGradient>
   </defs>
 
-  <rect x="14" y="14" width="228" height="228" rx="46" fill="url(#field)" stroke="#06e0a3" stroke-opacity=".5" stroke-width="3"/>
-
-  <g stroke="#0afabb" stroke-opacity=".55" stroke-width="2" stroke-linejoin="round">
-    <path d="M86 180 L78 56 L99 94 L120 56 L112 180 Z" fill="url(#post)"/>
-    <path d="M144 180 L136 56 L157 94 L178 56 L170 180 Z" fill="url(#post)"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M86 150 H170 M106 150 L66 108 L98 32 M150 150 L190 108 L158 32 M128 150 L128 194 M128 194 L110 236 M128 194 L146 236"
+          stroke="#03261d" stroke-width="34"/>
+    <path d="M86 150 H170 M106 150 L66 108 L98 32 M150 150 L190 108 L158 32 M128 150 L128 194 M128 194 L110 236 M128 194 L146 236"
+          stroke="url(#g)" stroke-width="24"/>
   </g>
 
-  <rect x="72" y="174" width="112" height="26" rx="8" fill="#09cf9f" stroke="#0afabb" stroke-opacity=".55" stroke-width="2"/>
-  <rect x="80" y="179" width="96" height="6" rx="3" fill="#bafce9" opacity=".7"/>
+  <g stroke="#3f4a44" stroke-width="2">
+    <circle cx="106" cy="150" r="8" fill="#cfd8d2"/>
+    <circle cx="150" cy="150" r="8" fill="#cfd8d2"/>
+  </g>
 </svg>
