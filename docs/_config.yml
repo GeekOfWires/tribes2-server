@@ -9,6 +9,7 @@ baseurl: /tribes2-server
 
 # Theme: just-the-docs (sidebar nav + search). Built via Bundler in the Pages workflow.
 theme: just-the-docs
+logo: "/assets/icon.svg"
 
 search_enabled: true
 heading_anchors: true

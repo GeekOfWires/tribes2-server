@@ -1,5 +1,7 @@
 # Tribes 2 Dedicated Server Container
 
+<img src="panel/ClientApp/public/icon.svg" alt="Tribes 2 server emblem" width="104" align="right" />
+
 A single Docker image that runs a **Tribes 2** (2002) dedicated server under **Wine** on
 **Debian**, applies the **Tribes 2** community patch, and ships an integrated
 **ASP.NET Core 10** control panel (React SPA frontend, ASP.NET Identity auth) with
