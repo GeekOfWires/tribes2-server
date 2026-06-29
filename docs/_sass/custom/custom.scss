@@ -12,14 +12,22 @@ $t2-accent:   #03e0a3; // --primary
 $t2-accent-2: #05f5b4; // --primary-2
 $t2-code-bg:  #05080c; // console background
 
-$t2-sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
-$t2-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+$t2-sans: "Roboto", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+$t2-mono: "Roboto Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
 
 body {
   background-color: $t2-bg;
   color: $t2-text;
   font-family: $t2-sans;
 }
+
+// Roboto everywhere the theme sets its own font, Roboto Mono for all code.
+body, .site-title, .btn, button, input, select,
+.main-content h1, .main-content h2, .main-content h3,
+.main-content h4, .main-content h5, .main-content h6,
+.nav-list .nav-list-item .nav-list-link,
+.search-input, .breadcrumb-nav-list-item { font-family: $t2-sans; }
+pre, code, kbd, samp, tt, .highlight, .highlighter-rouge { font-family: $t2-mono; }
 
 // ---- chrome -----------------------------------------------------------------
 .side-bar {
