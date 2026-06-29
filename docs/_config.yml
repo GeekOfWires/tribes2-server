@@ -33,6 +33,14 @@ relative_links:
 readme_index:
   enabled: true
   remove_originals: true
+  with_frontmatter: true   # our README.md has front matter (title/nav_order); still use it as /
+
+# Apply the just-the-docs layout to every page (incl. the README-derived index).
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
 
 # Don't let Jekyll try to process build scaffolding.
 exclude:
