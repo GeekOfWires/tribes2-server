@@ -111,7 +111,7 @@ function FirstRunSetup({ onDone, onLogout }: { onDone: () => Promise<void>; onLo
               value={prefs}
               onChange={(v) => setPrefs(v ?? "")}
               beforeMount={setupMonaco}
-              options={{ fontSize: 13, minimap: { enabled: false }, tabSize: 3, scrollBeyondLastLine: false }}
+              options={{ fontSize: 13, fontFamily: '"Share Tech Mono", ui-monospace, monospace', minimap: { enabled: false }, tabSize: 3, scrollBeyondLastLine: false }}
             />
           </>
         )}

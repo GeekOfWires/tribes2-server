@@ -13,7 +13,7 @@ export default function Terminal() {
     const term = new XTerm({
       cursorBlink: true,
       fontSize: 13,
-      fontFamily: 'ui-monospace, Consolas, "Cascadia Mono", monospace',
+      fontFamily: '"Share Tech Mono", ui-monospace, Consolas, monospace',
       theme: { background: "#1E1E1E", foreground: "#D4D4D4", cursor: "#AEAFAD" },
     });
     const fit = new FitAddon();

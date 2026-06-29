@@ -129,7 +129,7 @@ export default function Files() {
                 value={content}
                 onChange={(v) => setContent(v ?? "")}
                 beforeMount={setupMonaco}
-                options={{ fontSize: 13, minimap: { enabled: false }, tabSize: 3, renderWhitespace: "selection", scrollBeyondLastLine: false }}
+                options={{ fontSize: 13, fontFamily: '"Share Tech Mono", ui-monospace, monospace', minimap: { enabled: false }, tabSize: 3, renderWhitespace: "selection", scrollBeyondLastLine: false }}
               />
             </>
           )}

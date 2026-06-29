@@ -1,3 +1,15 @@
+/* Self-hosted fonts (OFL) — bundled in public/fonts so the panel needs no CDN. */
+@font-face {
+  font-family: "Electrolize";
+  font-style: normal; font-weight: 400; font-display: swap;
+  src: url("/fonts/electrolize.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Share Tech Mono";
+  font-style: normal; font-weight: 400; font-display: swap;
+  src: url("/fonts/sharetechmono.woff2") format("woff2");
+}
+
 /* PlayT2-derived dark/mint theme */
 :root {
   --bg: #0a1410;
@@ -9,10 +21,12 @@
   --primary-2: #05f5b4;
   --danger: #e5534b;
   --warn: #d9a441;
+  --font-sans: "Electrolize", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  --font-mono: "Share Tech Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--text); font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif; }
-code { color: var(--primary-2); }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-sans); }
+code { color: var(--primary-2); font-family: var(--font-mono); }
 a { color: var(--primary); }
 
 .shell { display: flex; min-height: 100vh; }
@@ -46,7 +60,7 @@ th { color: var(--muted); }
 
 .badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 12px; border: 1px solid var(--border); }
 .console { background: #05080c; border: 1px solid var(--border); border-radius: 10px; padding: 12px; height: 62vh; overflow-y: auto;
-  font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
+  font-family: var(--font-mono); font-size: 12.5px; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
 
 /* file browser + editor */
 .files-grid { display: grid; grid-template-columns: 320px 1fr; gap: 16px; align-items: start; }
