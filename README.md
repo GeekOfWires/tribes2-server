@@ -87,15 +87,15 @@ browser --HTTPS+cookie (Identity)--> panel API/SSE --> GameSupervisor --> game
 
 The panel DB is a single local file (`PANEL_DB_PATH`, default `/data/panel.db`) on a Docker
 volume. EF Core 10 talks to it via the official SQLite provider, and the file is plain
-SQLite-format — i.e. a **local Turso database**. You can inspect
-or manage it locally with the Turso CLI:
+**SQLite-format** (so it's also libSQL/Turso-compatible) — a self-contained file, no database
+server. Inspect or manage it locally with whichever CLI you prefer:
 
 ```bash
-turso db shell /data/panel.db        # also works with the sqlite3 or libsql CLIs
+sqlite3 /data/panel.db               # or the libsql / turso shells
 ```
 
 (There is no EF Core 10 provider for the new Turso/Limbo engine or for libSQL today, so EF Core's
-SQLite provider on the Turso-compatible file is the robust local-only choice.)
+SQLite provider on the compatible file is the robust choice.)
 
 ## Roles
 

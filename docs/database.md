@@ -8,19 +8,18 @@ nav_order: 10
 The panel stores its state in a single **SQLite-format file** at `PANEL_DB_PATH`
 (default `/data/panel.db`) via **EF Core**.
 
-## Local SQLite / libSQL / Turso-compatible
+## SQLite / libSQL / Turso-compatible
 
-Turso/libSQL are SQLite-compatible forks; a local Turso database **is** a SQLite-format file. This
-project uses EF Core's SQLite provider against that file, so you get a local, file-based,
-Turso-compatible database that **stays local**. Inspect it with whichever CLI you
-prefer:
+Turso and libSQL are SQLite-compatible forks, so the database is just a **SQLite-format file on
+disk**. The panel uses EF Core's SQLite provider against it — a self-contained, file-based store
+with no external database server. Inspect it with whichever CLI you prefer:
 
 ```bash
-turso db shell /data/panel.db     # or: sqlite3 /data/panel.db  /  libsql shell
+sqlite3 /data/panel.db      # or the libsql / turso shells, e.g. `turso db shell /data/panel.db`
 ```
 
-(There is no EF Core 10 provider for the newer Turso/Limbo engine or for libSQL today, so the
-SQLite provider on the compatible file is the robust local-only choice.)
+(There's no EF Core 10 provider for the newer Turso/Limbo engine or for libSQL today, so the
+SQLite provider on the compatible file is the robust choice.)
 
 ## Tables
 
