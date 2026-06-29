@@ -11,6 +11,9 @@ baseurl: /tribes2-server
 theme: just-the-docs
 logo: "/assets/icon.svg"
 
+# Dark base; retinted to the control-panel palette in _sass/custom/custom.scss.
+color_scheme: dark
+
 search_enabled: true
 heading_anchors: true
 

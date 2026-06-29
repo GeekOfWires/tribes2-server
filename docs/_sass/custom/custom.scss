@@ -1,0 +1,128 @@
+// Make the docs site match the Tribes 2 control panel (PlayT2-derived dark / mint theme).
+// Layered on top of just-the-docs' built-in `dark` color scheme (set in _config.yml), so
+// code highlighting stays readable while surfaces/accents follow the panel's palette
+// (see panel/ClientApp/src/styles.css).
+
+$t2-bg:       #0a1410; // --bg
+$t2-panel:    #0e1a15; // --panel (sidebar / cards)
+$t2-border:   #1f2f28; // --border
+$t2-text:     #e2e8ee; // --text
+$t2-muted:    #8fb3a6; // --muted
+$t2-accent:   #03e0a3; // --primary
+$t2-accent-2: #05f5b4; // --primary-2
+$t2-code-bg:  #05080c; // console background
+
+$t2-sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+$t2-mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+body {
+  background-color: $t2-bg;
+  color: $t2-text;
+  font-family: $t2-sans;
+}
+
+// ---- chrome -----------------------------------------------------------------
+.side-bar {
+  background-color: $t2-panel;
+  border-right: 1px solid $t2-border;
+}
+.main { background-color: $t2-bg; }
+
+.site-header { border-bottom: 1px solid $t2-border; }
+.site-title,
+.site-title:hover { color: $t2-accent; font-weight: 700; }
+.site-button:hover { background-color: #14241d; }
+
+// search box
+.search-input {
+  background-color: $t2-code-bg;
+  color: $t2-text;
+}
+.search-result-title { color: $t2-text; }
+.search-result-rel-url { color: $t2-muted; }
+
+// ---- navigation -------------------------------------------------------------
+.nav-list .nav-list-item .nav-list-link { color: $t2-text; }
+.nav-list .nav-list-item .nav-list-link:hover { background-color: #14241d; }
+.nav-list .nav-list-item .nav-list-link.active {
+  color: $t2-accent-2;
+  background-color: #102a20;
+  border-left: 3px solid $t2-accent;
+}
+
+// ---- content ----------------------------------------------------------------
+.main-content { color: $t2-text; }
+.main-content h1,
+.main-content h2,
+.main-content h3,
+.main-content h4,
+.main-content h5,
+.main-content h6 { color: #f2f6f4; }
+.main-content h2 {
+  border-bottom: 1px solid $t2-border;
+  padding-bottom: 0.3rem;
+}
+
+.main-content a,
+a { color: $t2-accent; }
+.main-content a:hover,
+a:hover { color: $t2-accent-2; }
+
+// blockquotes -> a left teal rule, like a callout
+.main-content blockquote {
+  border-left: 3px solid $t2-accent;
+  color: $t2-muted;
+}
+
+// ---- code -------------------------------------------------------------------
+// Inline code mirrors the panel: mint text on the near-black console background.
+code,
+.highlighter-rouge {
+  color: $t2-accent-2;
+  background-color: $t2-code-bg;
+  font-family: $t2-mono;
+}
+// Code blocks: keep the dark scheme's syntax token colors, just match the bg.
+div.highlighter-rouge,
+figure.highlight,
+pre.highlight,
+.highlight {
+  background-color: $t2-code-bg !important;
+  border: 1px solid $t2-border;
+}
+div.highlighter-rouge .highlight,
+figure.highlight pre { border: 0; }
+// inside code blocks: base text light, token spans keep the dark scheme's syntax colors
+.highlight code {
+  color: $t2-text;
+  background-color: transparent;
+}
+
+// ---- tables -----------------------------------------------------------------
+.main-content table { border-color: $t2-border; }
+.main-content th {
+  color: $t2-muted;
+  background-color: $t2-panel;
+  border-color: $t2-border;
+}
+.main-content td { border-color: $t2-border; }
+.main-content tbody tr { background-color: transparent; }
+.main-content tbody tr:nth-child(2n) { background-color: $t2-panel; }
+
+// ---- buttons (just-the-docs .btn) ------------------------------------------
+.btn {
+  background-color: #18241e;
+  color: $t2-text;
+  border: 1px solid $t2-border;
+  box-shadow: none;
+}
+.btn:hover { background-color: #1d2c24; }
+.btn-primary {
+  background-color: $t2-accent;
+  color: #04140e;
+  border-color: $t2-accent;
+  font-weight: 600;
+}
+
+// embedded SVG figures stay tidy
+.main-content img { max-width: 100%; height: auto; }
