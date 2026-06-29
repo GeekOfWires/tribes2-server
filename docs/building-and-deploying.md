@@ -103,6 +103,7 @@ The `base` job resolves `content/tribesinstall.7z` in this order:
 If none is available the build fails with a clear error.
 
 ### Repo variables / secrets
+
 | Name | Kind | Purpose |
 |------|------|---------|
 | `GAMEDATA_RELEASE_TAG` | variable | Release tag holding `tribesinstall.7z`. |

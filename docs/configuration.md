@@ -30,6 +30,7 @@ See [Building & deploying](building-and-deploying.md) for how to pass these.
 ## Runtime environment variables
 
 ### Game launch & ruleset
+
 | Var | Default | Purpose |
 |-----|---------|---------|
 | `LAUNCH_PARAMS` | `-online -dedicated` | Base launch parameters. `-online` (or `-nologin`) first, `-dedicated` last. |
@@ -44,6 +45,7 @@ See [Building & deploying](building-and-deploying.md) for how to pass these.
 > env values are the **defaults** offered during first-time setup.
 
 ### Paths (rarely changed)
+
 | Var | Default |
 |-----|---------|
 | `GAME_DIR` | `/opt/wineprefix/drive_c/Dynamix/Tribes2/GameData` |
@@ -55,6 +57,7 @@ See [Building & deploying](building-and-deploying.md) for how to pass these.
 | `WINEDLLOVERRIDES` | *(set in the Dockerfile for the vcrun DLLs)* |
 
 ### Panel: ports, database, root user
+
 | Var | Default | Purpose |
 |-----|---------|---------|
 | `HTTP_PORT` | `8080` | Panel HTTP port (always on; also used for ACME HTTP-01). |

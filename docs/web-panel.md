@@ -75,7 +75,7 @@ All under `/api`. Auth is the login cookie; the policy column is the minimum.
 | `GET /config/` | User | `configured, autoStart, launchParams, defaultLaunchParams, ruleset, defaultRuleset`. |
 | `GET /config/rulesets` | User | Discovered rulesets (GameData folders with `scripts/`). |
 | `POST /config/complete` · `/config/auto-start` · `/config/ruleset` | root | |
-| `GET /config/serverprefs?ruleset=` | root | Resolves `GameData/<base|ruleset>/prefs/serverprefs.cs` (creates the dir). |
+| `GET /config/serverprefs?ruleset=` | root | Resolves <code>GameData/&lt;base&#124;ruleset&gt;/prefs/serverprefs.cs</code> (creates the dir). |
 | `GET/POST /users/...` (`/{id}/role`,`/active`,`/password`,`/developer`, `DELETE /{id}`) | root | |
 | `GET /audit` | Super Admin | |
 | `GET /crashes` | Admin | |
