@@ -9,6 +9,17 @@ role-based access. The panel is **PID 1** and owns the game lifecycle.
 > Torque Game Engine (TGE), which preceded Torque Game Engine Advanced (TGEA), which preceded
 > Torque 3D.
 
+## 📚 Documentation
+
+In-depth guides live in **[`docs/`](docs/README.md)**:
+
+- [Architecture](docs/architecture.md) — how the panel, Wine, the game, and the database fit together.
+- [**Creating a custom mod image**](docs/custom-mod-image.md) — **build your own server image with a custom mod + ruleset** (worked examples).
+- [Rulesets & mods](docs/rulesets-and-mods.md) — how `SERVER_RULESET` / `-mod` works; baking vs uploading.
+- [Web panel & roles](docs/web-panel.md) — every page, the role model, the Developer capability, the API.
+- [Configuration reference](docs/configuration.md) — every env var and build arg.
+- [Building & deploying](docs/building-and-deploying.md) · [Internals: patch & headless](docs/internals.md) · [Database](docs/database.md) · [TLS](docs/tls.md) · [Troubleshooting](docs/troubleshooting.md)
+
 ## What the build does
 
 1. `FROM mcr.microsoft.com/dotnet/aspnet:10.0` — the **ASP.NET Core runtime owns the image**;
