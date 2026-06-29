@@ -122,7 +122,12 @@ COPY content/tribes_dual_patcher.py /opt/patcher/tribes_dual_patcher.py
 RUN python3 /opt/patcher/tribes_dual_patcher.py --exe "${GAME_DIR}/Tribes2.exe" --backup \
  && python3 /opt/patcher/tribes_dual_patcher.py --exe "${GAME_DIR}/Tribes2.exe" --dry-run
 
-# 8. the ASP.NET Core panel (PID 1; owns the game via the GameSupervisor worker)
+# 8. serverprefs.cs build defaults ($Host::Linux = 1;). The helper is baked in so the
+#    derived mod images (FROM this) can reuse it for their own ruleset's prefs/.
+COPY content/set-serverprefs-defaults.sh /usr/local/bin/set-serverprefs-defaults.sh
+RUN sh /usr/local/bin/set-serverprefs-defaults.sh "${GAME_DIR}" base
+
+# 9. the ASP.NET Core panel (PID 1; owns the game via the GameSupervisor worker)
 COPY --from=app-build /app/publish /app/panel
 RUN mkdir -p /data
 WORKDIR /app/panel

@@ -63,6 +63,10 @@ During setup (and via the Files editor) root can edit it; the panel creates the 
 it doesn't exist. This is plain TorqueScript — set `$Host::Name`, `$Host::Password`,
 `$Host::MaxPlayers`, map rotation, etc.
 
+**Build-time default.** Each image seeds its ruleset's `serverprefs.cs` with `$Host::Linux = 1;`
+(base seeds `base/prefs`, the Classic/Construction images seed theirs too) via the baked helper
+`/usr/local/bin/set-serverprefs-defaults.sh`. Your edits are layered on top of that default.
+
 ## Two ways to add a ruleset
 
 ### A) Bake it into a derived image (recommended for distribution)

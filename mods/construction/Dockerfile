@@ -7,8 +7,8 @@
 # top-level "Construction/" folder; extracting it into GameData yields
 # GameData/Construction (matching `-mod Construction`).
 #
-# RAR extraction needs the full 7-Zip port (`7zz` from the `7zip` package);
-# the base image's p7zip-full lacks the RAR codec.
+# RAR self-extractors need a full RAR decoder; the base 7-Zip's RAR support is incomplete
+# for this archive ("Unsupported Method"), so we use `unar` (free) for the build layer.
 #
 # Sets SERVER_RULESET=Construction so the panel/supervisor launches with
 # -mod Construction (override via the SERVER_RULESET env or the panel setup screen).
@@ -18,11 +18,14 @@ FROM ${BASE_IMAGE}
 
 COPY content/Construction_v0.70a.exe /tmp/construction.exe
 RUN apt-get update \
- && apt-get install -y --no-install-recommends 7zip \
+ && apt-get install -y --no-install-recommends unar \
  && rm -rf /var/lib/apt/lists/* \
- && 7zz x -y /tmp/construction.exe -o"${GAME_DIR}" \
+ && unar -q -f -o "${GAME_DIR}" /tmp/construction.exe \
  && rm -f /tmp/construction.exe \
- && apt-get purge -y 7zip && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* \
+ && apt-get purge -y unar && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* \
  && test -d "${GAME_DIR}/Construction/scripts"
+
+# serverprefs.cs build defaults for the Construction prefs/ (helper baked into the base image)
+RUN sh /usr/local/bin/set-serverprefs-defaults.sh "${GAME_DIR}" Construction
 
 ENV SERVER_RULESET="Construction"

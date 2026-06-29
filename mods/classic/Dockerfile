@@ -49,4 +49,7 @@ RUN apt-get update \
  && apt-get purge -y git && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* \
  && ls "${GAME_DIR}/base/"*.vl2 >/dev/null
 
+# serverprefs.cs build defaults for the Classic prefs/ (helper baked into the base image)
+RUN sh /usr/local/bin/set-serverprefs-defaults.sh "${GAME_DIR}" Classic
+
 ENV SERVER_RULESET="Classic"

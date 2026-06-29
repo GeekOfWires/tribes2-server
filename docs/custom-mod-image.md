@@ -152,6 +152,13 @@ COPY mymod-serverprefs.cs "${GAME_DIR}/MyMod/prefs/serverprefs.cs"
 …or leave it out and let root edit it in the panel during first-time setup (the panel creates
 the `prefs/` dir automatically). See [Rulesets & mods → serverprefs](rulesets-and-mods.md#serverprefscs).
 
+The base image bakes a helper that seeds the `$Host::Linux = 1;` default into a ruleset's
+`serverprefs.cs` (creating `prefs/` if needed). Reuse it for your mod:
+
+```dockerfile
+RUN sh /usr/local/bin/set-serverprefs-defaults.sh "${GAME_DIR}" MyMod
+```
+
 ## Step 3 — verify the image
 
 ```bash
