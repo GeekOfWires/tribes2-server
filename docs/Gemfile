@@ -5,6 +5,7 @@
 #   bundle install
 #   bundle exec jekyll serve --config _config.yml,_config_dev.yml --livereload
 #   -> http://127.0.0.1:4000/   (the dev config drops the /tribes2-server baseurl)
+# Windows shortcut (finds Ruby, installs gems, serves):  powershell -File docs\serve.ps1
 source "https://rubygems.org"
 
 gem "jekyll", "~> 4.3"
