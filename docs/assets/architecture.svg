@@ -1,0 +1,71 @@
+<svg viewBox="0 0 760 472" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t d">
+  <title id="t">Architecture overview</title>
+  <desc id="d">A web browser talks over HTTP/HTTPS to the ASP.NET Core panel (API/SSE/WebSocket, React SPA, EF Core SQLite, and the GameSupervisor worker), which runs as PID 1 in the container. The supervisor spawns and monitors the game process tree under Wine — a Python PTY bridge, wine, and Tribes2.exe — exchanging console output and commands over a pseudo-terminal. The game serves players on UDP 28000.</desc>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M2 1 L8 5 L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="760" height="472" rx="16" fill="#0a1410"/>
+
+  <g font-family="ui-sans-serif, 'Segoe UI', Roboto, sans-serif" fill="#e2e8ee">
+    <rect x="300" y="28" width="160" height="44" rx="8" fill="#16291f" stroke="#283d31"/>
+    <text x="380" y="55" text-anchor="middle" font-size="14">Web browser</text>
+
+    <rect x="36" y="92" width="688" height="344" rx="12" fill="#0e1a15" stroke="#03e0a3" stroke-opacity=".5" stroke-width="1.5"/>
+    <text x="52" y="113" font-size="12" fill="#8fb3a6">Container — the panel runs as PID 1</text>
+
+    <line x1="380" y1="72" x2="380" y2="149" stroke="#4a6b5e" stroke-width="1.6" marker-end="url(#ah)"/>
+    <text x="392" y="120" font-size="12" fill="#8fb3a6">HTTP / HTTPS · :8080 / :8443</text>
+
+    <rect x="56" y="150" width="648" height="116" rx="10" fill="#102019" stroke="#03e0a3" stroke-opacity=".55" stroke-width="1.5"/>
+    <text x="72" y="173" font-size="14" font-weight="500" fill="#05e0a3">ASP.NET Core 10 panel · Kestrel</text>
+
+    <g text-anchor="middle">
+      <rect x="72"  y="186" width="150" height="62" rx="7" fill="#16291f" stroke="#283d31"/>
+      <text x="147" y="214" font-size="13">API · SSE · WS</text>
+      <text x="147" y="233" font-size="11" fill="#8fb3a6">/api/*</text>
+
+      <rect x="232" y="186" width="150" height="62" rx="7" fill="#16291f" stroke="#283d31"/>
+      <text x="307" y="214" font-size="13">React SPA</text>
+      <text x="307" y="233" font-size="11" fill="#8fb3a6">wwwroot</text>
+
+      <rect x="392" y="186" width="150" height="62" rx="7" fill="#16291f" stroke="#283d31"/>
+      <text x="467" y="214" font-size="13">EF Core</text>
+      <text x="467" y="233" font-size="11" fill="#8fb3a6">SQLite · /data</text>
+
+      <rect x="552" y="186" width="150" height="62" rx="7" fill="#16291f" stroke="#283d31"/>
+      <text x="627" y="214" font-size="13">GameSupervisor</text>
+      <text x="627" y="233" font-size="11" fill="#8fb3a6">worker service</text>
+    </g>
+
+    <line x1="627" y1="266" x2="627" y2="321" stroke="#4a6b5e" stroke-width="1.6" marker-end="url(#ah)"/>
+    <text x="613" y="298" text-anchor="end" font-size="12" fill="#8fb3a6">spawns + monitors</text>
+
+    <line x1="307" y1="321" x2="307" y2="266" stroke="#03e0a3" stroke-opacity=".7" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ah)" marker-start="url(#ah)"/>
+    <text x="321" y="298" font-size="12" fill="#8fb3a6">PTY · console + commands</text>
+
+    <rect x="56" y="322" width="648" height="98" rx="10" fill="#0c1813" stroke="#283d31" stroke-width="1.2" stroke-dasharray="6 4"/>
+    <text x="72" y="343" font-size="12" fill="#8fb3a6">Game process tree (under Wine)</text>
+
+    <g text-anchor="middle">
+      <rect x="72"  y="352" width="190" height="46" rx="7" fill="#16291f" stroke="#283d31"/>
+      <text x="167" y="380" font-size="13">python3 — PTY bridge</text>
+
+      <line x1="262" y1="375" x2="291" y2="375" stroke="#4a6b5e" stroke-width="1.6" marker-end="url(#ah)"/>
+
+      <rect x="292" y="352" width="70" height="46" rx="7" fill="#16291f" stroke="#283d31"/>
+      <text x="327" y="380" font-size="13">wine</text>
+
+      <line x1="362" y1="375" x2="391" y2="375" stroke="#4a6b5e" stroke-width="1.6" marker-end="url(#ah)"/>
+
+      <rect x="392" y="352" width="300" height="46" rx="7" fill="#16291f" stroke="#283d31"/>
+      <text x="542" y="373" font-size="13">Tribes2.exe</text>
+      <text x="542" y="390" font-size="11" fill="#8fb3a6">-online [-mod X] -dedicated</text>
+    </g>
+
+    <line x1="542" y1="420" x2="542" y2="454" stroke="#4a6b5e" stroke-width="1.6" marker-end="url(#ah)"/>
+    <text x="556" y="446" font-size="12" fill="#8fb3a6">UDP :28000 — game traffic</text>
+  </g>
+</svg>

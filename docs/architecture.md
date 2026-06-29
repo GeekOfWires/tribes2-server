@@ -11,24 +11,7 @@ owns the whole thing.
 
 ## The big picture
 
-```
- ┌──────────────────────────── container (PID 1 = the panel) ───────────────────────────┐
- │                                                                                        │
- │   ASP.NET Core 10 panel  (Kestrel: :8080 HTTP, :8443 HTTPS)                            │
- │   ├─ Minimal API endpoints  (/api/...)            ── REST + SSE + WebSocket            │
- │   ├─ React SPA  (served from wwwroot)             ── the browser UI                    │
- │   ├─ EF Core + SQLite  (/data/panel.db)           ── users, audit, crashes, file edits │
- │   └─ GameSupervisor : BackgroundService  ─────────── owns the game lifecycle           │
- │            │                                                                            │
- │            │ spawns + monitors                                                          │
- │            ▼                                                                            │
- │     python3 (PTY bridge)  ──>  wine  ──>  Tribes2.exe -online [-mod X] -dedicated       │
- │            ▲                                   │                                        │
- │            └── console feed (stdout) / commands (stdin) ── on a pseudo-terminal        │
- │                                                                                        │
- └────────────────────────────────────────────────────────────────────────────────────┘
-            :28000/udp  ← game traffic
-```
+![Architecture: the panel (PID 1) owns the game under Wine via a PTY bridge](assets/architecture.svg)
 
 ## Why the panel owns the game (not the other way around)
 
