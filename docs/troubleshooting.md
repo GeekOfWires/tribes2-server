@@ -1,3 +1,8 @@
+---
+title: Troubleshooting
+nav_order: 11
+---
+
 # Troubleshooting
 
 ## The panel is up but the game won't start

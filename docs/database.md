@@ -1,3 +1,8 @@
+---
+title: Database
+nav_order: 9
+---
+
 # Database
 
 The panel stores its state in a single **SQLite-format file** at `PANEL_DB_PATH`
@@ -32,7 +37,7 @@ ASP.NET Core Identity owns the `AspNet*` tables (users, roles, claims, …). The
 ## How schema is created & migrated
 
 There are no EF migration files; schema is applied at startup by
-[`Bootstrap.cs`](../panel/Bootstrap.cs):
+[`Bootstrap.cs`](https://github.com/GeekOfWires/tribes2-server/blob/main/panel/Bootstrap.cs):
 
 1. `EnsureCreatedAsync()` creates the schema on a fresh database.
 2. Because `EnsureCreated` won't alter a **pre-existing** database volume, Bootstrap also runs

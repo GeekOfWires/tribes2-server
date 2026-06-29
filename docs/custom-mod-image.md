@@ -1,8 +1,13 @@
+---
+title: Creating a custom mod image
+nav_order: 6
+---
+
 # Creating a custom mod image
 
 This is the end-to-end guide to building **your own server image with a custom mod and ruleset**,
 deriving from `tribes2-server:base`. It mirrors how the bundled
-[Classic](../mods/classic/Dockerfile) and [Construction](../mods/construction/Dockerfile) images
+[Classic](https://github.com/GeekOfWires/tribes2-server/blob/main/mods/classic/Dockerfile) and [Construction](https://github.com/GeekOfWires/tribes2-server/blob/main/mods/construction/Dockerfile) images
 are built, then generalizes it.
 
 > Just want to try a mod on a running server without building an image? Use the runtime upload
@@ -124,7 +129,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends 7zip \
 ENV SERVER_RULESET="MyMod"
 ```
 
-(This is exactly what the [Construction image](../mods/construction/Dockerfile) does.)
+(This is exactly what the [Construction image](https://github.com/GeekOfWires/tribes2-server/blob/main/mods/construction/Dockerfile) does.)
 
 ### Adding maps
 
@@ -167,7 +172,7 @@ folder containing `scripts/`).
 ## Step 4 — wire it into Docker Compose (optional)
 
 Add a service mirroring the Classic/Construction ones in
-[`docker-compose.yml`](../docker-compose.yml):
+[`docker-compose.yml`](https://github.com/GeekOfWires/tribes2-server/blob/main/docker-compose.yml):
 
 ```yaml
   t2-mymod:
@@ -202,7 +207,7 @@ docker compose --profile mymod up -d t2-mymod
 ## Step 5 — wire it into CI (optional)
 
 The GitHub Actions workflow builds the base, then a matrix of mod images. To publish your image
-to GHCR, add it to the matrix in [`.github/workflows/build.yml`](../.github/workflows/build.yml)
+to GHCR, add it to the matrix in [`.github/workflows/build.yml`](https://github.com/GeekOfWires/tribes2-server/blob/main/.github/workflows/build.yml)
 (see [Building & deploying](building-and-deploying.md#github-actions--ghcr)).
 
 ## Gotchas
@@ -223,6 +228,6 @@ to GHCR, add it to the matrix in [`.github/workflows/build.yml`](../.github/work
 
 ## See also
 - [Rulesets & mods](rulesets-and-mods.md) · [Building & deploying](building-and-deploying.md)
-- Reference images: [mods/classic/Dockerfile](../mods/classic/Dockerfile) ·
-  [mods/construction/Dockerfile](../mods/construction/Dockerfile)
+- Reference images: [mods/classic/Dockerfile](https://github.com/GeekOfWires/tribes2-server/blob/main/mods/classic/Dockerfile) ·
+  [mods/construction/Dockerfile](https://github.com/GeekOfWires/tribes2-server/blob/main/mods/construction/Dockerfile)
 - Back to [docs index](README.md)

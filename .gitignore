@@ -9,6 +9,12 @@
 __pycache__/
 *.pyc
 
+# --- docs site (Jekyll) build artifacts ---
+docs/_site/
+docs/.jekyll-cache/
+docs/Gemfile.lock
+docs/vendor/
+
 # --- reference client installs (excluded) ---
 tribes2-unpatched-install-reference/
 tribes2-patched-install-reference/

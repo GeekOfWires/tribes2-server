@@ -1,8 +1,13 @@
+---
+title: Configuration reference
+nav_order: 3
+---
+
 # Configuration reference
 
 Everything is configured through **environment variables** (read directly by the panel and the
 supervisor) and a few **build args** (baked at image build time). With Docker Compose, copy
-[`.env.example`](../.env.example) to `.env` and edit.
+[`.env.example`](https://github.com/GeekOfWires/tribes2-server/blob/main/.env.example) to `.env` and edit.
 
 ## Build args (image build time)
 
@@ -10,10 +15,13 @@ supervisor) and a few **build args** (baked at image build time). With Docker Co
 |-----|---------|---------|
 | `PATCH_URL` | the community QoL patch URL | NSIS installer `.exe`; its payload is 7z-extracted over `GameData`. |
 | `PATCH_SHA256` | *(empty)* | If set, the downloaded patch is checksum-verified. |
-| `VCRUN22_URL` | `https://files.playt2.com/Linux/Server/vcrun22.zip` | Modern VC++ 2022 runtime DLLs dropped into the Wine `system32`. |
 | `WINE_BRANCH` | `stable` | WineHQ branch (`stable`/`staging`/`devel`). |
 | `WINE_VERSION` | `10.0.0.0` | Pinned Wine version (Wine 11 regresses the mission-start path). Blank = latest for the branch. |
 | `BASE_IMAGE` | `tribes2-server:base` | *(mod images only)* the base image to derive from. |
+
+The modern VC++ 2022 runtime is **not** a build arg — it's vendored in
+[`content/vcrun22.zip`](https://github.com/GeekOfWires/tribes2-server/blob/main/content/vcrun22.zip) and bind-mounted at build time (no network
+fetch). Replace that file to change the runtime set.
 
 See [Building & deploying](building-and-deploying.md) for how to pass these.
 

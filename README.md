@@ -11,7 +11,13 @@ role-based access. The panel is **PID 1** and owns the game lifecycle.
 
 ## 📚 Documentation
 
-In-depth guides live in **[`docs/`](docs/README.md)**:
+Published as a site at **<https://geekofwires.github.io/tribes2-server/>** (built from
+[`docs/`](docs/README.md) by [`.github/workflows/pages.yml`](.github/workflows/pages.yml)).
+
+> One-time setup to turn the site on: repo **Settings → Pages → Build and deployment →
+> Source = "GitHub Actions"**. The workflow then deploys on every push that touches `docs/`.
+
+In-depth guides:
 
 - [Architecture](docs/architecture.md) — how the panel, Wine, the game, and the database fit together.
 - [**Creating a custom mod image**](docs/custom-mod-image.md) — **build your own server image with a custom mod + ruleset** (worked examples).
@@ -262,8 +268,9 @@ default 8443). Pick at most one cert source via env (see `.env.example`):
 - **Root seeding**: `ROOT_PASSWORD` (plaintext) is used once on first boot to create the root
   user (hashed by Identity). Change it in the panel afterward.
 - **Game UDP ports** for your mod (default exposes 28000/udp).
-- **`vcrun22` source**: the modern VC++ runtime DLLs come from `VCRUN22_URL`
-  (default `files.playt2.com/.../vcrun22.zip`); host your own copy if you prefer.
+- **`vcrun22`**: the modern VC++ 2022 runtime DLLs are **vendored** in
+  [`content/vcrun22.zip`](content/vcrun22.zip) (originally from `files.playt2.com`) and bind-mounted
+  at build time — no network fetch. Replace that file to use a different runtime set.
 - **CPU pinning**: set `GAME_CPU_AFFINITY` (e.g. `0`) to `taskset` the single-threaded server
   onto one core.
 - **Auth/master**: `-online` registers with the Tribes 2 master; use `-nologin` to host

@@ -1,0 +1,37 @@
+# GitHub Pages config for the docs site, served at
+#   https://geekofwires.github.io/tribes2-server/
+title: Tribes 2 Dedicated Server
+description: Tribes 2 dedicated server container + ASP.NET Core control panel — documentation.
+
+# Project-site URL (repo: github.com/GeekOfWires/tribes2-server)
+url: https://geekofwires.github.io
+baseurl: /tribes2-server
+
+# Theme: just-the-docs (sidebar nav + search). Built via Bundler in the Pages workflow.
+theme: just-the-docs
+
+search_enabled: true
+heading_anchors: true
+
+aux_links:
+  "GitHub repository":
+    - "https://github.com/GeekOfWires/tribes2-server"
+aux_links_new_tab: true
+
+# Turn relative .md links into rendered links, and use README.md as the index of /.
+plugins:
+  - jekyll-relative-links
+  - jekyll-readme-index
+  - jekyll-seo-tag
+relative_links:
+  enabled: true
+  collections: false
+readme_index:
+  enabled: true
+  remove_originals: true
+
+# Don't let Jekyll try to process build scaffolding.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor

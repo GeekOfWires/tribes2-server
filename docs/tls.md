@@ -1,8 +1,13 @@
+---
+title: TLS
+nav_order: 10
+---
+
 # TLS
 
 The panel always serves **HTTP** on `HTTP_PORT` (8080). HTTPS on `HTTPS_PORT` (8443) is bound
 **only** when you enable one of the two modes below. With neither, terminate TLS at your own
-reverse proxy. See [`Tls/TlsConfigurator.cs`](../panel/Tls/TlsConfigurator.cs).
+reverse proxy. See [`Tls/TlsConfigurator.cs`](https://github.com/GeekOfWires/tribes2-server/blob/main/panel/Tls/TlsConfigurator.cs).
 
 ## Mode 1 — self-signed
 

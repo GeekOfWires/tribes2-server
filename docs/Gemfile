@@ -1,0 +1,14 @@
+# Used by the GitHub Pages workflow (.github/workflows/pages.yml) to build the docs site.
+# Jekyll 4 + just-the-docs, with the relative-links / readme-index plugins.
+source "https://rubygems.org"
+
+gem "jekyll", "~> 4.3"
+gem "just-the-docs", "~> 0.10"
+gem "jekyll-relative-links"
+gem "jekyll-readme-index"
+gem "jekyll-seo-tag"
+
+# Needed by Jekyll on Ruby 3.4+ (these left the default gems).
+gem "csv"
+gem "base64"
+gem "logger"

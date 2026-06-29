@@ -1,3 +1,8 @@
+---
+title: Building & deploying
+nav_order: 7
+---
+
 # Building & deploying
 
 ## Game data is not in the repo
@@ -42,7 +47,7 @@ Open `http://localhost:8080`, log in as `root`, complete first-time setup.
 
 ## Docker Compose
 
-[`docker-compose.yml`](../docker-compose.yml) defines three services that share a common env
+[`docker-compose.yml`](https://github.com/GeekOfWires/tribes2-server/blob/main/docker-compose.yml) defines three services that share a common env
 anchor: `t2-base` (default) and `t2-classic` / `t2-construction` (behind profiles).
 
 ```bash
@@ -62,7 +67,7 @@ To add your own mod service, see
 
 ## GitHub Actions / GHCR
 
-[`.github/workflows/build.yml`](../.github/workflows/build.yml) builds and pushes to **GHCR** on
+[`.github/workflows/build.yml`](https://github.com/GeekOfWires/tribes2-server/blob/main/.github/workflows/build.yml) builds and pushes to **GHCR** on
 push to `main`, on `v*` tags, or manually (`workflow_dispatch`):
 
 - Job **`base`** builds `Dockerfile` → `ghcr.io/<owner>/<repo>/base:{sha,latest}`.

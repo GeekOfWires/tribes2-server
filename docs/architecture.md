@@ -1,3 +1,8 @@
+---
+title: Architecture
+nav_order: 2
+---
+
 # Architecture
 
 This image runs a **Tribes 2 (2002, Dynamix "V12"/Torque-lineage engine) dedicated server**

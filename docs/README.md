@@ -1,3 +1,8 @@
+---
+title: Home
+nav_order: 1
+---
+
 # Tribes 2 Dedicated Server — Documentation
 
 This folder documents the Tribes 2 dedicated-server container and its ASP.NET Core
@@ -37,4 +42,4 @@ people come here for — **how to build your own mod image with a custom ruleset
   runtime, then point `SERVER_RULESET`/the panel at it. See
   [Creating a custom mod image](custom-mod-image.md).
 
-The top-level [README](../README.md) has the quick start; these docs go deeper.
+The top-level [README](https://github.com/GeekOfWires/tribes2-server/blob/main/README.md) has the quick start; these docs go deeper.

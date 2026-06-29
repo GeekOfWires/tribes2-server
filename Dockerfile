@@ -36,7 +36,6 @@ USER root
 
 ARG PATCH_URL="https://www.tribesnext.com/files/TribesNEXT_20250922_preview.exe"
 ARG PATCH_SHA256=""
-ARG VCRUN22_URL="https://files.playt2.com/Linux/Server/vcrun22.zip"
 ARG WINE_BRANCH=stable
 # Pinned to Wine 10 (the Tribes 2-on-Wine community's proven version); Wine 11
 # regresses the T2 mission-start path. Blank = latest for the branch.
@@ -80,12 +79,14 @@ RUN wineboot --init && wineserver -w
 
 # 4. NEWER Windows APIs the QoL patch needs: real VC++ 2022 runtime DLLs into system32.
 #    (OLDER VC++6 comes from the game's bundled MSVCRT.dll + Tribes2.exe.local.)
-RUN wget -O /tmp/vcrun22.zip "${VCRUN22_URL}" \
- && mkdir -p /tmp/vcr && 7z x -y /tmp/vcrun22.zip -o/tmp/vcr >/dev/null \
+#    vcrun22.zip is vendored in content/ (originally from files.playt2.com) and bind-mounted
+#    so the archive never becomes an image layer.
+RUN --mount=type=bind,source=content/vcrun22.zip,target=/tmp/vcrun22.zip \
+    mkdir -p /tmp/vcr && 7z x -y /tmp/vcrun22.zip -o/tmp/vcr >/dev/null \
  && for f in /tmp/vcr/dlls/*.dll_x86; do \
         cp -f "$f" "${WINEPREFIX}/drive_c/windows/system32/$(basename "$f" .dll_x86).dll"; \
     done \
- && rm -rf /tmp/vcrun22.zip /tmp/vcr \
+ && rm -rf /tmp/vcr \
  && test -f "${WINEPREFIX}/drive_c/windows/system32/vcruntime140.dll"
 
 # 5. extract the game; 7z root is GameData/, so extract into the parent (bind-mounted,

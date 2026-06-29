@@ -1,3 +1,8 @@
+---
+title: Rulesets & mods
+nav_order: 5
+---
+
 # Rulesets & mods
 
 A **mod** (a.k.a. **ruleset**) in Tribes 2 is a top-level folder inside `GameData` — e.g.

@@ -1,3 +1,8 @@
+---
+title: Web panel & roles
+nav_order: 4
+---
+
 # Web panel & roles
 
 The panel is a React SPA served by the ASP.NET Core host. Authentication is cookie-based
