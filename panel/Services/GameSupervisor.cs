@@ -1,22 +1,26 @@
 using System.Diagnostics;
-using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using TribesServerPanel.Data;
 
 namespace TribesServerPanel.Services;
 
 /// <summary>
-/// Owns the Tribes 2 (Dynamix V12 engine) dedicated server process under Wine.
-/// Runs as a hosted Worker Service: captures stdout into the ConsoleHub, injects
-/// the telnet remote-console bootstrap, and drives the lifecycle. The web panel is
-/// PID 1, so this is where "the panel manages the container lifecycle" lives.
+/// Owns the Tribes 2 (Dynamix V12 engine) dedicated server under Wine, as a hosted
+/// Worker Service. The panel is PID 1, so this is where it "manages the server".
+///
+/// The game is a console app (PE patched GUI->CUI). It is launched on a PTY via a
+/// tiny embedded Python bridge so the engine's ReadConsoleInput-based console works
+/// head-less (no xvfb, no telnet): the supervisor reads the console feed from the
+/// bridge's stdout and sends commands (incl. quit();) to the bridge's stdin, which
+/// forwards them to the game's console input. The bridge strips terminal escapes.
 ///
 /// Role-driven actions (enforced at the endpoint layer):
-///   Admin       -> RestartAsync       (graceful quit(); then relaunch)
+///   Admin       -> RestartAsync       (quit(); then relaunch)
 ///   SuperAdmin  -> ForceRestartAsync  (kill the wine tree; relaunch)  [emergency]
-///   SuperAdmin  -> StopAsync          (graceful quit(); stay down)
+///   SuperAdmin  -> StopAsync          (quit(); stay down)
 ///   SuperAdmin  -> SendCommandAsync   (arbitrary console command)
 ///   Admin       -> StartAsync         (start if stopped)
+/// First-run config + AutoStart gate whether the game runs (see LoadSettingsAsync).
 /// Crashes auto-restart internally so the panel stays available.
 /// </summary>
 public sealed class GameSupervisor : BackgroundService
@@ -26,19 +30,16 @@ public sealed class GameSupervisor : BackgroundService
     private readonly IServiceScopeFactory _scopes;
 
     private readonly string _gameDir, _winePrefix, _wineBin, _exePathWin, _launchParams;
-    private readonly int _telnetPort, _graceSeconds, _restartBackoff;
-    private readonly string _consolePass, _listenPass;
+    private readonly int _graceSeconds, _restartBackoff;
     private readonly bool _restartOnCrash;
+    private string _bridgePath = "";
 
-    private readonly TelnetCommander _telnet;
     private readonly object _sync = new();
+    private readonly SemaphoreSlim _stdinGate = new(1, 1);
 
-    // Until root completes first-time setup the game does not run; AutoStart governs
-    // whether it launches automatically on host startup. Both come from the DB.
     private volatile bool _configured;
     private volatile string? _launchOverride;
-
-    private volatile string _desired = "stop";   // run | stop (set from settings at startup)
+    private volatile string _desired = "stop";   // run | stop
     private volatile string _state = "init";     // init|unconfigured|starting|running|stopped|crashed|error
     private Process? _proc;
     private int _restarts;
@@ -52,51 +53,54 @@ public sealed class GameSupervisor : BackgroundService
         _wineBin = cfg["WINE_BIN"] ?? "wine";
         _exePathWin = cfg["EXE_PATH_WIN"] ?? @"C:\Dynamix\Tribes2\GameData\Tribes2.exe";
         _launchParams = cfg["LAUNCH_PARAMS"] ?? "-online -dedicated";
-        _telnetPort = cfg.GetValue("TELNET_PORT", 23000);
         _graceSeconds = cfg.GetValue("GRACE_SECONDS", 20);
         _restartBackoff = cfg.GetValue("RESTART_BACKOFF", 5);
         _restartOnCrash = cfg.GetValue("RESTART_ON_CRASH", true);
-        _consolePass = Nonempty(cfg["TELNET_CONSOLE_PASS"]) ?? RandomHex();
-        _listenPass = Nonempty(cfg["TELNET_LISTEN_PASS"]) ?? RandomHex();
-        _telnet = new TelnetCommander("127.0.0.1", _telnetPort, _consolePass);
     }
 
     private static string? Nonempty(string? s) => string.IsNullOrWhiteSpace(s) ? null : s;
-    private static string RandomHex() => Convert.ToHexString(RandomNumberGenerator.GetBytes(16));
 
-    // ---- public lifecycle API ---------------------------------------------
+    // ---- public lifecycle API ----------------------------------------------
     public Task StartAsync() { _desired = "run"; return Task.CompletedTask; }
 
     public async Task RestartAsync()
     {
         _desired = "run";
-        await GracefulQuitAsync(); // monitor loop relaunches because desired==run
+        await GracefulQuitAsync();   // monitor loop relaunches (desired==run)
     }
 
     public Task ForceRestartAsync()
     {
         _desired = "run";
-        KillTree();                // monitor loop relaunches
+        KillTree();                  // monitor loop relaunches
         return Task.CompletedTask;
     }
 
     public async Task StopAsync()
     {
         _desired = "stop";
-        await GracefulQuitAsync();  // stays down
+        await GracefulQuitAsync();   // stays down
     }
 
-    public async Task<bool> SendCommandAsync(string cmd)
-    {
-        var ok = await _telnet.SendAsync(cmd);
-        _hub.Publish($"[panel] >>> {cmd}" + (ok ? "" : "  (SEND FAILED)"));
-        return ok;
-    }
-
-    // Applied by the config endpoints after persisting to the DB.
     public void MarkConfigured() => _configured = true;
     public void SetLaunchParams(string? p) => _launchOverride = Nonempty(p);
     private string EffectiveLaunchParams => Nonempty(_launchOverride) ?? _launchParams;
+
+    /// <summary>Send a console command to the game over its stdin (PTY).</summary>
+    public async Task<bool> SendCommandAsync(string cmd)
+    {
+        var p = _proc;
+        var ok = false;
+        if (p is { HasExited: false })
+        {
+            await _stdinGate.WaitAsync();
+            try { await p.StandardInput.WriteAsync(cmd.TrimEnd('\r', '\n') + "\n"); await p.StandardInput.FlushAsync(); ok = true; }
+            catch (Exception ex) { _log.LogWarning(ex, "stdin write failed"); }
+            finally { _stdinGate.Release(); }
+        }
+        _hub.Publish($"[panel] >>> {cmd}" + (ok ? "" : "  (SEND FAILED)"));
+        return ok;
+    }
 
     public object Status()
     {
@@ -110,7 +114,7 @@ public sealed class GameSupervisor : BackgroundService
             running,
             pid = running ? p!.Id : (int?)null,
             @params = EffectiveLaunchParams,
-            telnetConnected = _telnet.IsConnected,
+            commandsReady = running,   // stdin command channel available while running
             restarts = _restarts,
             lastExit = _lastExit,
         };
@@ -119,8 +123,8 @@ public sealed class GameSupervisor : BackgroundService
     // ---- worker loop -------------------------------------------------------
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        await LoadSettingsAsync();   // gate auto-start on first-run config + AutoStart flag
-        RenderAutoexec();
+        _bridgePath = await WriteBridgeAsync();
+        await LoadSettingsAsync();   // gate auto-start on first-run config + AutoStart
         while (!stoppingToken.IsCancellationRequested)
         {
             try
@@ -131,7 +135,6 @@ public sealed class GameSupervisor : BackgroundService
                     if (p is { HasExited: true })
                     {
                         _lastExit = SafeExitCode(p);
-                        _telnet.Reset();
                         lock (_sync) _proc = null;
                         if (!_restartOnCrash)
                         {
@@ -145,7 +148,6 @@ public sealed class GameSupervisor : BackgroundService
                         await Task.Delay(TimeSpan.FromSeconds(_restartBackoff), stoppingToken);
                         if (stoppingToken.IsCancellationRequested || _desired != "run") continue;
                     }
-
                     _state = "starting";
                     if (!TrySpawn())
                     {
@@ -157,12 +159,10 @@ public sealed class GameSupervisor : BackgroundService
                 {
                     _state = "stopped";
                     lock (_sync) _proc = null;
-                    _telnet.Reset();
                 }
             }
             catch (OperationCanceledException) { break; }
             catch (Exception ex) { _log.LogError(ex, "supervisor loop error"); }
-
             await Task.Delay(500, stoppingToken);
         }
     }
@@ -181,24 +181,23 @@ public sealed class GameSupervisor : BackgroundService
         {
             var psi = new ProcessStartInfo
             {
+                FileName = "python3",
                 WorkingDirectory = _gameDir,
+                RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
             };
-            // Optional CPU pinning: the single-threaded T2 server can peg a core.
+            // python bridge runs the game on a PTY: python3 bridge.py [taskset -c N] wine EXE params...
+            psi.ArgumentList.Add(_bridgePath);
             var affinity = Environment.GetEnvironmentVariable("GAME_CPU_AFFINITY");
             if (!string.IsNullOrWhiteSpace(affinity))
             {
-                psi.FileName = "taskset";
+                psi.ArgumentList.Add("taskset");
                 psi.ArgumentList.Add("-c");
                 psi.ArgumentList.Add(affinity);
-                psi.ArgumentList.Add(_wineBin);
             }
-            else
-            {
-                psi.FileName = _wineBin;
-            }
+            psi.ArgumentList.Add(_wineBin);
             psi.ArgumentList.Add(_exePathWin);
             foreach (var a in EffectiveLaunchParams.Split(' ', StringSplitOptions.RemoveEmptyEntries))
                 psi.ArgumentList.Add(a);
@@ -219,7 +218,7 @@ public sealed class GameSupervisor : BackgroundService
         }
         catch (Exception ex)
         {
-            _log.LogError(ex, "failed to launch game (is wine present?)");
+            _log.LogError(ex, "failed to launch game");
             _hub.Publish($"[panel] failed to launch game: {ex.Message}");
             return false;
         }
@@ -263,43 +262,66 @@ public sealed class GameSupervisor : BackgroundService
             _launchOverride = Nonempty(s?.LaunchParams);
             if (_configured && (s?.AutoStart ?? false))
             {
-                _desired = "run";
-                _state = "starting";
+                _desired = "run"; _state = "starting";
                 _log.LogInformation("Configured + AutoStart: launching game on startup.");
             }
             else
             {
-                _desired = "stop";
-                _state = _configured ? "stopped" : "unconfigured";
+                _desired = "stop"; _state = _configured ? "stopped" : "unconfigured";
                 _log.LogInformation("Not auto-starting (configured={C}, autoStart={A}).", _configured, s?.AutoStart ?? false);
             }
         }
         catch (Exception ex)
         {
             _log.LogError(ex, "failed to read server settings; staying stopped");
-            _desired = "stop";
-            _state = "unconfigured";
+            _desired = "stop"; _state = "unconfigured";
         }
     }
 
-    private void RenderAutoexec()
+    // Python PTY bridge: runs the game on a real TTY (headless), strips terminal
+    // escapes, and bridges the game's console I/O to our stdin/stdout pipes.
+    private const string BridgeScript = """
+        import os, pty, select, sys, termios, fcntl, signal, re
+        argv = sys.argv[1:]
+        master, slave = os.openpty()
+        a = termios.tcgetattr(slave); a[3] &= ~termios.ECHO
+        termios.tcsetattr(slave, termios.TCSANOW, a)
+        pid = os.fork()
+        if pid == 0:
+            os.setsid()
+            for fd in (0, 1, 2): os.dup2(slave, fd)
+            if master > 2: os.close(master)
+            try: fcntl.ioctl(0, termios.TIOCSCTTY, 0)
+            except Exception: pass
+            os.execvp(argv[0], argv); os._exit(127)
+        os.close(slave)
+        ansi = re.compile(rb'\x1b\[[0-9;?]*[ -/]*[@-~]|\x1b[@-Z\\-_]|[\r\x07]')
+        fl = fcntl.fcntl(0, fcntl.F_GETFL); fcntl.fcntl(0, fcntl.F_SETFL, fl | os.O_NONBLOCK)
+        out = sys.stdout.buffer
+        while True:
+            try: r, _, _ = select.select([master, 0], [], [], 1)
+            except (OSError, InterruptedError): r = []
+            if master in r:
+                try: data = os.read(master, 8192)
+                except OSError: data = b''
+                if not data: break
+                out.write(ansi.sub(b'', data)); out.flush()
+            if 0 in r:
+                try: data = os.read(0, 4096)
+                except OSError: data = b''
+                if data:
+                    try: os.write(master, data)
+                    except OSError: pass
+            if os.waitpid(pid, os.WNOHANG)[0] == pid: break
+        try: os.kill(pid, signal.SIGKILL)
+        except Exception: pass
+        """;
+
+    private async Task<string> WriteBridgeAsync()
     {
-        // console_start.cs exec()s autoexec.cs after arg parsing; enable the telnet
-        // remote console there (the stock -telnetParams handler has an empty-listen-pass bug).
-        var content = $$"""
-            if ($LaunchMode $= "DedicatedServer")
-            {
-               telnetSetParameters({{_telnetPort}}, "{{_consolePass}}", "{{_listenPass}}");
-               echo("[panel] telnet remote console enabled on port {{_telnetPort}}");
-            }
-            """;
-        try
-        {
-            if (Directory.Exists(_gameDir))
-                File.WriteAllText(Path.Combine(_gameDir, "autoexec.cs"), content);
-            else
-                _log.LogWarning("GAME_DIR {Dir} not found; skipping autoexec render", _gameDir);
-        }
-        catch (Exception ex) { _log.LogWarning(ex, "could not write autoexec.cs"); }
+        var path = Path.Combine(Path.GetTempPath(), "t2_ptybridge.py");
+        try { await File.WriteAllTextAsync(path, BridgeScript); }
+        catch (Exception ex) { _log.LogError(ex, "could not write PTY bridge"); }
+        return path;
     }
 }

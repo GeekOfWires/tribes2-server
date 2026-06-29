@@ -5,7 +5,7 @@ export type Status = {
   running: boolean;
   pid: number | null;
   params: string;
-  telnetConnected: boolean;
+  commandsReady: boolean;
   restarts: number;
   lastExit: number | null;
 };

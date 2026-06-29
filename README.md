@@ -7,7 +7,7 @@ role-based access. The panel is **PID 1** and owns the game lifecycle.
 
 > **Engine note:** Tribes 2 runs on the Dynamix **"V12" engine** — the precursor to the
 > Torque Game Engine (TGE), which preceded Torque Game Engine Advanced (TGEA), which preceded
-> Torque 3D. The telnet remote console the panel relies on originates in this lineage.
+> Torque 3D.
 
 ## What the build does
 
@@ -30,22 +30,27 @@ role-based access. The panel is **PID 1** and owns the game lifecycle.
    extracts its payload deterministically (`IFC22.dll`, Miles sound libs, SDL3/OpenAL/
    Discord/libcurl, `base/t2csri.vl2`, …) straight onto `GameData` — **no Wine-run required**.
 6. Runs the Python PE patcher (`content/tribes_dual_patcher.py`) over `Tribes2.exe`:
-   NOPs its single `AllocConsole` call-site and flips the PE subsystem GUI→CUI so the
-   dedicated server attaches to the launcher's stdio **without needing an X/GUI console**.
+   flips the PE subsystem GUI→CUI so the dedicated server is a console app — its console
+   output goes to stdout and its console input is read from stdin. The supervisor then runs
+   it on a **PTY** (a real TTY, still headless) so the engine's `ReadConsoleInput` console
+   works with no display.
 7. Adds the framework-dependent **ASP.NET Core 10 panel** (with the built React SPA) and sets
    it as the entrypoint (PID 1).
 
-> The patcher only affects the dedicated-server console path — `Tribes2.exe` contains
-> exactly one `AllocConsole` call (verified), so there is nothing else to touch.
+> Why the PTY: on a plain pipe, `ReadConsoleInput` fails and the server crashes at "starting
+> mission countdown" (root-caused to the per-tick console-input poller over-reading an
+> uninitialized event count). A TTY fixes that **and** gives us a command channel — no xvfb,
+> no telnet (the engine's `telnetSetParameters` is fatal in this head-less build).
 
 ## Runtime architecture (single container)
 
 ```
 PID 1: ASP.NET Core panel (Kestrel + React SPA + ASP.NET Identity)
   └─ GameSupervisor (hosted Worker Service)
-       ├─ wine Tribes2.exe $LAUNCH_PARAMS   (stdout -> ConsoleHub ring buffer + SSE)
-       ├─ telnet client -> in-game V12-engine console (quit(); + arbitrary commands)
-       └─ lifecycle: restart / force-restart / stop / start + internal auto-restart
+       └─ python PTY bridge ─ wine Tribes2.exe $LAUNCH_PARAMS
+            ├─ game stdout (PTY) -> bridge strips ANSI -> ConsoleHub ring buffer + SSE
+            ├─ game stdin  (PTY) <- panel console commands + quit();
+            └─ lifecycle: restart / force-restart / stop / start + internal auto-restart
 
 browser --HTTPS+cookie (Identity)--> panel API/SSE --> GameSupervisor --> game
 ```
@@ -53,9 +58,8 @@ browser --HTTPS+cookie (Identity)--> panel API/SSE --> GameSupervisor --> game
 - **The panel owns the lifecycle.** The game runs inside the panel process; crashes are
   auto-restarted internally so the panel stays available. `restart: on-failure` only relaunches
   the *container* if the panel itself exits (e.g. root's force-shutdown).
-- **Console feed** = captured game stdout, streamed to the browser over SSE.
-- **Commands/quit** = the engine's telnet remote console, enabled by an injected `autoexec.cs`
-  (`telnetSetParameters`; the stock `-telnetParams` handler has an empty-listen-pass bug).
+- **Console feed** = the game's console output (over the PTY), ANSI-stripped, streamed via SSE.
+- **Commands / `quit();`** = written to the game's console **stdin** over the PTY (no telnet).
 - **Tech**: ASP.NET Core 10 · React (Vite) SPA served by the host · **ASP.NET Core Identity**
   (cookie auth) · **EF Core 10** on a **local Turso-compatible SQLite** file · LettuceEncrypt for ACME.
 
@@ -144,7 +148,7 @@ value; override the env only if needed.
 docker run --rm --entrypoint bash tribes2-server:base -c '
   ls -l "$GAME_DIR/IFC22.dll";                       # ~2 MB (Tribes 2)
   python3 /opt/patcher/tribes_dual_patcher.py --exe "$GAME_DIR/Tribes2.exe" --dry-run'
-# subsystem should read CUI and 0 AllocConsole call-sites remaining to patch.
+# "Current subsystem: CUI" confirms the headless console patch is applied.
 ```
 
 ## Game data (`tribesinstall.7z`)
@@ -229,14 +233,14 @@ content/
   tribesinstall.7z         game data (GameData/ at archive root; not committed)
   classic_v152.zip         Classic v1.52 mod (committed)
   Construction_v0.70a.exe  Construction mod RAR self-extractor (committed)
-  tribes_dual_patcher.py   PE patcher (AllocConsole NOP + GUI->CUI)
+  tribes_dual_patcher.py   PE patcher (subsystem GUI->CUI for headless console I/O)
 panel/                     ASP.NET Core 10 control panel (PID 1)
   Program.cs               host wiring: TLS, EF/Identity, RBAC, supervisor, endpoints
   Bootstrap.cs             EnsureCreated + seed roles/root
   Endpoints.cs             minimal-API: account, console SSE, lifecycle, users, audit
   Auth/                    ApplicationUser/Role + rank-based Roles/policies
   Data/                    AppDbContext (IdentityDbContext) + AuditEntry
-  Services/                GameSupervisor (worker), ConsoleHub, TelnetCommander
+  Services/                GameSupervisor (worker; PTY bridge + stdin commands), ConsoleHub
   Tls/TlsConfigurator.cs   self-signed / Let's Encrypt / plain HTTP from env
   ClientApp/               React + Vite + TS SPA (built into wwwroot)
 .github/workflows/build.yml  CI: build + push base/classic/construction to GHCR

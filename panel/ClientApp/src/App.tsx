@@ -163,7 +163,7 @@ function StatusBar() {
       <span className="badge" style={{ color, borderColor: color }}>● {s?.running ? "running" : s?.state ?? "…"}</span>
       {s?.pid && <span className="muted">pid {s.pid}</span>}
       {s?.params && <span className="muted">params: <code>{s.params}</code></span>}
-      <span className="muted">telnet: {s?.telnetConnected ? "connected" : "—"}</span>
+      <span className="muted">commands: {s?.commandsReady ? "ready" : "—"}</span>
       {s && <span className="muted">restarts: {s.restarts}</span>}
     </div>
   );
