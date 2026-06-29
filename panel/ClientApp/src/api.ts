@@ -20,6 +20,11 @@ export type AuditRow = {
   ts: number; actor: string; actorRole: string; action: string;
   target: string | null; detail: string | null; success: boolean;
 };
+export type Crash = {
+  startedAt: number; crashedAt: number; exitCode: number | null;
+  faultAddress: string | null; faultInstruction: string | null;
+  module: string | null; launchParams: string | null; details: string | null;
+};
 
 export const RANK: Record<string, number> = { User: 10, Admin: 20, SuperAdmin: 30, root: 40 };
 export const ROLES = ["User", "Admin", "SuperAdmin", "root"];
@@ -72,4 +77,5 @@ export const api = {
   deleteUser: (id: string) => req<void>(`/api/users/${id}`, { method: "DELETE" }),
 
   audit: () => req<AuditRow[]>("/api/audit"),
+  crashes: () => req<Crash[]>("/api/crashes"),
 };

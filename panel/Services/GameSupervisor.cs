@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using TribesServerPanel.Data;
 
@@ -44,6 +45,8 @@ public sealed class GameSupervisor : BackgroundService
     private Process? _proc;
     private int _restarts;
     private int? _lastExit;
+    private long _startedAt;
+    private volatile bool _expectedExit;   // set when WE end the process (so it isn't logged as a crash)
 
     public GameSupervisor(ConsoleHub hub, IConfiguration cfg, ILogger<GameSupervisor> log, IServiceScopeFactory scopes)
     {
@@ -72,6 +75,7 @@ public sealed class GameSupervisor : BackgroundService
     public Task ForceRestartAsync()
     {
         _desired = "run";
+        _expectedExit = true;        // operator-initiated kill, not a crash
         KillTree();                  // monitor loop relaunches
         return Task.CompletedTask;
     }
@@ -135,7 +139,12 @@ public sealed class GameSupervisor : BackgroundService
                     if (p is { HasExited: true })
                     {
                         _lastExit = SafeExitCode(p);
+                        var wasExpected = _expectedExit;
+                        var startedAt = _startedAt;
+                        _expectedExit = false;
                         lock (_sync) _proc = null;
+                        if (!wasExpected)
+                            await RecordCrashAsync(_lastExit, startedAt);  // unhandled fault -> crash report
                         if (!_restartOnCrash)
                         {
                             _state = "stopped"; _desired = "stop";
@@ -158,6 +167,7 @@ public sealed class GameSupervisor : BackgroundService
                 else if (_desired == "stop" && p is { HasExited: true })
                 {
                     _state = "stopped";
+                    _expectedExit = false;
                     lock (_sync) _proc = null;
                 }
             }
@@ -213,6 +223,8 @@ public sealed class GameSupervisor : BackgroundService
             proc.BeginOutputReadLine();
             proc.BeginErrorReadLine();
             lock (_sync) _proc = proc;
+            _startedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            _expectedExit = false;
             _state = "running";
             return true;
         }
@@ -228,6 +240,7 @@ public sealed class GameSupervisor : BackgroundService
     {
         var p = _proc;
         if (p is null || p.HasExited) return;
+        _expectedExit = true;        // graceful/forced stop, not a crash
         _hub.Publish("[panel] graceful quit -> quit();");
         await SendCommandAsync("quit();");
         var deadline = DateTime.UtcNow.AddSeconds(_graceSeconds);
@@ -250,6 +263,55 @@ public sealed class GameSupervisor : BackgroundService
     }
 
     private static int? SafeExitCode(Process p) { try { return p.ExitCode; } catch { return null; } }
+
+    private static string Trunc(string s, int n) => s.Length <= n ? s : s[..n] + "\n…(truncated)";
+
+    /// <summary>Persist a crash record from the console tail + CRASHLOG.TXT for the read-only crashes page.</summary>
+    private async Task RecordCrashAsync(int? exitCode, long startedAt)
+    {
+        try
+        {
+            var lines = _hub.Snapshot(80);
+            string? addr = null, instr = null, module = null;
+            for (var i = lines.Count - 1; i >= 0; i--)
+            {
+                if (!lines[i].Contains("Access Violation", StringComparison.OrdinalIgnoreCase)) continue;
+                var mm = Regex.Match(lines[i], @"in\s+(\S+)");
+                if (mm.Success) module = mm.Groups[1].Value.TrimEnd('.', ')');
+                var detail = i + 1 < lines.Count ? lines[i + 1] : lines[i];   // "(N @ 0xADDR:0xADDR): instr"
+                var am = Regex.Match(detail, @"0x[0-9A-Fa-f]+");
+                if (am.Success) addr = am.Value;
+                var im = Regex.Match(detail, @"\)\s*:\s*(.+)$");
+                if (im.Success) instr = im.Groups[1].Value.Trim();
+                break;
+            }
+
+            string? crashlog = null;
+            var clp = Path.Combine(_gameDir, "CRASHLOG.TXT");
+            try { if (File.Exists(clp)) crashlog = await File.ReadAllTextAsync(clp); }
+            catch (Exception ex) { _log.LogWarning(ex, "could not read CRASHLOG.TXT"); }
+
+            var details = "Console tail:\n" + string.Join("\n", lines.TakeLast(50));
+            if (crashlog is not null) details += "\n\n--- CRASHLOG.TXT ---\n" + Trunc(crashlog, 8000);
+
+            using var scope = _scopes.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            db.Crashes.Add(new CrashReport
+            {
+                StartedAt = startedAt,
+                CrashedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
+                ExitCode = exitCode,
+                FaultAddress = addr,
+                FaultInstruction = instr,
+                Module = module,
+                LaunchParams = EffectiveLaunchParams,
+                Details = Trunc(details, 12000),
+            });
+            await db.SaveChangesAsync();
+            _hub.Publish($"[panel] crash recorded (exit {exitCode}{(addr is not null ? ", " + addr : "")})");
+        }
+        catch (Exception ex) { _log.LogError(ex, "failed to record crash"); }
+    }
 
     private async Task LoadSettingsAsync()
     {

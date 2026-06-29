@@ -16,6 +16,22 @@ public static class Bootstrap
         var db = sp.GetRequiredService<AppDbContext>();
         await db.Database.EnsureCreatedAsync();
 
+        // EnsureCreated does not add new tables to a pre-existing DB volume; create
+        // the newer tables defensively (matches the EF model for the SQLite provider).
+        await db.Database.ExecuteSqlRawAsync("""
+            CREATE TABLE IF NOT EXISTS "Crashes" (
+              "Id" INTEGER NOT NULL CONSTRAINT "PK_Crashes" PRIMARY KEY AUTOINCREMENT,
+              "StartedAt" INTEGER NOT NULL,
+              "CrashedAt" INTEGER NOT NULL,
+              "ExitCode" INTEGER NULL,
+              "FaultAddress" TEXT NULL,
+              "FaultInstruction" TEXT NULL,
+              "Module" TEXT NULL,
+              "LaunchParams" TEXT NULL,
+              "Details" TEXT NULL
+            );
+            """);
+
         // Ensure the single server-settings row exists (unconfigured by default).
         if (await db.ServerSettings.FindAsync(1) is null)
         {

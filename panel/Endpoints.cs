@@ -252,6 +252,17 @@ public static class Endpoints
             var rows = await db.AuditEntries.OrderByDescending(a => a.Id).Take(300).ToListAsync();
             return Results.Ok(rows.Select(a => new { a.Ts, a.Actor, a.ActorRole, a.Action, a.Target, a.Detail, a.Success }));
         }).RequireAuthorization(Roles.PolicySuperAdmin);
+
+        // ---- crash reports (read-only; Admin+) ----------------------------
+        app.MapGet("/api/crashes", async (AppDbContext db) =>
+        {
+            var rows = await db.Crashes.OrderByDescending(c => c.Id).Take(200).ToListAsync();
+            return Results.Ok(rows.Select(c => new
+            {
+                c.StartedAt, c.CrashedAt, c.ExitCode, c.FaultAddress,
+                c.FaultInstruction, c.Module, c.LaunchParams, c.Details,
+            }));
+        }).RequireAuthorization(Roles.PolicyAdmin);
     }
 
     private static async Task<bool> IsLastRoot(UserManager<ApplicationUser> users)

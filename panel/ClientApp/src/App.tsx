@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { api, RANK, ROLES, roleLabel, type Me, type Status, type UserRow, type AuditRow, type Config } from "./api";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import { api, RANK, ROLES, roleLabel, type Me, type Status, type UserRow, type AuditRow, type Config, type Crash } from "./api";
 
 export default function App() {
   const [me, setMe] = useState<Me | null>(null);
@@ -118,7 +118,7 @@ function FirstRunSetup({ cfg, onDone, onLogout }: { cfg: Config; onDone: () => v
   );
 }
 
-type Tab = "console" | "controls" | "users" | "audit";
+type Tab = "console" | "controls" | "crashes" | "users" | "audit";
 
 function Dashboard({ me, cfg, onLogout, refreshCfg }: { me: Me; cfg: Config | null; onLogout: () => void; refreshCfg: () => void }) {
   const [tab, setTab] = useState<Tab>("console");
@@ -131,6 +131,7 @@ function Dashboard({ me, cfg, onLogout, refreshCfg }: { me: Me; cfg: Config | nu
         <div className="brand">Tribes <span>2</span></div>
         <button className={`navbtn ${tab === "console" ? "active" : ""}`} onClick={() => setTab("console")}>Console</button>
         {can(RANK.Admin) && <button className={`navbtn ${tab === "controls" ? "active" : ""}`} onClick={() => setTab("controls")}>Controls</button>}
+        {can(RANK.Admin) && <button className={`navbtn ${tab === "crashes" ? "active" : ""}`} onClick={() => setTab("crashes")}>Crashes</button>}
         {can(RANK.root) && <button className={`navbtn ${tab === "users" ? "active" : ""}`} onClick={() => setTab("users")}>Users</button>}
         {can(RANK.SuperAdmin) && <button className={`navbtn ${tab === "audit" ? "active" : ""}`} onClick={() => setTab("audit")}>Audit Log</button>}
         <div className="spacer" />
@@ -141,6 +142,7 @@ function Dashboard({ me, cfg, onLogout, refreshCfg }: { me: Me; cfg: Config | nu
       <main className="main">
         {tab === "console" && <ConsoleView />}
         {tab === "controls" && can(RANK.Admin) && <Controls me={me} cfg={cfg} refreshCfg={refreshCfg} />}
+        {tab === "crashes" && can(RANK.Admin) && <Crashes />}
         {tab === "users" && can(RANK.root) && <Users />}
         {tab === "audit" && can(RANK.SuperAdmin) && <Audit />}
       </main>
@@ -332,6 +334,58 @@ function Users() {
         </table>
       </div>
       {msg && <p className={msg.ok ? "ok" : "err"}>{msg.t}</p>}
+    </div>
+  );
+}
+
+function fmtUtc(unix: number) {
+  return unix ? new Date(unix * 1000).toISOString().replace("T", " ").slice(0, 19) : "—";
+}
+
+function Crashes() {
+  const [rows, setRows] = useState<Crash[]>([]);
+  const [open, setOpen] = useState<number | null>(null);
+  const [err, setErr] = useState("");
+  useEffect(() => { api.crashes().then(setRows).catch((e) => setErr((e as Error).message)); }, []);
+
+  return (
+    <div>
+      <h2>Crash Reports</h2>
+      <p className="muted" style={{ marginTop: -6 }}>
+        Read-only. Unexpected/unhandled game exits (access violations) for reporting against the container image.
+      </p>
+      {err && <p className="err">{err}</p>}
+      <div className="card">
+        <table>
+          <thead>
+            <tr><th>Server Start (UTC)</th><th>Crash (UTC)</th><th>Exit</th><th>Fault</th><th>Module</th><th>Instruction</th><th></th></tr>
+          </thead>
+          <tbody>
+            {rows.length === 0 && <tr><td colSpan={7} className="muted">No crashes recorded.</td></tr>}
+            {rows.map((c, i) => (
+              <Fragment key={i}>
+                <tr>
+                  <td className="muted">{fmtUtc(c.startedAt)}</td>
+                  <td>{fmtUtc(c.crashedAt)}</td>
+                  <td>{c.exitCode ?? "—"}</td>
+                  <td><code>{c.faultAddress ?? "—"}</code></td>
+                  <td>{c.module ?? "—"}</td>
+                  <td className="muted" style={{ maxWidth: 280, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.faultInstruction ?? "—"}</td>
+                  <td><button className="btn" onClick={() => setOpen(open === i ? null : i)}>{open === i ? "Hide" : "Details"}</button></td>
+                </tr>
+                {open === i && (
+                  <tr>
+                    <td colSpan={7}>
+                      <div className="muted" style={{ marginBottom: 6 }}>launch params: <code>{c.launchParams ?? "—"}</code></div>
+                      <pre className="console" style={{ height: "auto", maxHeight: "40vh" }}>{c.details ?? "(no details)"}</pre>
+                    </td>
+                  </tr>
+                )}
+              </Fragment>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

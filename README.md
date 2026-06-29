@@ -88,6 +88,11 @@ SQLite provider on the Turso-compatible file is the robust local-only choice.)
 
 All privileged actions are recorded in an **audit log** (visible to Super Admin+).
 
+Every unexpected/unhandled game exit (access violations) is recorded to a read-only
+**Crash Reports** page (Admin+): server start + crash timestamps, exit code, the `0x` fault
+address, faulting instruction, module, launch params, and the console tail + `CRASHLOG.TXT`,
+so hosts can report reproducible crashes for the image to patch.
+
 ## First-time setup & Auto-Start
 
 On a fresh database the server is **unconfigured** and does **not** run. Log in as **root**
