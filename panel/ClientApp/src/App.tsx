@@ -1,17 +1,38 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { api, RANK, ROLES, roleLabel, type Me, type Status, type UserRow, type AuditRow } from "./api";
+import { api, RANK, ROLES, roleLabel, type Me, type Status, type UserRow, type AuditRow, type Config } from "./api";
 
 export default function App() {
   const [me, setMe] = useState<Me | null>(null);
+  const [cfg, setCfg] = useState<Config | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const loadCfg = useCallback(() => api.config().then(setCfg).catch(() => setCfg(null)), []);
+
   useEffect(() => {
-    api.me().then(setMe).catch(() => setMe(null)).finally(() => setLoading(false));
-  }, []);
+    (async () => {
+      try {
+        setMe(await api.me());
+        await loadCfg();
+      } catch {
+        setMe(null);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [loadCfg]);
+
+  const onLogin = async (m: Me) => { setMe(m); await loadCfg(); };
+  const onLogout = () => { setMe(null); setCfg(null); };
 
   if (loading) return <div className="login-wrap"><div className="muted">Loading…</div></div>;
-  if (!me) return <Login onLogin={setMe} />;
-  return <Dashboard me={me} onLogout={() => setMe(null)} />;
+  if (!me) return <Login onLogin={onLogin} />;
+
+  if (cfg && !cfg.configured) {
+    return me.rank >= RANK.root
+      ? <FirstRunSetup cfg={cfg} onDone={loadCfg} onLogout={onLogout} />
+      : <NotConfigured onLogout={onLogout} />;
+  }
+  return <Dashboard me={me} cfg={cfg} onLogout={onLogout} refreshCfg={loadCfg} />;
 }
 
 function Login({ onLogin }: { onLogin: (m: Me) => void }) {
@@ -43,9 +64,63 @@ function Login({ onLogin }: { onLogin: (m: Me) => void }) {
   );
 }
 
+function SignOut({ onLogout }: { onLogout: () => void }) {
+  return <button className="btn" onClick={async () => { await api.logout().catch(() => {}); onLogout(); }}>Sign out</button>;
+}
+
+function NotConfigured({ onLogout }: { onLogout: () => void }) {
+  return (
+    <div className="login-wrap">
+      <div className="card login" style={{ textAlign: "center" }}>
+        <h2>Setup required</h2>
+        <p className="muted">This server has not been configured yet. A <strong>root</strong> administrator must complete first-time setup before it can run.</p>
+        <SignOut onLogout={onLogout} />
+      </div>
+    </div>
+  );
+}
+
+function FirstRunSetup({ cfg, onDone, onLogout }: { cfg: Config; onDone: () => void; onLogout: () => void }) {
+  const [params, setParams] = useState(cfg.launchParams || cfg.defaultLaunchParams);
+  const [autoStart, setAutoStart] = useState(true);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+
+  const complete = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBusy(true); setErr("");
+    try { await api.completeConfig(autoStart, params); await onDone(); }
+    catch (e2) { setErr((e2 as Error).message); setBusy(false); }
+  };
+
+  return (
+    <div className="login-wrap">
+      <form className="card" style={{ width: 460 }} onSubmit={complete}>
+        <h2>First-time Server Setup</h2>
+        <p className="muted">Configure the dedicated server. After this the server can run, and you can change Auto-Start anytime.</p>
+
+        <label style={{ display: "block", margin: "10px 0 4px", fontSize: 13, color: "var(--muted)" }}>Launch parameters</label>
+        <input style={{ width: "100%" }} value={params} onChange={(e) => setParams(e.target.value)} />
+        <p className="muted" style={{ fontSize: 12 }}>Order: <code>-online</code> (or <code>-nologin</code>) first, <code>-dedicated</code> last, mods in between.</p>
+
+        <label style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 10 }}>
+          <input type="checkbox" checked={autoStart} onChange={(e) => setAutoStart(e.target.checked)} style={{ width: "auto" }} />
+          <span>Auto-Start the server when the panel starts</span>
+        </label>
+
+        {err && <p className="err">{err}</p>}
+        <div className="row" style={{ marginTop: 16 }}>
+          <button className="btn primary" disabled={busy}>{busy ? "Configuring…" : "Complete setup & start"}</button>
+          <SignOut onLogout={onLogout} />
+        </div>
+      </form>
+    </div>
+  );
+}
+
 type Tab = "console" | "controls" | "users" | "audit";
 
-function Dashboard({ me, onLogout }: { me: Me; onLogout: () => void }) {
+function Dashboard({ me, cfg, onLogout, refreshCfg }: { me: Me; cfg: Config | null; onLogout: () => void; refreshCfg: () => void }) {
   const [tab, setTab] = useState<Tab>("console");
   const logout = async () => { await api.logout().catch(() => {}); onLogout(); };
   const can = (rank: number) => me.rank >= rank;
@@ -65,7 +140,7 @@ function Dashboard({ me, onLogout }: { me: Me; onLogout: () => void }) {
       </nav>
       <main className="main">
         {tab === "console" && <ConsoleView />}
-        {tab === "controls" && can(RANK.Admin) && <Controls me={me} />}
+        {tab === "controls" && can(RANK.Admin) && <Controls me={me} cfg={cfg} refreshCfg={refreshCfg} />}
         {tab === "users" && can(RANK.root) && <Users />}
         {tab === "audit" && can(RANK.SuperAdmin) && <Audit />}
       </main>
@@ -128,7 +203,7 @@ function ConsoleView() {
   );
 }
 
-function Controls({ me }: { me: Me }) {
+function Controls({ me, cfg, refreshCfg }: { me: Me; cfg: Config | null; refreshCfg: () => void }) {
   const [msg, setMsg] = useState<{ ok: boolean; t: string } | null>(null);
   const [cmd, setCmd] = useState("");
   const [busy, setBusy] = useState(false);
@@ -147,6 +222,10 @@ function Controls({ me }: { me: Me }) {
     await run(() => api.command(c), `command "${c}"`);
     setCmd("");
   };
+  const toggleAutoStart = async (enabled: boolean) => {
+    await run(() => api.setAutoStart(enabled), `auto-start ${enabled ? "on" : "off"}`);
+    refreshCfg();
+  };
 
   return (
     <div>
@@ -161,6 +240,16 @@ function Controls({ me }: { me: Me }) {
           {can(RANK.SuperAdmin) && <button className="btn warn" disabled={busy} onClick={() => run(api.stop, "stop", "Gracefully stop the server and keep it down?")}>Stop</button>}
         </div>
       </div>
+
+      {can(RANK.root) && cfg && (
+        <div className="card">
+          <h3 style={{ marginTop: 0 }}>Auto-Start</h3>
+          <label style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <input type="checkbox" disabled={busy} checked={cfg.autoStart} onChange={(e) => toggleAutoStart(e.target.checked)} style={{ width: "auto" }} />
+            <span>Launch the Tribes 2 server automatically when the panel starts</span>
+          </label>
+        </div>
+      )}
 
       {can(RANK.SuperAdmin) && (
         <div className="card">

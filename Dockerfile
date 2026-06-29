@@ -1,16 +1,16 @@
 # syntax=docker/dockerfile:1.7
 ###############################################################################
-# Tribes 2 dedicated server + ASP.NET Core 10 control panel (single image).
+# Tribes 2 dedicated server, OWNED by an ASP.NET Core 10 control panel.
 #
-# The panel is PID 1 and owns the game lifecycle via a hosted Worker Service
-# (GameSupervisor). Build ordering:
-#   1. Debian base + i386 multiarch
-#   2. WineHQ (32-bit components)
-#   3. winetricks runtimes (MSVC6 era + modern UCRT)
-#   4. extract tribesinstall.7z so GameData lands at C:\Dynamix\Tribes2\GameData
-#   5. overlay the Tribes 2 NSIS patch payload (URL is a build ARG = the variable)
-#   6. run the python PE patcher over Tribes2.exe (AllocConsole NOP + GUI->CUI)
-#   7. ship the ASP.NET Core panel (with the built React SPA) as the entrypoint
+# The image is fundamentally an ASP.NET Core app (FROM mcr.microsoft.com/dotnet/
+# aspnet:10.0). Wine + the Tribes 2 game are layered on top, and the panel (PID 1)
+# manages the game via a hosted Worker Service -- so the panel stays up even when
+# the game stops/crashes.
+#
+# Dependency strategy (per ChocoTaco1/docker-tribesnext-server, Wine branch):
+#   * OLD Win32/VC++6 runtime  -> the game's own bundled MSVCRT.dll + Tribes2.exe.local
+#   * NEW Win32 APIs (QoL)     -> real VC++ 2022 DLLs (vcrun22) dropped into system32
+#   No winetricks, no xvfb, no Ruby (the 2025 QoL is native code in IFC22.dll).
 ###############################################################################
 
 # ---------------------------------------------------------------- React SPA build
@@ -21,89 +21,98 @@ RUN npm install
 COPY panel/ClientApp/ ./
 RUN npm run build           # vite outDir ../wwwroot -> /wwwroot
 
-# ------------------------------------------------ ASP.NET Core publish (self-contained)
+# ------------------------------------------------ ASP.NET Core publish (framework-dependent)
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS app-build
 WORKDIR /src
 COPY panel/TribesServerPanel.csproj ./
-RUN dotnet restore -r linux-x64
+RUN dotnet restore
 COPY panel/ ./
 COPY --from=spa-build /wwwroot ./wwwroot
-RUN dotnet publish -c Release -r linux-x64 --self-contained true -o /app/publish
+RUN dotnet publish -c Release -o /app/publish
 
-# ---------------------------------------------------------------- runtime image
-FROM debian:trixie-slim AS runtime
+# ---------------------------------------------------------------- runtime image (ASP.NET owner)
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+USER root
 
-# The Tribes 2 QoL patch (the "variable"). NSIS installer .exe; 7z extracts its
-# payload deterministically, so we overlay files without running the GUI installer.
 ARG PATCH_URL="https://www.tribesnext.com/files/TribesNEXT_20250922_preview.exe"
 ARG PATCH_SHA256=""
-ARG WINE_BRANCH=stable             # stable | staging | devel
+ARG VCRUN22_URL="https://files.playt2.com/Linux/Server/vcrun22.zip"
+ARG WINE_BRANCH=stable
+# Pinned to Wine 10 (the Tribes 2-on-Wine community's proven version); Wine 11
+# regresses the T2 mission-start path. Blank = latest for the branch.
+ARG WINE_VERSION=10.0.0.0
 
 ENV DEBIAN_FRONTEND=noninteractive \
     WINEPREFIX=/opt/wineprefix \
     WINEARCH=win32 \
     WINEDEBUG=-all \
-    GAME_DIR=/opt/wineprefix/drive_c/Dynamix/Tribes2/GameData
+    GAME_DIR=/opt/wineprefix/drive_c/Dynamix/Tribes2/GameData \
+    WINEDLLOVERRIDES="msvcp140,msvcp140_1,msvcp140_2,msvcp140_atomic_wait,msvcp140_codecvt_ids,concrt140,vcamp140,vccorlib140,vcomp140,vcruntime140=n,b"
 
-# 1. base tooling + i386 multiarch (python3 is used by the build-time PE patcher)
+# 1. i386 multiarch + tooling (python3 = build-time PE patcher; p7zip = archives).
+#    universe is enabled because Wine's deps (e.g. libfaudio0) live there on Ubuntu.
 RUN dpkg --add-architecture i386 \
  && apt-get update \
  && apt-get install -y --no-install-recommends \
-      ca-certificates wget gnupg p7zip-full cabextract \
-      python3 procps tini libstdc++6 libssl3 zlib1g \
+      ca-certificates wget gnupg p7zip-full python3 procps tini software-properties-common \
+ && ( . /etc/os-release; [ "$ID" = "ubuntu" ] && add-apt-repository -y universe || true ) \
  && rm -rf /var/lib/apt/lists/*
 
-# 2. WineHQ repository (amd64 + i386) and Wine
-RUN mkdir -p /etc/apt/keyrings \
- && wget -qO- https://dl.winehq.org/wine-builds/winehq.key | gpg --dearmor -o /etc/apt/keyrings/winehq.gpg \
+# 2. WineHQ repository + Wine, matched to this image's distro/codename (the .NET base is
+#    Ubuntu noble; the official per-distro .sources file selects the right URIs).
+RUN mkdir -pm755 /etc/apt/keyrings \
+ && wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key \
  && . /etc/os-release \
- && printf 'Types: deb\nURIs: https://dl.winehq.org/wine-builds/debian/\nSuites: %s\nComponents: main\nArchitectures: amd64 i386\nSigned-By: /etc/apt/keyrings/winehq.gpg\n' "$VERSION_CODENAME" \
-      > /etc/apt/sources.list.d/winehq.sources \
+ && wget -NP /etc/apt/sources.list.d/ "https://dl.winehq.org/wine-builds/${ID}/dists/${VERSION_CODENAME}/winehq-${VERSION_CODENAME}.sources" \
  && apt-get update \
- && apt-get install -y --install-recommends winehq-${WINE_BRANCH} \
+ && if [ -n "${WINE_VERSION}" ]; then \
+        PKGVER="${WINE_VERSION}~${VERSION_CODENAME}-1"; \
+        apt-get install -y --install-recommends \
+          "winehq-${WINE_BRANCH}=${PKGVER}" "wine-${WINE_BRANCH}=${PKGVER}" \
+          "wine-${WINE_BRANCH}-amd64=${PKGVER}" "wine-${WINE_BRANCH}-i386=${PKGVER}"; \
+    else \
+        apt-get install -y --install-recommends "winehq-${WINE_BRANCH}"; \
+    fi \
  && rm -rf /var/lib/apt/lists/*
 
-# 3. winetricks (upstream) + prefix init + runtimes.
-#    winetricks runs GUI redistributable installers, so these steps need a virtual
-#    display -- BUT ONLY AT BUILD TIME. xvfb is a build dependency here; the runtime
-#    game server is headless via the PE patch (step 6) and never uses xvfb.
-RUN apt-get update && apt-get install -y --no-install-recommends xvfb xauth \
- && rm -rf /var/lib/apt/lists/* && mkdir -p /tmp/xdg && chmod 700 /tmp/xdg
-ENV XDG_RUNTIME_DIR=/tmp/xdg
-RUN wget -qO /usr/local/bin/winetricks https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks \
- && chmod +x /usr/local/bin/winetricks
-RUN xvfb-run -a wineboot --init && wineserver -w
-# vcrun6 -> MSVC6-era runtime the 2002 engine links against;
-# vcrun2015 -> UCRT/vcruntime140 surface for the rebuilt IFC22.dll loader
-RUN xvfb-run -a winetricks -q --force win7 vcrun6 vcrun2015 && wineserver -w
-RUN xvfb-run -a wine reg add 'HKCU\Software\Wine\DllOverrides' /v msvcrt /d native,builtin /f \
- && wineserver -w
+# 3. initialize the 32-bit prefix headlessly (no winetricks, no xvfb)
+RUN wineboot --init && wineserver -w
 
-# 4. extract the game; 7z root is GameData/, so extract into the parent. Bind-mounted
-#    (not COPYed) so the 453 MB archive never becomes an image layer.
+# 4. NEWER Windows APIs the QoL patch needs: real VC++ 2022 runtime DLLs into system32.
+#    (OLDER VC++6 comes from the game's bundled MSVCRT.dll + Tribes2.exe.local.)
+RUN wget -O /tmp/vcrun22.zip "${VCRUN22_URL}" \
+ && mkdir -p /tmp/vcr && 7z x -y /tmp/vcrun22.zip -o/tmp/vcr >/dev/null \
+ && for f in /tmp/vcr/dlls/*.dll_x86; do \
+        cp -f "$f" "${WINEPREFIX}/drive_c/windows/system32/$(basename "$f" .dll_x86).dll"; \
+    done \
+ && rm -rf /tmp/vcrun22.zip /tmp/vcr \
+ && test -f "${WINEPREFIX}/drive_c/windows/system32/vcruntime140.dll"
+
+# 5. extract the game; 7z root is GameData/, so extract into the parent (bind-mounted,
+#    so the 453 MB archive never becomes an image layer).
 RUN --mount=type=bind,source=content/tribesinstall.7z,target=/tmp/tribesinstall.7z \
     mkdir -p "${WINEPREFIX}/drive_c/Dynamix/Tribes2" \
  && 7z x -y /tmp/tribesinstall.7z -o"${WINEPREFIX}/drive_c/Dynamix/Tribes2" \
  && test -f "${GAME_DIR}/Tribes2.exe"
 
-# 5. overlay the Tribes 2 NSIS patch payload
+# 6. overlay the Tribes 2 NSIS patch payload (QoL in IFC22.dll; no Ruby)
 RUN wget -O /tmp/tnext.exe "${PATCH_URL}" \
  && if [ -n "${PATCH_SHA256}" ]; then echo "${PATCH_SHA256}  /tmp/tnext.exe" | sha256sum -c -; fi \
  && mkdir -p /tmp/tn \
- && 7z x -y -xr'!*.nsis' /tmp/tnext.exe -o/tmp/tn \
+ && 7z x -y -xr'!*.nsis' /tmp/tnext.exe -o/tmp/tn >/dev/null \
  && rm -rf '/tmp/tn/$PLUGINSDIR' \
  && cp -rf /tmp/tn/. "${GAME_DIR}/" \
  && rm -rf /tmp/tnext.exe /tmp/tn \
- && test "$(stat -c%s "${GAME_DIR}/IFC22.dll")" -gt 1000000   # patched IFC22.dll ~2 MB
+ && test "$(stat -c%s "${GAME_DIR}/IFC22.dll")" -gt 1000000
 
-# 6. python PE patcher (AllocConsole NOP + GUI->CUI) so the dedicated server is headless
+# 7. python PE patcher (AllocConsole NOP + GUI->CUI) so the dedicated server is headless
 COPY content/tribes_dual_patcher.py /opt/patcher/tribes_dual_patcher.py
 RUN python3 /opt/patcher/tribes_dual_patcher.py --exe "${GAME_DIR}/Tribes2.exe" --backup \
  && python3 /opt/patcher/tribes_dual_patcher.py --exe "${GAME_DIR}/Tribes2.exe" --dry-run
 
-# 7. ASP.NET Core panel (PID 1; owns the game via the GameSupervisor worker)
+# 8. the ASP.NET Core panel (PID 1; owns the game via the GameSupervisor worker)
 COPY --from=app-build /app/publish /app/panel
-RUN mkdir -p /data && chmod +x /app/panel/TribesServerPanel
+RUN mkdir -p /data
 WORKDIR /app/panel
 
 ENV LAUNCH_PARAMS="-online -dedicated" \
@@ -115,4 +124,4 @@ ENV LAUNCH_PARAMS="-online -dedicated" \
 EXPOSE 8080/tcp 8443/tcp 28000/udp
 
 # tini reaps the Wine child tree; the .NET panel is the real PID-1 logic.
-ENTRYPOINT ["/usr/bin/tini", "--", "/app/panel/TribesServerPanel"]
+ENTRYPOINT ["/usr/bin/tini", "--", "dotnet", "/app/panel/TribesServerPanel.dll"]

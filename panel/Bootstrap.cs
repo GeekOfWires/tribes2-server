@@ -16,21 +16,28 @@ public static class Bootstrap
         var db = sp.GetRequiredService<AppDbContext>();
         await db.Database.EnsureCreatedAsync();
 
+        // Ensure the single server-settings row exists (unconfigured by default).
+        if (await db.ServerSettings.FindAsync(1) is null)
+        {
+            db.ServerSettings.Add(new ServerSettings { Id = 1, Configured = false, AutoStart = false });
+            await db.SaveChangesAsync();
+        }
+
         var roleMgr = sp.GetRequiredService<RoleManager<ApplicationRole>>();
         foreach (var r in Roles.All)
             if (!await roleMgr.RoleExistsAsync(r))
                 await roleMgr.CreateAsync(new ApplicationRole(r));
 
         var userMgr = sp.GetRequiredService<UserManager<ApplicationUser>>();
-        var username = cfg["PANEL_ROOT_USERNAME"];
-        var password = cfg["PANEL_ROOT_PASSWORD"];
+        var username = cfg["ROOT_USERNAME"] ?? cfg["PANEL_ROOT_USERNAME"] ?? "root";
+        var password = cfg["ROOT_PASSWORD"] ?? cfg["PANEL_ROOT_PASSWORD"];
 
         var anyRoot = (await userMgr.GetUsersInRoleAsync(Roles.Root)).Count > 0;
         if (anyRoot) return;
 
         if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
         {
-            log.LogWarning("No root user exists and PANEL_ROOT_USERNAME/PANEL_ROOT_PASSWORD are not set; cannot bootstrap. Set them and restart.");
+            log.LogWarning("No root user exists and ROOT_PASSWORD is not set; cannot bootstrap. Set ROOT_PASSWORD and restart.");
             return;
         }
 

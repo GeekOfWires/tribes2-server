@@ -10,6 +10,12 @@ export type Status = {
   lastExit: number | null;
 };
 export type UserRow = { id: string; username: string; role: string; isActive: boolean };
+export type Config = {
+  configured: boolean;
+  autoStart: boolean;
+  launchParams: string | null;
+  defaultLaunchParams: string;
+};
 export type AuditRow = {
   ts: number; actor: string; actorRole: string; action: string;
   target: string | null; detail: string | null; success: boolean;
@@ -47,6 +53,12 @@ export const api = {
   stop: () => req<void>("/api/server/stop", { method: "POST" }),
   command: (cmd: string) => req<void>("/api/server/command", { method: "POST", body: JSON.stringify({ cmd }) }),
   shutdownPanel: () => req<void>("/api/panel/shutdown", { method: "POST" }),
+
+  config: () => req<Config>("/api/config/"),
+  completeConfig: (autoStart: boolean, launchParams: string) =>
+    req<void>("/api/config/complete", { method: "POST", body: JSON.stringify({ autoStart, launchParams }) }),
+  setAutoStart: (enabled: boolean) =>
+    req<void>("/api/config/auto-start", { method: "POST", body: JSON.stringify({ enabled }) }),
 
   users: () => req<UserRow[]>("/api/users/"),
   createUser: (username: string, password: string, role: string) =>

@@ -16,6 +16,8 @@ public static class Endpoints
     public record SetRoleDto(string Role);
     public record SetActiveDto(bool Active);
     public record PasswordDto(string Password);
+    public record CompleteConfigDto(bool AutoStart, string? LaunchParams);
+    public record AutoStartDto(bool Enabled);
 
     private static (string name, string role) Actor(ClaimsPrincipal u) =>
         (u.Identity?.Name ?? "?", u.FindFirstValue(ClaimTypes.Role) ?? Roles.User);
@@ -116,6 +118,49 @@ public static class Endpoints
             await Audit(db, u, "console.command", detail: cmd, ok: ok);
             return ok ? Results.Ok() : Results.StatusCode(StatusCodes.Status502BadGateway);
         }).RequireAuthorization(Roles.PolicySuperAdmin);
+
+        // ---- first-time configuration + Auto-Start (persisted in SQLite) ---
+        var config = app.MapGroup("/api/config");
+
+        config.MapGet("/", async (AppDbContext db, IConfiguration appCfg) =>
+        {
+            var s = await db.ServerSettings.FindAsync(1);
+            return Results.Ok(new
+            {
+                configured = s?.Configured ?? false,
+                autoStart = s?.AutoStart ?? false,
+                launchParams = s?.LaunchParams,
+                defaultLaunchParams = appCfg["LAUNCH_PARAMS"] ?? "-online -dedicated",
+            });
+        }).RequireAuthorization(Roles.PolicyUser);
+
+        // root completes first-time setup: marks configured, sets AutoStart + params, starts now.
+        config.MapPost("/complete", async (CompleteConfigDto dto, AppDbContext db, GameSupervisor g, ClaimsPrincipal u) =>
+        {
+            var s = await db.ServerSettings.FindAsync(1);
+            if (s is null) { s = new ServerSettings { Id = 1 }; db.ServerSettings.Add(s); }
+            if (s.Configured) return Results.BadRequest(new { error = "already configured" });
+            s.Configured = true;
+            s.AutoStart = dto.AutoStart;
+            s.LaunchParams = string.IsNullOrWhiteSpace(dto.LaunchParams) ? null : dto.LaunchParams.Trim();
+            await db.SaveChangesAsync();
+            g.MarkConfigured();
+            g.SetLaunchParams(s.LaunchParams);
+            await g.StartAsync();
+            await Audit(db, u, "config.complete", detail: $"autoStart={dto.AutoStart}; params={s.LaunchParams}");
+            return Results.Ok();
+        }).RequireAuthorization(Roles.PolicyRoot);
+
+        // root toggles the persisted Auto-Start flag (governs launch on host startup).
+        config.MapPost("/auto-start", async (AutoStartDto dto, AppDbContext db, ClaimsPrincipal u) =>
+        {
+            var s = await db.ServerSettings.FindAsync(1);
+            if (s is null || !s.Configured) return Results.BadRequest(new { error = "complete first-time setup first" });
+            s.AutoStart = dto.Enabled;
+            await db.SaveChangesAsync();
+            await Audit(db, u, dto.Enabled ? "config.auto_start_on" : "config.auto_start_off");
+            return Results.Ok();
+        }).RequireAuthorization(Roles.PolicyRoot);
 
         // ---- panel/container lifecycle (root only) -------------------------
         app.MapPost("/api/panel/shutdown", async (IHostApplicationLifetime life, AppDbContext db, ClaimsPrincipal u) =>

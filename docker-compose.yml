@@ -16,8 +16,8 @@ x-common-env: &common-env
   GRACE_SECONDS: ${GRACE_SECONDS:-20}
   RESTART_ON_CRASH: ${RESTART_ON_CRASH:-true}
   PANEL_DB_PATH: /data/panel.db
-  PANEL_ROOT_USERNAME: ${PANEL_ROOT_USERNAME:?set PANEL_ROOT_USERNAME in .env}
-  PANEL_ROOT_PASSWORD: ${PANEL_ROOT_PASSWORD:?set PANEL_ROOT_PASSWORD in .env}
+  ROOT_USERNAME: ${ROOT_USERNAME:-root}
+  ROOT_PASSWORD: ${ROOT_PASSWORD:?set ROOT_PASSWORD in .env}
   HTTP_PORT: 8080
   HTTPS_PORT: 8443
   # --- TLS (all optional; default plain HTTP behind your own proxy) ---

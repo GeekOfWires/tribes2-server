@@ -9,6 +9,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     public DbSet<AuditEntry> AuditEntries => Set<AuditEntry>();
+    public DbSet<ServerSettings> ServerSettings => Set<ServerSettings>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -18,6 +19,11 @@ public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, 
             e.ToTable("AuditLog");
             e.HasKey(x => x.Id);
             e.HasIndex(x => x.Ts);
+        });
+        builder.Entity<ServerSettings>(e =>
+        {
+            e.ToTable("ServerSettings");
+            e.HasKey(x => x.Id);
         });
     }
 }

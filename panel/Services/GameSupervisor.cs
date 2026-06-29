@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore;
+using TribesServerPanel.Data;
 
 namespace TribesServerPanel.Services;
 
@@ -21,6 +23,7 @@ public sealed class GameSupervisor : BackgroundService
 {
     private readonly ConsoleHub _hub;
     private readonly ILogger<GameSupervisor> _log;
+    private readonly IServiceScopeFactory _scopes;
 
     private readonly string _gameDir, _winePrefix, _wineBin, _exePathWin, _launchParams;
     private readonly int _telnetPort, _graceSeconds, _restartBackoff;
@@ -30,15 +33,20 @@ public sealed class GameSupervisor : BackgroundService
     private readonly TelnetCommander _telnet;
     private readonly object _sync = new();
 
-    private volatile string _desired = "run";   // run | stop
-    private volatile string _state = "init";     // init|starting|running|stopped|crashed|error
+    // Until root completes first-time setup the game does not run; AutoStart governs
+    // whether it launches automatically on host startup. Both come from the DB.
+    private volatile bool _configured;
+    private volatile string? _launchOverride;
+
+    private volatile string _desired = "stop";   // run | stop (set from settings at startup)
+    private volatile string _state = "init";     // init|unconfigured|starting|running|stopped|crashed|error
     private Process? _proc;
     private int _restarts;
     private int? _lastExit;
 
-    public GameSupervisor(ConsoleHub hub, IConfiguration cfg, ILogger<GameSupervisor> log)
+    public GameSupervisor(ConsoleHub hub, IConfiguration cfg, ILogger<GameSupervisor> log, IServiceScopeFactory scopes)
     {
-        _hub = hub; _log = log;
+        _hub = hub; _log = log; _scopes = scopes;
         _gameDir = cfg["GAME_DIR"] ?? "/opt/wineprefix/drive_c/Dynamix/Tribes2/GameData";
         _winePrefix = cfg["WINEPREFIX"] ?? "/opt/wineprefix";
         _wineBin = cfg["WINE_BIN"] ?? "wine";
@@ -85,6 +93,11 @@ public sealed class GameSupervisor : BackgroundService
         return ok;
     }
 
+    // Applied by the config endpoints after persisting to the DB.
+    public void MarkConfigured() => _configured = true;
+    public void SetLaunchParams(string? p) => _launchOverride = Nonempty(p);
+    private string EffectiveLaunchParams => Nonempty(_launchOverride) ?? _launchParams;
+
     public object Status()
     {
         var p = _proc;
@@ -93,9 +106,10 @@ public sealed class GameSupervisor : BackgroundService
         {
             state = _state,
             desired = _desired,
+            configured = _configured,
             running,
             pid = running ? p!.Id : (int?)null,
-            @params = _launchParams,
+            @params = EffectiveLaunchParams,
             telnetConnected = _telnet.IsConnected,
             restarts = _restarts,
             lastExit = _lastExit,
@@ -105,6 +119,7 @@ public sealed class GameSupervisor : BackgroundService
     // ---- worker loop -------------------------------------------------------
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        await LoadSettingsAsync();   // gate auto-start on first-run config + AutoStart flag
         RenderAutoexec();
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -166,14 +181,26 @@ public sealed class GameSupervisor : BackgroundService
         {
             var psi = new ProcessStartInfo
             {
-                FileName = _wineBin,
                 WorkingDirectory = _gameDir,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
             };
+            // Optional CPU pinning: the single-threaded T2 server can peg a core.
+            var affinity = Environment.GetEnvironmentVariable("GAME_CPU_AFFINITY");
+            if (!string.IsNullOrWhiteSpace(affinity))
+            {
+                psi.FileName = "taskset";
+                psi.ArgumentList.Add("-c");
+                psi.ArgumentList.Add(affinity);
+                psi.ArgumentList.Add(_wineBin);
+            }
+            else
+            {
+                psi.FileName = _wineBin;
+            }
             psi.ArgumentList.Add(_exePathWin);
-            foreach (var a in _launchParams.Split(' ', StringSplitOptions.RemoveEmptyEntries))
+            foreach (var a in EffectiveLaunchParams.Split(' ', StringSplitOptions.RemoveEmptyEntries))
                 psi.ArgumentList.Add(a);
             psi.Environment["WINEPREFIX"] = _winePrefix;
             psi.Environment["WINEDEBUG"] = Environment.GetEnvironmentVariable("WINEDEBUG") ?? "-all";
@@ -182,7 +209,7 @@ public sealed class GameSupervisor : BackgroundService
             proc.OutputDataReceived += (_, e) => { if (e.Data != null) _hub.Publish(e.Data); };
             proc.ErrorDataReceived += (_, e) => { if (e.Data != null) _hub.Publish(e.Data); };
 
-            _hub.Publish($"[panel] launching Tribes2.exe {_launchParams}");
+            _hub.Publish($"[panel] launching Tribes2.exe {EffectiveLaunchParams}");
             proc.Start();
             proc.BeginOutputReadLine();
             proc.BeginErrorReadLine();
@@ -224,6 +251,36 @@ public sealed class GameSupervisor : BackgroundService
     }
 
     private static int? SafeExitCode(Process p) { try { return p.ExitCode; } catch { return null; } }
+
+    private async Task LoadSettingsAsync()
+    {
+        try
+        {
+            using var scope = _scopes.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var s = await db.ServerSettings.AsNoTracking().FirstOrDefaultAsync(x => x.Id == 1);
+            _configured = s?.Configured ?? false;
+            _launchOverride = Nonempty(s?.LaunchParams);
+            if (_configured && (s?.AutoStart ?? false))
+            {
+                _desired = "run";
+                _state = "starting";
+                _log.LogInformation("Configured + AutoStart: launching game on startup.");
+            }
+            else
+            {
+                _desired = "stop";
+                _state = _configured ? "stopped" : "unconfigured";
+                _log.LogInformation("Not auto-starting (configured={C}, autoStart={A}).", _configured, s?.AutoStart ?? false);
+            }
+        }
+        catch (Exception ex)
+        {
+            _log.LogError(ex, "failed to read server settings; staying stopped");
+            _desired = "stop";
+            _state = "unconfigured";
+        }
+    }
 
     private void RenderAutoexec()
     {

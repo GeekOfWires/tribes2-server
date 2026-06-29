@@ -11,25 +11,29 @@ role-based access. The panel is **PID 1** and owns the game lifecycle.
 
 ## What the build does
 
-1. `FROM debian:trixie-slim`, enables **i386** multiarch.
-2. Installs **WineHQ** (`winehq-stable`) with 32-bit components.
-3. Initializes a 32-bit Wine prefix and installs runtimes via winetricks:
-   - `vcrun6` — MSVC 6.0-era runtime the original engine links against.
-   - `vcrun2015` (UCRT) — modern runtime surface needed by the rebuilt 2 MB
-     `IFC22.dll` (the Ruby-based Tribes 2 loader).
-   - `msvcrt` set to `native,builtin` (Tribes 2 Ruby requirement).
-4. Extracts `content/tribesinstall.7z` so `GameData` lands at
-   `C:\Dynamix\Tribes2\GameData`.
+1. `FROM mcr.microsoft.com/dotnet/aspnet:10.0` — the **ASP.NET Core runtime owns the image**;
+   Wine + the game are layered on top. (.NET has no linux-x86 runtime, so the image is amd64
+   with **i386 multiarch** for 32-bit Wine — not a pure-i386 base.)
+2. Installs **WineHQ** (`winehq-stable`, **pinned to Wine 10** via `WINE_VERSION` — Wine 11
+   regresses the T2 mission-start path) with 32-bit components and initializes a `win32`
+   Wine prefix **headlessly** (`wineboot --init`; no winetricks, no xvfb).
+3. Provides the Windows runtimes the way the Tribes 2 Linux community does
+   ([ChocoTaco1/docker-tribesnext-server](https://github.com/ChocoTaco1/docker-tribesnext-server/tree/Wine)):
+   - **Old VC++6 runtime** — the game's own bundled `MSVCRT.dll` + `Tribes2.exe.local`
+     (DLL redirection), already in `GameData`.
+   - **Newer 32-bit Windows APIs** (what the QoL patch needs) — the real Microsoft **VC++ 2022**
+     DLLs (`vcrun22`: `msvcp140`, `vcruntime140`, `concrt140`, …) dropped into `system32`,
+     with native DLL-overrides. No Ruby — the 2025 QoL is native code inside `IFC22.dll`.
+4. Extracts `content/tribesinstall.7z` so `GameData` lands at `C:\Dynamix\Tribes2\GameData`.
 5. Downloads the **Tribes 2 QoL patch** (`PATCH_URL` build ARG — the "variable";
    defaults to `TribesNEXT_20250922_preview.exe`). It's an **NSIS installer**, so `7z`
    extracts its payload deterministically (`IFC22.dll`, Miles sound libs, SDL3/OpenAL/
-   Discord/libcurl, `base/t2csri.vl2`, …) straight onto `GameData` — **no Wine-run of the
-   GUI installer required**.
+   Discord/libcurl, `base/t2csri.vl2`, …) straight onto `GameData` — **no Wine-run required**.
 6. Runs the Python PE patcher (`content/tribes_dual_patcher.py`) over `Tribes2.exe`:
    NOPs its single `AllocConsole` call-site and flips the PE subsystem GUI→CUI so the
    dedicated server attaches to the launcher's stdio **without needing an X/GUI console**.
-7. Publishes the **ASP.NET Core 10 panel** (with the built React SPA) self-contained and
-   sets it as the entrypoint (PID 1).
+7. Adds the framework-dependent **ASP.NET Core 10 panel** (with the built React SPA) and sets
+   it as the entrypoint (PID 1).
 
 > The patcher only affects the dedicated-server console path — `Tribes2.exe` contains
 > exactly one `AllocConsole` call (verified), so there is nothing else to touch.
@@ -79,6 +83,15 @@ SQLite provider on the Turso-compatible file is the robust local-only choice.)
 | root         | + **Force-shutdown the panel** (stops the container; restart policy relaunches it) + **user management** |
 
 All privileged actions are recorded in an **audit log** (visible to Super Admin+).
+
+## First-time setup & Auto-Start
+
+On a fresh database the server is **unconfigured** and does **not** run. Log in as **root**
+(`ROOT_USERNAME`/`ROOT_PASSWORD`, seeded on first boot) — the panel shows a **first-time setup**
+screen. Completing it (choose launch params + whether to Auto-Start) marks the server
+**configured** in SQLite and starts it. Afterwards root can toggle **Auto-Start** any time; the
+flag is persisted, and on every panel startup the ASP.NET host launches the game automatically
+only when Auto-Start is `true`. Non-root users see a "setup required" notice until then.
 
 ## Quick start
 
@@ -172,7 +185,7 @@ Tribes 2 patch is fetched from `PATCH_URL` (overridable via the `PATCH_URL` repo
 *variable*); the Classic mod zip and Construction installer **are** committed under `content/`.
 
 Feasibility notes: the runner needs free disk for a multi-GB Wine image (the workflow frees
-space first) and the build downloads the winetricks runtimes; expect a long first build.
+space first) and the build installs Wine + downloads the VC++ runtime; expect a long first build.
 GHCR auth uses the built-in `GITHUB_TOKEN` (no extra secret).
 
 ## TLS
@@ -192,11 +205,13 @@ default 8443). Pick at most one cert source via env (see `.env.example`):
 
 - **`PATCH_URL`**: defaults to the 2025-09-22 preview installer; pin `PATCH_SHA256`
   for reproducibility.
-- **Root seeding**: `PANEL_ROOT_PASSWORD` is plaintext, used once on first boot to create the
-  root user (hashed by Identity). Change it in the panel afterward.
+- **Root seeding**: `ROOT_PASSWORD` (plaintext) is used once on first boot to create the root
+  user (hashed by Identity). Change it in the panel afterward.
 - **Game UDP ports** for your mod (default exposes 28000/udp).
-- **Wine windows version**: prefix is `win7` (so UCRT installs); if the engine misbehaves,
-  add a per-exe `winxp` override.
+- **`vcrun22` source**: the modern VC++ runtime DLLs come from `VCRUN22_URL`
+  (default `files.playt2.com/.../vcrun22.zip`); host your own copy if you prefer.
+- **CPU pinning**: set `GAME_CPU_AFFINITY` (e.g. `0`) to `taskset` the single-threaded server
+  onto one core.
 - **Auth/master**: `-online` registers with the Tribes 2 master; use `-nologin` to host
   standalone.
 - **Transitive advisory**: EF Core 10 pins `SQLitePCLRaw … e_sqlite3 2.1.11` (GHSA-2m69-gcr7-jv3q).
