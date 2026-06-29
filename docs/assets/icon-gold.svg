@@ -1,6 +1,6 @@
 <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ttl dsc">
   <title id="ttl">Tribes 2 server emblem</title>
-  <desc id="dsc">Two separate mirrored prongs — each a raised, bent arm over a straight leg — divided by a central gap, with a rivet at each shoulder, in classic gold.</desc>
+  <desc id="dsc">The Tribes 2 twin-fork mark with shortened legs, standing on a stack of three rack-mounted servers, in classic gold.</desc>
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#f4c14e"/>
@@ -9,15 +9,35 @@
     </linearGradient>
   </defs>
 
+  <!-- twin-fork mark, short legs -->
   <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M108 236 L108 150 L62 108 L96 32 M148 236 L148 150 L194 108 L160 32"
-          stroke="#1c1305" stroke-width="32"/>
-    <path d="M108 236 L108 150 L62 108 L96 32 M148 236 L148 150 L194 108 L160 32"
-          stroke="url(#g)" stroke-width="22"/>
+    <path d="M108 152 L108 124 L62 92 L96 30 M148 152 L148 124 L194 92 L160 30" stroke="#1c1305" stroke-width="30"/>
+    <path d="M108 152 L108 124 L62 92 L96 30 M148 152 L148 124 L194 92 L160 30" stroke="url(#g)" stroke-width="20"/>
+  </g>
+  <g stroke="#3f4a44" stroke-width="2">
+    <circle cx="108" cy="124" r="7" fill="#cfd8d2"/>
+    <circle cx="148" cy="124" r="7" fill="#cfd8d2"/>
   </g>
 
-  <g stroke="#3f4a44" stroke-width="2">
-    <circle cx="108" cy="150" r="8" fill="#cfd8d2"/>
-    <circle cx="148" cy="150" r="8" fill="#cfd8d2"/>
+  <!-- 3-unit server rack -->
+  <g>
+    <g transform="translate(0,156)">
+      <rect x="40" y="0" width="176" height="22" rx="4" fill="#1a1305" stroke="#c4881c" stroke-opacity=".85" stroke-width="2"/>
+      <circle cx="54" cy="11" r="2.7" fill="#ffd97a"/><circle cx="63" cy="11" r="2.7" fill="#8a5a0e"/>
+      <rect x="72" y="6" width="44" height="10" rx="2" fill="none" stroke="#c4881c" stroke-opacity=".5"/>
+      <g fill="#c4881c" fill-opacity=".6"><rect x="178" y="6" width="3" height="10" rx="1"/><rect x="186" y="6" width="3" height="10" rx="1"/><rect x="194" y="6" width="3" height="10" rx="1"/><rect x="202" y="6" width="3" height="10" rx="1"/></g>
+    </g>
+    <g transform="translate(0,182)">
+      <rect x="40" y="0" width="176" height="22" rx="4" fill="#1a1305" stroke="#c4881c" stroke-opacity=".85" stroke-width="2"/>
+      <circle cx="54" cy="11" r="2.7" fill="#ffd97a"/><circle cx="63" cy="11" r="2.7" fill="#8a5a0e"/>
+      <rect x="72" y="6" width="44" height="10" rx="2" fill="none" stroke="#c4881c" stroke-opacity=".5"/>
+      <g fill="#c4881c" fill-opacity=".6"><rect x="178" y="6" width="3" height="10" rx="1"/><rect x="186" y="6" width="3" height="10" rx="1"/><rect x="194" y="6" width="3" height="10" rx="1"/><rect x="202" y="6" width="3" height="10" rx="1"/></g>
+    </g>
+    <g transform="translate(0,208)">
+      <rect x="40" y="0" width="176" height="22" rx="4" fill="#1a1305" stroke="#c4881c" stroke-opacity=".85" stroke-width="2"/>
+      <circle cx="54" cy="11" r="2.7" fill="#ffd97a"/><circle cx="63" cy="11" r="2.7" fill="#8a5a0e"/>
+      <rect x="72" y="6" width="44" height="10" rx="2" fill="none" stroke="#c4881c" stroke-opacity=".5"/>
+      <g fill="#c4881c" fill-opacity=".6"><rect x="178" y="6" width="3" height="10" rx="1"/><rect x="186" y="6" width="3" height="10" rx="1"/><rect x="194" y="6" width="3" height="10" rx="1"/><rect x="202" y="6" width="3" height="10" rx="1"/></g>
+    </g>
   </g>
 </svg>
