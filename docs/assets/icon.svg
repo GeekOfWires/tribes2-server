@@ -1,6 +1,6 @@
 <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ttl dsc">
   <title id="ttl">Tribes 2 server emblem</title>
-  <desc id="dsc">A twin-fork mark: two raised bent arms rising from a crossbar over a central post that forks into two legs, with two rivets at the shoulders, in metallic teal.</desc>
+  <desc id="dsc">Two separate mirrored prongs — each a raised, bent arm over a straight leg — divided by a central gap, with a rivet at each shoulder, in metallic teal.</desc>
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#16ffc6"/>
@@ -10,14 +10,14 @@
   </defs>
 
   <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M86 150 H170 M106 150 L66 108 L98 32 M150 150 L190 108 L158 32 M128 150 L128 194 M128 194 L110 236 M128 194 L146 236"
-          stroke="#03261d" stroke-width="34"/>
-    <path d="M86 150 H170 M106 150 L66 108 L98 32 M150 150 L190 108 L158 32 M128 150 L128 194 M128 194 L110 236 M128 194 L146 236"
-          stroke="url(#g)" stroke-width="24"/>
+    <path d="M108 236 L108 150 L62 108 L96 32 M148 236 L148 150 L194 108 L160 32"
+          stroke="#03261d" stroke-width="32"/>
+    <path d="M108 236 L108 150 L62 108 L96 32 M148 236 L148 150 L194 108 L160 32"
+          stroke="url(#g)" stroke-width="22"/>
   </g>
 
   <g stroke="#3f4a44" stroke-width="2">
-    <circle cx="106" cy="150" r="8" fill="#cfd8d2"/>
-    <circle cx="150" cy="150" r="8" fill="#cfd8d2"/>
+    <circle cx="108" cy="150" r="8" fill="#cfd8d2"/>
+    <circle cx="148" cy="150" r="8" fill="#cfd8d2"/>
   </g>
 </svg>
