@@ -1,0 +1,23 @@
+# --- env / secrets ---
+.env
+*.local
+
+# --- editor / tooling local state ---
+.claude/settings.local.json
+
+# --- python ---
+__pycache__/
+*.pyc
+
+# --- reference client installs (excluded) ---
+tribes2-unpatched-install-reference/
+tribes2-patched-install-reference/
+
+# --- game data (delivered via the build context, never via git) ---
+# content/tribesinstall.7z (~453 MB) is too big for git (GitHub rejects >100 MB
+# regular files, and we don't use Git LFS). It is NOT committed:
+#   * local builds read it straight from your disk (content/tribesinstall.7z)
+#   * CI downloads it from a GitHub Release asset before `docker build`
+# Ignoring it here only keeps it out of git; the Docker build still uses it from
+# the build context. See README "Game data".
+content/tribesinstall.7z

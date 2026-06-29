@@ -1,0 +1,14 @@
+# Reference install trees are large and not used by the build.
+tribes2-unpatched-install-reference/
+tribes2-patched-install-reference/
+
+# Panel build artifacts (the image builds these fresh in dedicated stages).
+panel/bin/
+panel/obj/
+panel/wwwroot/
+panel/ClientApp/node_modules/
+panel/ClientApp/dist/
+
+**/.git
+*.md
+.env

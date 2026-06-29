@@ -1,0 +1,99 @@
+# Three server variants share most settings. base (standard, `base` mod) is the
+# default; Classic and Construction are derived images gated behind profiles.
+#
+#   docker compose build t2-base                     # build base first (others FROM it)
+#   docker compose up -d t2-base                     # standard server + panel
+#   docker compose --profile classic      up -d --build t2-classic
+#   docker compose --profile construction up -d --build t2-construction
+#
+# The ASP.NET Core panel is PID 1 and owns the game lifecycle. root can force-stop
+# the panel (which stops the container; restart policy relaunches it).
+
+x-common-env: &common-env
+  TELNET_PORT: ${TELNET_PORT:-23000}
+  TELNET_CONSOLE_PASS: ${TELNET_CONSOLE_PASS:-}
+  TELNET_LISTEN_PASS: ${TELNET_LISTEN_PASS:-}
+  GRACE_SECONDS: ${GRACE_SECONDS:-20}
+  RESTART_ON_CRASH: ${RESTART_ON_CRASH:-true}
+  PANEL_DB_PATH: /data/panel.db
+  PANEL_ROOT_USERNAME: ${PANEL_ROOT_USERNAME:?set PANEL_ROOT_USERNAME in .env}
+  PANEL_ROOT_PASSWORD: ${PANEL_ROOT_PASSWORD:?set PANEL_ROOT_PASSWORD in .env}
+  HTTP_PORT: 8080
+  HTTPS_PORT: 8443
+  # --- TLS (all optional; default plain HTTP behind your own proxy) ---
+  SELF_SIGNED_CERT: ${SELF_SIGNED_CERT:-0}
+  SELF_SIGNED_SUBJECT: ${SELF_SIGNED_SUBJECT:-}
+  SELF_SIGNED_CN: ${SELF_SIGNED_CN:-}
+  SELF_SIGNED_DNS: ${SELF_SIGNED_DNS:-}
+  SELF_SIGNED_IP: ${SELF_SIGNED_IP:-}
+  SELF_SIGNED_DAYS: ${SELF_SIGNED_DAYS:-365}
+  SELF_SIGNED_PASSWORD: ${SELF_SIGNED_PASSWORD:-}
+  LETS_ENCRYPT_CERT: ${LETS_ENCRYPT_CERT:-0}
+  LETS_ENCRYPT_EMAIL: ${LETS_ENCRYPT_EMAIL:-}
+  LETS_ENCRYPT_DOMAINS: ${LETS_ENCRYPT_DOMAINS:-}
+  LETS_ENCRYPT_STAGING: ${LETS_ENCRYPT_STAGING:-0}
+
+services:
+  t2-base:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PATCH_URL: ${PATCH_URL:-https://www.tribesnext.com/files/TribesNEXT_20250922_preview.exe}
+        PATCH_SHA256: ${PATCH_SHA256:-}
+        WINE_BRANCH: ${WINE_BRANCH:-stable}
+    image: tribes2-server:base
+    container_name: tribes2-base
+    restart: on-failure
+    environment:
+      <<: *common-env
+      LAUNCH_PARAMS: ${LAUNCH_PARAMS:--online -dedicated}
+    ports:
+      - "${PANEL_HTTP_PORT:-8080}:8080"
+      - "${PANEL_HTTPS_PORT:-8443}:8443"
+      - "${GAME_PORT:-28000}:28000/udp"
+    volumes:
+      - base-data:/data
+
+  t2-classic:
+    profiles: ["classic"]
+    build:
+      context: .
+      dockerfile: mods/classic/Dockerfile
+      args:
+        BASE_IMAGE: tribes2-server:base
+    image: tribes2-server:classic
+    container_name: tribes2-classic
+    restart: on-failure
+    environment:
+      <<: *common-env   # LAUNCH_PARAMS baked into the image
+    ports:
+      - "${CLASSIC_HTTP_PORT:-8081}:8080"
+      - "${CLASSIC_HTTPS_PORT:-8444}:8443"
+      - "${CLASSIC_GAME_PORT:-28001}:28000/udp"
+    volumes:
+      - classic-data:/data
+
+  t2-construction:
+    profiles: ["construction"]
+    build:
+      context: .
+      dockerfile: mods/construction/Dockerfile
+      args:
+        BASE_IMAGE: tribes2-server:base
+    image: tribes2-server:construction
+    container_name: tribes2-construction
+    restart: on-failure
+    environment:
+      <<: *common-env   # LAUNCH_PARAMS baked into the image
+    ports:
+      - "${CONSTRUCTION_HTTP_PORT:-8082}:8080"
+      - "${CONSTRUCTION_HTTPS_PORT:-8445}:8443"
+      - "${CONSTRUCTION_GAME_PORT:-28002}:28000/udp"
+    volumes:
+      - construction-data:/data
+
+volumes:
+  base-data:
+  classic-data:
+  construction-data:

@@ -1,0 +1,130 @@
+name: Build and push images to GHCR
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  # ---- base (standard) image: Wine + Tribes 2 + Tribes 2 + panel ----------
+  base:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      repo_lc: ${{ steps.vars.outputs.repo_lc }}
+    steps:
+      - name: Compute lowercase repo
+        id: vars
+        run: echo "repo_lc=${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+
+      - name: Free up disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/lib/android "$AGENT_TOOLSDIRECTORY" /opt/hostedtoolcache/CodeQL || true
+          sudo docker image prune -af || true
+          df -h
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      # The 453 MB game data is never committed. Fetch it into the build context
+      # before `docker build`. Preferred: a GitHub Release asset named
+      # tribesinstall.7z (set the repo variable GAMEDATA_RELEASE_TAG to its tag).
+      # Fallback: a direct URL in the GAMEDATA_URL secret.
+      - name: Provide game data
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GAMEDATA_RELEASE_TAG: ${{ vars.GAMEDATA_RELEASE_TAG }}
+          GAMEDATA_URL: ${{ secrets.GAMEDATA_URL }}
+        run: |
+          if [ -f content/tribesinstall.7z ]; then
+            echo "Using game data already present in the checkout."
+          elif [ -n "$GAMEDATA_RELEASE_TAG" ]; then
+            echo "Downloading game data from Release '$GAMEDATA_RELEASE_TAG'…"
+            gh release download "$GAMEDATA_RELEASE_TAG" --repo "$GITHUB_REPOSITORY" \
+              --pattern 'tribesinstall.7z' --output content/tribesinstall.7z --clobber
+          elif [ -n "$GAMEDATA_URL" ]; then
+            echo "Downloading game data from GAMEDATA_URL…"
+            curl -fSL "$GAMEDATA_URL" -o content/tribesinstall.7z
+          else
+            echo "::error::No game data source. Set the GAMEDATA_RELEASE_TAG repo variable (Release asset) or the GAMEDATA_URL secret."
+            exit 1
+          fi
+          ls -lh content/tribesinstall.7z
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push base
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ steps.vars.outputs.repo_lc }}/base:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ steps.vars.outputs.repo_lc }}/base:latest
+          build-args: |
+            PATCH_URL=${{ vars.PATCH_URL || 'https://www.tribesnext.com/files/TribesNEXT_20250922_preview.exe' }}
+            PATCH_SHA256=${{ vars.PATCH_SHA256 }}
+            WINE_BRANCH=${{ vars.WINE_BRANCH || 'stable' }}
+          cache-from: type=gha,scope=base
+          cache-to: type=gha,mode=max,scope=base
+
+  # ---- derived mod images: Classic + Construction (FROM the base) -----------
+  mods:
+    needs: base
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        mod: [classic, construction]
+    steps:
+      - name: Free up disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/lib/android "$AGENT_TOOLSDIRECTORY" /opt/hostedtoolcache/CodeQL || true
+          sudo docker image prune -af || true
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push ${{ matrix.mod }}
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: mods/${{ matrix.mod }}/Dockerfile
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ needs.base.outputs.repo_lc }}/${{ matrix.mod }}:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ needs.base.outputs.repo_lc }}/${{ matrix.mod }}:latest
+          build-args: |
+            BASE_IMAGE=${{ env.REGISTRY }}/${{ needs.base.outputs.repo_lc }}/base:${{ github.sha }}
+          cache-from: type=gha,scope=${{ matrix.mod }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.mod }}
