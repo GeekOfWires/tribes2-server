@@ -1,6 +1,6 @@
 # Tribes 2 Dedicated Server Container
 
-<img src="panel/ClientApp/public/icon.svg" alt="Tribes 2 server emblem" width="104" align="right" />
+<img src="docs/assets/icon-gold.svg" alt="Tribes 2 server emblem" width="104" align="right" />
 
 A single Docker image that runs a **Tribes 2** (2002) dedicated server under **Wine** on
 **Debian**, applies the **Tribes 2** community patch, and ships an integrated

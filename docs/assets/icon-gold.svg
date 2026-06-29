@@ -1,0 +1,23 @@
+<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ttl dsc">
+  <title id="ttl">Tribes 2 server emblem</title>
+  <desc id="dsc">Two separate mirrored prongs — each a raised, bent arm over a straight leg — divided by a central gap, with a rivet at each shoulder, in classic gold.</desc>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4c14e"/>
+      <stop offset=".5" stop-color="#c4881c"/>
+      <stop offset="1" stop-color="#8a5a0e"/>
+    </linearGradient>
+  </defs>
+
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M108 236 L108 150 L62 108 L96 32 M148 236 L148 150 L194 108 L160 32"
+          stroke="#1c1305" stroke-width="32"/>
+    <path d="M108 236 L108 150 L62 108 L96 32 M148 236 L148 150 L194 108 L160 32"
+          stroke="url(#g)" stroke-width="22"/>
+  </g>
+
+  <g stroke="#3f4a44" stroke-width="2">
+    <circle cx="108" cy="150" r="8" fill="#cfd8d2"/>
+    <circle cx="148" cy="150" r="8" fill="#cfd8d2"/>
+  </g>
+</svg>
