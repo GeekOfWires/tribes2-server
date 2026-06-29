@@ -1,0 +1,12 @@
+# Local-preview overrides for the docs site. Layer this on top of _config.yml so the
+# site serves at the server root instead of under the GitHub Pages project path
+# (/tribes2-server). Without this, local previews have "no styling / broken links"
+# because every asset URL is prefixed with the production baseurl.
+#
+# Preview locally (from docs/):
+#   bundle exec jekyll serve --config _config.yml,_config_dev.yml --livereload
+#   -> open http://127.0.0.1:4000/
+#
+# (CI / GitHub Pages ignores this file and builds with the real baseurl.)
+url: ""
+baseurl: ""

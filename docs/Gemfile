@@ -1,5 +1,10 @@
 # Used by the GitHub Pages workflow (.github/workflows/pages.yml) to build the docs site.
 # Jekyll 4 + just-the-docs, with the relative-links / readme-index plugins.
+#
+# Preview locally (from docs/):
+#   bundle install
+#   bundle exec jekyll serve --config _config.yml,_config_dev.yml --livereload
+#   -> http://127.0.0.1:4000/   (the dev config drops the /tribes2-server baseurl)
 source "https://rubygems.org"
 
 gem "jekyll", "~> 4.3"

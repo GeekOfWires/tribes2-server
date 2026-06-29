@@ -47,3 +47,4 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - vendor
+  - _config_dev.yml
