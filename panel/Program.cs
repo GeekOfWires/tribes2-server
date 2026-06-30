@@ -2,91 +2,99 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using TribesServerPanel;
 using TribesServerPanel.Auth;
 using TribesServerPanel.Data;
 using TribesServerPanel.Services;
 using TribesServerPanel.Tls;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace TribesServerPanel;
 
-// Environment variables are already a configuration source (no prefix), so
-// cfg["GAME_DIR"], cfg["SELF_SIGNED_CERT"], etc. read the container env directly.
-var cfg = builder.Configuration;
-
-// ---- TLS / Kestrel endpoints (self-signed | Let's Encrypt | plain HTTP) ----
-TlsConfigurator.Configure(builder);
-
-// ---- database (EF Core on the libSQL-compatible SQLite file) ----------------
-var dbPath = cfg["PANEL_DB_PATH"] ?? "/data/panel.db";
-var dataDir = Path.GetDirectoryName(Path.GetFullPath(dbPath))!;
-Directory.CreateDirectory(dataDir);
-builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite($"Data Source={dbPath}"));
-
-// Persist data-protection keys so auth cookies survive restarts/redeploys.
-var keysDir = cfg["DATAPROTECTION_DIR"] ?? Path.Combine(dataDir, "keys");
-Directory.CreateDirectory(keysDir);
-builder.Services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(keysDir));
-
-// ---- ASP.NET Core Identity --------------------------------------------------
-builder.Services
-    .AddIdentity<ApplicationUser, ApplicationRole>(o =>
-    {
-        o.Password.RequiredLength = 8;
-        o.Password.RequireNonAlphanumeric = false;
-        o.Password.RequireUppercase = false;
-        o.User.RequireUniqueEmail = false;
-    })
-    .AddEntityFrameworkStores<AppDbContext>()
-    .AddDefaultTokenProviders();
-
-builder.Services.ConfigureApplicationCookie(o =>
+public class Program
 {
-    o.Cookie.HttpOnly = true;
-    o.Cookie.SameSite = SameSiteMode.Strict;
-    o.SlidingExpiration = true;
-    o.ExpireTimeSpan = TimeSpan.FromHours(8);
-    // API-friendly: return status codes instead of HTML redirects.
-    o.Events.OnRedirectToLogin = ctx => { ctx.Response.StatusCode = StatusCodes.Status401Unauthorized; return Task.CompletedTask; };
-    o.Events.OnRedirectToAccessDenied = ctx => { ctx.Response.StatusCode = StatusCodes.Status403Forbidden; return Task.CompletedTask; };
-});
+    public static async Task Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-// ---- authorization: rank-based policies (role rank >= threshold) ------------
-static int MaxRank(ClaimsPrincipal u) =>
-    u.FindAll(ClaimTypes.Role).Select(c => Roles.Rank(c.Value)).DefaultIfEmpty(0).Max();
+        // Environment variables are already a configuration source (no prefix), so
+        // cfg["GAME_DIR"], cfg["SELF_SIGNED_CERT"], etc. read the container env directly.
+        var cfg = builder.Configuration;
 
-builder.Services.AddAuthorizationBuilder()
-    .AddPolicy(Roles.PolicyUser, p => p.RequireAssertion(c => MaxRank(c.User) >= Roles.Rank(Roles.User)))
-    .AddPolicy(Roles.PolicyAdmin, p => p.RequireAssertion(c => MaxRank(c.User) >= Roles.Rank(Roles.Admin)))
-    .AddPolicy(Roles.PolicySuperAdmin, p => p.RequireAssertion(c => MaxRank(c.User) >= Roles.Rank(Roles.SuperAdmin)))
-    .AddPolicy(Roles.PolicyRoot, p => p.RequireAssertion(c => MaxRank(c.User) >= Roles.Rank(Roles.Root)));
+        // ---- TLS / Kestrel endpoints (self-signed | Let's Encrypt | plain HTTP) ----
+        TlsConfigurator.Configure(builder);
 
-// ---- game supervisor (singleton + hosted worker service) --------------------
-builder.Services.AddSingleton<ConsoleHub>();
-builder.Services.AddSingleton<GameSupervisor>();
-builder.Services.AddHostedService(sp => sp.GetRequiredService<GameSupervisor>());
+        // ---- database (EF Core on the libSQL-compatible SQLite file) ----------------
+        var dbPath = cfg["PANEL_DB_PATH"] ?? "/data/panel.db";
+        var dataDir = Path.GetDirectoryName(Path.GetFullPath(dbPath))!;
+        Directory.CreateDirectory(dataDir);
+        builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite($"Data Source={dbPath}"));
 
-// ---- file browser/editor scope resolver -------------------------------------
-builder.Services.AddSingleton<TribesServerPanel.Services.FileAccess>();
+        // Persist data-protection keys so auth cookies survive restarts/redeploys.
+        var keysDir = cfg["DATAPROTECTION_DIR"] ?? Path.Combine(dataDir, "keys");
+        Directory.CreateDirectory(keysDir);
+        builder.Services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(keysDir));
 
-// Allow large file uploads through the panel (mod packs, maps). Admin-only surface.
-builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(o => o.MultipartBodyLengthLimit = long.MaxValue);
-builder.WebHost.ConfigureKestrel(k => k.Limits.MaxRequestBodySize = null);
+        // ---- ASP.NET Core Identity --------------------------------------------------
+        builder.Services
+            .AddIdentity<ApplicationUser, ApplicationRole>(o =>
+            {
+                o.Password.RequiredLength = 8;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequireUppercase = false;
+                o.User.RequireUniqueEmail = false;
+            })
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
 
-var app = builder.Build();
+        builder.Services.ConfigureApplicationCookie(o =>
+        {
+            o.Cookie.HttpOnly = true;
+            o.Cookie.SameSite = SameSiteMode.Strict;
+            o.SlidingExpiration = true;
+            o.ExpireTimeSpan = TimeSpan.FromHours(8);
+            // API-friendly: return status codes instead of HTML redirects.
+            o.Events.OnRedirectToLogin = ctx => { ctx.Response.StatusCode = StatusCodes.Status401Unauthorized; return Task.CompletedTask; };
+            o.Events.OnRedirectToAccessDenied = ctx => { ctx.Response.StatusCode = StatusCodes.Status403Forbidden; return Task.CompletedTask; };
+        });
 
-// ---- migrate + seed roles and the root user --------------------------------
-await Bootstrap.InitializeAsync(app.Services, cfg);
+        // ---- authorization: rank-based policies (role rank >= threshold) ------------
+        builder.Services.AddAuthorizationBuilder()
+            .AddPolicy(Roles.PolicyUser, p => p.RequireAssertion(c => MaxRank(c.User) >= Roles.Rank(Roles.User)))
+            .AddPolicy(Roles.PolicyAdmin, p => p.RequireAssertion(c => MaxRank(c.User) >= Roles.Rank(Roles.Admin)))
+            .AddPolicy(Roles.PolicySuperAdmin, p => p.RequireAssertion(c => MaxRank(c.User) >= Roles.Rank(Roles.SuperAdmin)))
+            .AddPolicy(Roles.PolicyRoot, p => p.RequireAssertion(c => MaxRank(c.User) >= Roles.Rank(Roles.Root)));
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
-app.UseWebSockets();           // root web terminal (PTY) rides on this
-app.UseAuthentication();
-app.UseAuthorization();
+        // ---- game supervisor (singleton + hosted worker service) --------------------
+        builder.Services.AddSingleton<ConsoleHub>();
+        builder.Services.AddSingleton<GameSupervisor>();
+        builder.Services.AddHostedService(sp => sp.GetRequiredService<GameSupervisor>());
 
-app.MapPanelEndpoints();
-app.MapFileEndpoints();
-app.MapTerminalEndpoints();
-app.MapFallbackToFile("index.html"); // SPA client-side routing
+        // ---- file browser/editor scope resolver -------------------------------------
+        builder.Services.AddSingleton<TribesServerPanel.Services.FileAccess>();
 
-app.Run();
+        // Allow large file uploads through the panel (mod packs, maps). Admin-only surface.
+        builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(o => o.MultipartBodyLengthLimit = long.MaxValue);
+        builder.WebHost.ConfigureKestrel(k => k.Limits.MaxRequestBodySize = null);
+
+        var app = builder.Build();
+
+        // ---- migrate + seed roles and the root user --------------------------------
+        await Bootstrap.InitializeAsync(app.Services, cfg);
+
+        app.UseDefaultFiles();
+        app.UseStaticFiles();
+        app.UseWebSockets();           // root web terminal (PTY) rides on this
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapPanelEndpoints();
+        app.MapFileEndpoints();
+        app.MapTerminalEndpoints();
+        app.MapFallbackToFile("index.html"); // SPA client-side routing
+
+        await app.RunAsync();
+    }
+
+    // Highest rank across the principal's role claims (0 if none).
+    private static int MaxRank(ClaimsPrincipal u) =>
+        u.FindAll(ClaimTypes.Role).Select(c => Roles.Rank(c.Value)).DefaultIfEmpty(0).Max();
+}
