@@ -298,3 +298,20 @@ panel/                     ASP.NET Core 10 control panel (PID 1)
   ClientApp/               React + Vite + TS SPA (built into wwwroot)
 .github/workflows/build.yml  CI: build + push base/classic/construction to GHCR
 ```
+
+## License
+
+This project's own code, Dockerfiles, scripts, and documentation are released under the
+[MIT License](LICENSE) — © 2026 GeekOfWires.
+
+It does **not** relicense third-party components, which keep their own terms:
+
+- **Tribes 2** (the game) — proprietary; **not redistributed here**. `GameData` is extracted at
+  build time from the publicly hosted GSI installer (see [Game data](#game-data-fetched-from-the-gsi-at-build-time)).
+- **The community QoL patch** — fetched at build time from its own host (`PATCH_URL`).
+- **Bundled community mods** — `content/classic_v152.zip`, `content/Construction_v0.70a.exe`,
+  redistributed under their authors' terms.
+- **Fonts** — Electrolize and Share Tech Mono, under the SIL Open Font License (see the
+  `OFL-*.txt` files alongside the bundled `.woff2`).
+- **Microsoft VC++ runtime** — fetched from Microsoft at build time under its own redistribution terms.
+- **[REWise](https://codeberg.org/CYBERDEV/REWise)** (build-time GSI extraction) — under its own license.
