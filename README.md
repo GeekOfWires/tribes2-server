@@ -44,7 +44,9 @@ In-depth guides:
    - **Newer 32-bit Windows APIs** (what the QoL patch needs) — the real Microsoft **VC++ 2022**
      DLLs (`vcrun22`: `msvcp140`, `vcruntime140`, `concrt140`, …) dropped into `system32`,
      with native DLL-overrides. No Ruby — the 2025 QoL is native code inside `IFC22.dll`.
-4. Extracts `content/tribesinstall.7z` so `GameData` lands at `C:\Dynamix\Tribes2\GameData`.
+4. Installs the base game from the public **GSI installer** (`GSI_URL` build ARG). It's a Wise
+   installer with no working headless mode, so a tiny static build of [REWise](https://codeberg.org/CYBERDEV/REWise)
+   **extracts `GameData` from it without running it** (no Wine, no display) to `C:\Dynamix\Tribes2\GameData`.
 5. Downloads the **Tribes 2 QoL patch** (`PATCH_URL` build ARG — the "variable";
    defaults to `TribesNEXT_20250922_preview.exe`). It's an **NSIS installer**, so `7z`
    extracts its payload deterministically (`IFC22.dll`, Miles sound libs, SDL3/OpenAL/
@@ -210,32 +212,22 @@ docker run --rm --entrypoint bash tribes2-server:base -c '
 # "Current subsystem: CUI" confirms the headless console patch is applied.
 ```
 
-## Game data (`tribesinstall.7z`)
+## Game data (fetched from the GSI at build time)
 
-The 453 MB game archive is **never committed to git** — GitHub rejects regular files >100 MB and
-we don't use Git LFS. Instead the Dockerfile reads it from the **build context** at
-`content/tribesinstall.7z`, and something puts it there depending on where you build:
+No game archive lives in the repo or CI. The base game ships as the public **GSI installer**
+(`tribes2gsi.exe`, a Wise installer), and the build pulls `GameData` out of it directly:
 
-- **Local builds:** keep the file on disk at `content/tribesinstall.7z`. `docker compose build`
-  bind-mounts it during the build (it is *not* copied into an image layer). It's git-ignored, so
-  it won't accidentally get committed.
-- **GitHub CI:** upload the same file **once** as a GitHub **Release asset** (Release assets allow
-  up to 2 GB, are free, and don't count against any LFS quota). The workflow downloads it into the
-  context before building.
+1. The build downloads the GSI from `GSI_URL` (default `https://depot.tribes2.net/legacy/tribes2gsi.exe`;
+   override with the `GSI_URL` repo variable, or pin its hash with `GSI_SHA256`).
+2. A tiny static build of [**REWise**](https://codeberg.org/CYBERDEV/REWise) — a tool that
+   extracts files from Wise installers **without executing them** — pulls just `MAINDIR/Tribes2/GameData/*`
+   out of the installer. No Wine, no display, no GUI: the installer is never run.
+3. The 538 MB installer is downloaded and removed in the **same** build layer, so only the
+   extracted `GameData` persists in the image.
 
-One-time CI setup (uses the built-in token, no secret needed):
-
-```bash
-# create a release that holds the game data and attach the 7z
-gh release create gamedata-v1 content/tribesinstall.7z --title "Game data" --notes "tribesinstall.7z"
-# tell the workflow which release to pull from:
-gh variable set GAMEDATA_RELEASE_TAG --body gamedata-v1
-```
-
-(Helper: `scripts/publish-gamedata.sh gamedata-v1` does both.) The workflow's *Provide game data*
-step then runs `gh release download "$GAMEDATA_RELEASE_TAG" --pattern tribesinstall.7z`. A direct
-URL via the `GAMEDATA_URL` secret is supported as a fallback. To update the data later, upload a new
-asset / bump the tag — no code change.
+This makes both local and CI builds **self-sufficient from a public source** — nothing to host,
+no secrets, no committed game files. (The installer's silent mode does *not* work headlessly, which
+is why we extract rather than run it.)
 
 ## Building on GitHub → GHCR
 
@@ -243,9 +235,10 @@ A workflow at `.github/workflows/build.yml` builds all three images and pushes t
 Container Registry on push to `main`, on `v*` tags, or manually:
 `ghcr.io/<owner>/<repo>/base`, `/classic`, `/construction` (tagged with the commit SHA and
 `latest`). The `base` job runs first; a `mods` matrix job then builds Classic and Construction
-`FROM` the freshly pushed base. The base build pulls game data as described above; the
-Tribes 2 patch is fetched from `PATCH_URL` (overridable via the `PATCH_URL` repo
-*variable*); the Classic mod zip and Construction installer **are** committed under `content/`.
+`FROM` the freshly pushed base. The base build pulls game data from the public GSI as described
+above (nothing to provision); the Tribes 2 patch is fetched from `PATCH_URL` (overridable via the
+`PATCH_URL` repo *variable*); the Classic mod zip and Construction installer **are** committed under
+`content/`.
 
 Feasibility notes: the runner needs free disk for a multi-GB Wine image (the workflow frees
 space first) and the build installs Wine + downloads the VC++ runtime; expect a long first build.
@@ -290,8 +283,7 @@ mods/
   classic/Dockerfile       Classic image (classic_v152 + TacoServer) FROM base
   construction/Dockerfile  Construction image (Construction_v0.70a) FROM base
 docker-compose.yml         base + classic + construction services (profiles)
-content/
-  tribesinstall.7z         game data (GameData/ at archive root; not committed)
+content/                   (game data is fetched from the GSI at build time; not committed)
   classic_v152.zip         Classic v1.52 mod (committed)
   Construction_v0.70a.exe  Construction mod RAR self-extractor (committed)
   tribes_dual_patcher.py   PE patcher (subsystem GUI->CUI for headless console I/O)

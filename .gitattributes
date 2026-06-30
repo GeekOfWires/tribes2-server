@@ -5,7 +5,3 @@
 *.7z binary
 *.exe binary
 *.dll binary
-
-# If you install Git LFS and want to commit content/tribesinstall.7z, remove the
-# matching line in .gitignore and uncomment:
-# *.7z filter=lfs diff=lfs merge=lfs -text

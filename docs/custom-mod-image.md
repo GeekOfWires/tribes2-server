@@ -230,8 +230,8 @@ to GHCR, add it to the matrix in [`.github/workflows/build.yml`](https://github.
 - **Don't override `LAUNCH_PARAMS` to add `-mod`.** Use `SERVER_RULESET` so the panel stays in
   control and `serverprefs`/discovery line up. (If you *do* hardcode `-mod` in `LAUNCH_PARAMS`,
   the supervisor won't double-insert it.)
-- **The 453 MB game archive is not in the image** — the base image bind-mounts it at build time.
-  Your derived image only adds your (small) mod layer.
+- **No game archive is needed** — the base image extracts `GameData` from the public GSI installer
+  at build time (with REWise). Your derived image only adds your (small) mod layer.
 
 ## See also
 - [Rulesets & mods](rulesets-and-mods.md) · [Building & deploying](building-and-deploying.md)

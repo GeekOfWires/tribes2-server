@@ -73,9 +73,12 @@ the image's distro/codename.
 1. **spa-build** (`node`) — builds the React SPA → `/wwwroot`.
 2. **app-build** (`dotnet/sdk`) — restores + publishes the panel (framework-dependent) and copies
    in the SPA.
-3. **runtime** (`dotnet/aspnet`, Ubuntu) — i386 multiarch + WineHQ + Wine; `wineboot` headless;
-   fetch + unpack the official VC++ runtime DLLs; bind-mount + extract the game; overlay the QoL
-   patch; run the PE patcher; copy in the published panel. Entrypoint = the panel under `tini`.
+3. **rewise-build** (`debian`) — compiles a tiny static [REWise](https://codeberg.org/CYBERDEV/REWise)
+   binary (pinned commit) used to extract `GameData` from the GSI installer.
+4. **runtime** (`dotnet/aspnet`, Ubuntu) — i386 multiarch + WineHQ + Wine; `wineboot` headless;
+   fetch + unpack the official VC++ runtime DLLs; download the public GSI installer and extract the
+   game from it with REWise (no install run); overlay the QoL patch; run the PE patcher; copy in the
+   published panel. Entrypoint = the panel under `tini`.
 
 ## Crash tracking
 

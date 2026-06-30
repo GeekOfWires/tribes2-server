@@ -31,33 +31,11 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          lfs: true
 
-      # The 453 MB game data is never committed. Fetch it into the build context
-      # before `docker build`. Preferred: a GitHub Release asset named
-      # tribesinstall.7z (set the repo variable GAMEDATA_RELEASE_TAG to its tag).
-      # Fallback: a direct URL in the GAMEDATA_URL secret.
-      - name: Provide game data
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GAMEDATA_RELEASE_TAG: ${{ vars.GAMEDATA_RELEASE_TAG }}
-          GAMEDATA_URL: ${{ secrets.GAMEDATA_URL }}
-        run: |
-          if [ -f content/tribesinstall.7z ]; then
-            echo "Using game data already present in the checkout."
-          elif [ -n "$GAMEDATA_RELEASE_TAG" ]; then
-            echo "Downloading game data from Release '$GAMEDATA_RELEASE_TAG'…"
-            gh release download "$GAMEDATA_RELEASE_TAG" --repo "$GITHUB_REPOSITORY" \
-              --pattern 'tribesinstall.7z' --output content/tribesinstall.7z --clobber
-          elif [ -n "$GAMEDATA_URL" ]; then
-            echo "Downloading game data from GAMEDATA_URL…"
-            curl -fSL "$GAMEDATA_URL" -o content/tribesinstall.7z
-          else
-            echo "::error::No game data source. Set the GAMEDATA_RELEASE_TAG repo variable (Release asset) or the GAMEDATA_URL secret."
-            exit 1
-          fi
-          ls -lh content/tribesinstall.7z
+      # No game data needs to be supplied to the build context: the Dockerfile fetches
+      # the public GSI installer at build time and extracts GameData from it with REWise
+      # (without running the installer). Override the source with the GSI_URL repo
+      # variable if the depot location changes.
 
       - name: Log in to GHCR
         uses: docker/login-action@v3
@@ -81,6 +59,8 @@ jobs:
           build-args: |
             PATCH_URL=${{ vars.PATCH_URL || 'https://www.tribesnext.com/files/TribesNEXT_20250922_preview.exe' }}
             PATCH_SHA256=${{ vars.PATCH_SHA256 }}
+            GSI_URL=${{ vars.GSI_URL || 'https://depot.tribes2.net/legacy/tribes2gsi.exe' }}
+            GSI_SHA256=${{ vars.GSI_SHA256 }}
             WINE_BRANCH=${{ vars.WINE_BRANCH || 'stable' }}
           cache-from: type=gha,scope=base
           cache-to: type=gha,mode=max,scope=base

@@ -40,6 +40,8 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
+        GSI_URL: ${GSI_URL:-https://depot.tribes2.net/legacy/tribes2gsi.exe}
+        GSI_SHA256: ${GSI_SHA256:-}
         PATCH_URL: ${PATCH_URL:-https://www.tribesnext.com/files/TribesNEXT_20250922_preview.exe}
         PATCH_SHA256: ${PATCH_SHA256:-}
         WINE_BRANCH: ${WINE_BRANCH:-stable}

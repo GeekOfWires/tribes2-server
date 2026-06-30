@@ -68,11 +68,12 @@ investigate, set `RESTART_ON_CRASH=false` (the supervisor stays down after an ex
 HTTPS is bound only when `SELF_SIGNED_CERT=1` or `LETS_ENCRYPT_CERT=1`. For Let's Encrypt the
 domain must resolve here and the HTTP port must be internet-reachable (HTTP-01). See [TLS](tls.md).
 
-## CI build fails: "No game data source"
+## Base build fails downloading the game data
 
-The base image needs `content/tribesinstall.7z`. In CI, set the `GAMEDATA_RELEASE_TAG` repo
-variable (a Release asset) or the `GAMEDATA_URL` secret. See
-[Building & deploying](building-and-deploying.md#providing-game-data-to-ci).
+The base image downloads the public GSI installer (`GSI_URL`, default `depot.tribes2.net`) and
+extracts `GameData` from it with REWise. If the build fails at that step, the depot may be
+unreachable or moved — point `GSI_URL` at a working mirror (repo variable in CI, or `--build-arg`
+locally). See [Building & deploying](building-and-deploying.md#game-data-comes-from-the-public-gsi-installer).
 
 ## Inspecting from the inside
 

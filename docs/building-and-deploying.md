@@ -5,15 +5,24 @@ nav_order: 7
 
 # Building & deploying
 
-## Game data is not in the repo
+## Game data comes from the public GSI installer
 
-The ~453 MB game archive (`content/tribesinstall.7z`) is **not committed** (it exceeds GitHub's
-file limits and isn't ours to redistribute). The base image consumes it via a **BuildKit bind
-mount** at build time, so it never becomes an image layer. You must make it available in the
-build context:
+No game archive lives in the repo or CI — we host nothing that isn't ours to redistribute. The
+base game ships as the public **GSI installer** (`tribes2gsi.exe`, a Wise installer), and the build
+extracts `GameData` from it directly — without ever running it:
 
-- **Locally** — place `content/tribesinstall.7z` in the repo before building.
-- **In CI** — provide it via a GitHub **Release asset** or a URL (see below).
+1. The build downloads the GSI from `GSI_URL` (default
+   `https://depot.tribes2.net/legacy/tribes2gsi.exe`).
+2. A tiny static build of [**REWise**](https://codeberg.org/CYBERDEV/REWise) — which extracts files
+   from Wise installers **without executing the `.exe`** — pulls just `MAINDIR/Tribes2/GameData/*`
+   from it. No Wine, no display, no GUI.
+3. The 538 MB installer is fetched and removed in the **same** build layer; only the extracted
+   `GameData` persists.
+
+REWise itself is compiled in a small `rewise-build` stage and pinned to a specific commit
+(`REWISE_REF`). This makes **both local and CI builds self-sufficient from a public source** — no
+secrets, no Release assets, no committed game files. (The installer's silent mode does not work
+headlessly, so extraction — not running it — is the only viable path.)
 
 Everything else a mod needs (`content/classic_v152.zip`, `content/Construction_v0.70a.exe`) **is**
 committed.
@@ -93,21 +102,17 @@ push to `main`, on `v*` tags, or manually (`workflow_dispatch`):
 
 Both use GitHub Actions cache (`type=gha`) and free up runner disk first.
 
-### Providing game data to CI
-The `base` job resolves `content/tribesinstall.7z` in this order:
-1. already present in the checkout, else
-2. **Release asset** named `tribesinstall.7z` — set the repo **variable** `GAMEDATA_RELEASE_TAG`
-   to the release tag, else
-3. the **`GAMEDATA_URL`** secret (a direct download URL).
-
-If none is available the build fails with a clear error.
+### Game data in CI
+Nothing to provision: the `base` job's `docker build` downloads the public GSI installer and
+extracts `GameData` with REWise (see above). Override the source with the `GSI_URL` repo variable
+if the depot location changes, or pin its checksum with `GSI_SHA256`.
 
 ### Repo variables / secrets
 
 | Name | Kind | Purpose |
 |------|------|---------|
-| `GAMEDATA_RELEASE_TAG` | variable | Release tag holding `tribesinstall.7z`. |
-| `GAMEDATA_URL` | secret | Fallback direct URL for the game archive. |
+| `GSI_URL` | variable | Override the GSI installer URL (default `depot.tribes2.net`). |
+| `GSI_SHA256` | variable | Pin the GSI installer checksum. |
 | `PATCH_URL` | variable | Override the QoL patch URL. |
 | `PATCH_SHA256` | variable | Pin the patch checksum. |
 | `WINE_BRANCH` | variable | Wine branch. |

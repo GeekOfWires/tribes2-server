@@ -30,12 +30,29 @@ COPY panel/ ./
 COPY --from=spa-build /wwwroot ./wwwroot
 RUN dotnet publish -c Release -o /app/publish
 
+# ---------------------------------------------------------------- REWise (Wise installer extractor)
+# Builds a tiny static binary that extracts files from a Wise installer WITHOUT executing it
+# (no Wine, no display) — used to pull GameData out of the GSI installer at build time.
+FROM debian:bookworm-slim AS rewise-build
+ARG REWISE_REPO=https://codeberg.org/CYBERDEV/REWise.git
+ARG REWISE_REF=cea1e2501b9b84e8fd38908cb59dc0edad3a1c1f
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends git gcc libc6-dev zlib1g-dev ca-certificates \
+ && git clone "${REWISE_REPO}" /rw \
+ && git -C /rw checkout "${REWISE_REF}" \
+ && gcc -O2 -I/rw/src -o /rewise /rw/src/*.c -static -lz \
+ && /rewise 2>&1 | grep -q "input file"
+
 # ---------------------------------------------------------------- runtime image (ASP.NET owner)
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 USER root
 
 ARG PATCH_URL="https://www.tribesnext.com/files/TribesNEXT_20250922_preview.exe"
 ARG PATCH_SHA256=""
+# The full Tribes 2 game, from the public GSI (Wise) installer. Its GameData is extracted at
+# build time with REWise (no install run), so no game archive needs to live in the repo or CI.
+ARG GSI_URL="https://depot.tribes2.net/legacy/tribes2gsi.exe"
+ARG GSI_SHA256=""
 # Microsoft VC++ 2022 x86 redistributable (official). Fetched at build time so Microsoft
 # is the distributor and no Microsoft binaries are vendored in this repo.
 ARG VCREDIST_URL="https://aka.ms/vs/17/release/vc_redist.x86.exe"
@@ -100,11 +117,17 @@ RUN apt-get update \
  && rm -rf /tmp/vc.exe /tmp/ce /tmp/vcr \
  && test -f "${WINEPREFIX}/drive_c/windows/system32/vcruntime140.dll"
 
-# 5. extract the game; 7z root is GameData/, so extract into the parent (bind-mounted,
-#    so the 453 MB archive never becomes an image layer).
-RUN --mount=type=bind,source=content/tribesinstall.7z,target=/tmp/tribesinstall.7z \
-    mkdir -p "${WINEPREFIX}/drive_c/Dynamix/Tribes2" \
- && 7z x -y /tmp/tribesinstall.7z -o"${WINEPREFIX}/drive_c/Dynamix/Tribes2" \
+# 5. install the base game from the public GSI installer. It's a Wise installer (7z can't
+#    open it and its silent mode doesn't work headlessly), so REWise extracts GameData/ from
+#    it WITHOUT running it — fully headless, no Wine/display. The 538 MB installer is fetched
+#    and removed in this one layer; only the extracted GameData persists.
+COPY --from=rewise-build /rewise /usr/local/bin/rewise
+RUN wget -O /tmp/gsi.exe "${GSI_URL}" \
+ && if [ -n "${GSI_SHA256}" ]; then echo "${GSI_SHA256}  /tmp/gsi.exe" | sha256sum -c -; fi \
+ && mkdir -p /tmp/gsi-out "${WINEPREFIX}/drive_c/Dynamix/Tribes2" \
+ && rewise -x /tmp/gsi-out -f "MAINDIR/Tribes2/GameData/*" /tmp/gsi.exe >/dev/null \
+ && mv /tmp/gsi-out/MAINDIR/Tribes2/GameData "${WINEPREFIX}/drive_c/Dynamix/Tribes2/GameData" \
+ && rm -rf /tmp/gsi.exe /tmp/gsi-out /usr/local/bin/rewise \
  && test -f "${GAME_DIR}/Tribes2.exe"
 
 # 6. overlay the Tribes 2 NSIS patch payload (QoL in IFC22.dll; no Ruby)

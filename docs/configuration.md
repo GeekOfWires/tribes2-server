@@ -13,6 +13,9 @@ supervisor) and a few **build args** (baked at image build time). With Docker Co
 
 | Arg | Default | Purpose |
 |-----|---------|---------|
+| `GSI_URL` | `https://depot.tribes2.net/legacy/tribes2gsi.exe` | The public Tribes 2 **GSI installer**. `GameData` is extracted from it at build time with [REWise](https://codeberg.org/CYBERDEV/REWise) — the installer is never run. |
+| `GSI_SHA256` | *(empty)* | If set, the downloaded GSI installer is checksum-verified. |
+| `REWISE_REF` | *(pinned commit)* | Git ref of [REWise](https://codeberg.org/CYBERDEV/REWise) compiled in the `rewise-build` stage to extract the GSI. |
 | `PATCH_URL` | the community QoL patch URL | NSIS installer `.exe`; its payload is 7z-extracted over `GameData`. |
 | `PATCH_SHA256` | *(empty)* | If set, the downloaded patch is checksum-verified. |
 | `VCREDIST_URL` | `https://aka.ms/vs/17/release/vc_redist.x86.exe` | Microsoft's **official** VC++ 2022 x86 redistributable, fetched at build time and unpacked with `cabextract`; the runtime DLLs land in the Wine `system32`. |
