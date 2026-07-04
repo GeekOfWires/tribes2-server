@@ -70,15 +70,17 @@ public static class Bootstrap
                 await roleMgr.CreateAsync(new ApplicationRole(r));
 
         var userMgr = sp.GetRequiredService<UserManager<ApplicationUser>>();
-        var username = cfg["ROOT_USERNAME"] ?? cfg["PANEL_ROOT_USERNAME"] ?? "root";
-        var password = cfg["ROOT_PASSWORD"] ?? cfg["PANEL_ROOT_PASSWORD"];
+        // Accept the documented names and the intuitive short forms operators reach for
+        // (ROOT_USER / ROOT_PASS). Documented names win if several are set.
+        var username = cfg["ROOT_USERNAME"] ?? cfg["PANEL_ROOT_USERNAME"] ?? cfg["ROOT_USER"] ?? "root";
+        var password = cfg["ROOT_PASSWORD"] ?? cfg["PANEL_ROOT_PASSWORD"] ?? cfg["ROOT_PASS"];
 
         var anyRoot = (await userMgr.GetUsersInRoleAsync(Roles.Root)).Count > 0;
         if (anyRoot) return;
 
         if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
         {
-            log.LogWarning("No root user exists and ROOT_PASSWORD is not set; cannot bootstrap. Set ROOT_PASSWORD and restart.");
+            log.LogWarning("No root user exists and no root password is set; cannot bootstrap. Set ROOT_PASSWORD (min 8 chars; ROOT_USERNAME optional, default 'root') and restart.");
             return;
         }
 

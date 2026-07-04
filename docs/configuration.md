@@ -67,11 +67,12 @@ See [Building & deploying](building-and-deploying.md) for how to pass these.
 | `HTTPS_PORT` | `8443` | Panel HTTPS port (only bound if a cert is configured). |
 | `PANEL_DB_PATH` | `/data/panel.db` | SQLite/Turso-compatible database file. |
 | `DATAPROTECTION_DIR` | `<db dir>/keys` | Where ASP.NET Data Protection keys are persisted (so cookies survive restarts). |
-| `ROOT_USERNAME` | `root` | Initial root username (also accepts `PANEL_ROOT_USERNAME`). |
-| `ROOT_PASSWORD` | *(required on first boot)* | Initial root password (also accepts `PANEL_ROOT_PASSWORD`). Needed to seed the first root user. |
+| `ROOT_USERNAME` | `root` | Initial root username (also accepts `PANEL_ROOT_USERNAME` or `ROOT_USER`). |
+| `ROOT_PASSWORD` | *(required on first boot)* | Initial root password (also accepts `PANEL_ROOT_PASSWORD` or `ROOT_PASS`). Minimum 8 characters. Needed to seed the first root user. |
 
 > The root user is seeded **once**, on first boot, only if no root exists. After that,
-> `ROOT_PASSWORD` is ignored — manage users in the panel.
+> `ROOT_PASSWORD` is ignored — manage users in the panel. If you set `ROOT_USER`/`ROOT_USERNAME`,
+> log in with **that** username; otherwise the default is `root`.
 
 ### TLS
 See [TLS](tls.md) for details and examples.

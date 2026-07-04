@@ -37,9 +37,14 @@ public class Program
         builder.Services
             .AddIdentity<ApplicationUser, ApplicationRole>(o =>
             {
+                // Length-only policy (set every flag explicitly so there are no hidden
+                // Identity defaults). Otherwise RequireDigit/RequireLowercase silently
+                // reject an operator's ROOT_PASSWORD and no root user gets seeded.
                 o.Password.RequiredLength = 8;
                 o.Password.RequireNonAlphanumeric = false;
                 o.Password.RequireUppercase = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireDigit = false;
                 o.User.RequireUniqueEmail = false;
             })
             .AddEntityFrameworkStores<AppDbContext>()
