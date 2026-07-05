@@ -103,17 +103,21 @@ public sealed class GameSupervisor : BackgroundService
     // Override wins once set (even "" to force base); otherwise the SERVER_RULESET env default.
     private string EffectiveRuleset => _rulesetOverride ?? _ruleset;
 
-    // Final launch args = base params with "-mod &lt;ruleset&gt;" inserted before -dedicated
-    // (Tribes 2 convention: -online first, mods in the middle, -dedicated last).
+    // Final launch args = base params with "-mod &lt;ruleset&gt;" appended LAST.
+    // The engine's console_start.cs "-mod" handler advances the argv index by 2 (while every
+    // other value flag advances by 1), so it *swallows the argument that follows the mod name*.
+    // Putting "-mod <ruleset>" last means the only thing it can eat is a trailing nothing --
+    // any earlier -dedicated/-online is safely parsed. (The retail Classic launcher runs
+    // "-dedicated -mod Classic" for exactly this reason; "-mod Classic -dedicated" eats
+    // -dedicated and the server boots as a headless *client* -> Video Init -> crash.)
     private List<string> ComposeArgs()
     {
         var tokens = EffectiveLaunchParams.Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList();
         var rs = EffectiveRuleset;
         if (rs.Length > 0 && !tokens.Contains("-mod"))   // respect an explicit -mod in params
         {
-            var idx = tokens.FindIndex(t => t.Equals("-dedicated", StringComparison.OrdinalIgnoreCase));
-            if (idx >= 0) tokens.InsertRange(idx, new[] { "-mod", rs });
-            else { tokens.Add("-mod"); tokens.Add(rs); }
+            tokens.Add("-mod");
+            tokens.Add(rs);
         }
         return tokens;
     }

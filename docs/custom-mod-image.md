@@ -169,7 +169,7 @@ docker run --rm --entrypoint sh tribes2-server:mymod -c \
 # run it and confirm the composed launch line + discovery
 docker run -d --name t2mymod -e ROOT_PASSWORD=changeme -p 8080:8080 tribes2-server:mymod
 # then, after logging in as root:
-#   GET /api/server/status  -> "params": "-online -mod MyMod -dedicated", "ruleset": "MyMod"
+#   GET /api/server/status  -> "params": "-online -dedicated -mod MyMod", "ruleset": "MyMod"
 #   GET /api/config/rulesets -> ["base","MyMod", ...]
 ```
 

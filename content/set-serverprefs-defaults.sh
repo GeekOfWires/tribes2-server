@@ -14,13 +14,22 @@ LINE='$Host::Linux = 1;'
 ensure() {
     d="$1"
     mkdir -p "$d"
-    f="$d/serverprefs.cs"
-    if [ -f "$f" ]; then
+    # Wine's filesystem is case-INSENSITIVE, so serverPrefs.cs and serverprefs.cs are the same
+    # file to the engine. A mod may ship its real config as "serverPrefs.cs" (capital P); we
+    # must edit THAT file, not create a second casing. Two files differing only in case make
+    # Wine read an ambiguous/wrong one -- e.g. a stub carrying only $Host::Linux would shadow
+    # the mod's real serverPrefs.cs and drop $Host::Dedicated, launching a headless client.
+    f=""
+    for cand in "$d"/[Ss][Ee][Rr][Vv][Ee][Rr][Pp][Rr][Ee][Ff][Ss].cs; do
+        [ -f "$cand" ] && { f="$cand"; break; }
+    done
+    if [ -n "$f" ]; then
         if grep -q 'Host::Linux' "$f"; then
             return 0
         fi
         printf '\n// container default\n%s\n' "$LINE" >> "$f"
     else
+        f="$d/serverprefs.cs"
         printf '// container default\n%s\n' "$LINE" > "$f"
     fi
     echo "serverprefs default set: $f"

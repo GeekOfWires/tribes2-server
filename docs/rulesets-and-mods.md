@@ -22,15 +22,19 @@ ruleset without rebuilding.
 
 ## How `-mod` is composed
 
-The supervisor takes `LAUNCH_PARAMS` and, if a ruleset is selected, **inserts `-mod <ruleset>`
-just before `-dedicated`** (the Tribes 2 convention: `-online` first, mods in the middle,
-`-dedicated` last):
+The supervisor takes `LAUNCH_PARAMS` and, if a ruleset is selected, **appends `-mod <ruleset>`
+at the very end**. This matters: the engine's `console_start.cs` `-mod` handler advances the
+argument index by two (not one), so it *swallows the argument that follows the mod name*.
+Putting `-mod <ruleset>` last means it can only eat a trailing nothing — an earlier
+`-dedicated` is safely parsed. (Retail's Classic launcher runs `-dedicated -mod Classic` for
+the same reason; `-mod Classic -dedicated` eats `-dedicated` and the server boots as a headless
+*client*, which then crashes on video init.)
 
 | `LAUNCH_PARAMS` | `SERVER_RULESET` | Final command line |
 |-----------------|------------------|--------------------|
 | `-online -dedicated` | `""` or `base` | `-online -dedicated` (no `-mod`) |
-| `-online -dedicated` | `Classic` | `-online -mod Classic -dedicated` |
-| `-online -dedicated` | `MyMod` | `-online -mod MyMod -dedicated` |
+| `-online -dedicated` | `Classic` | `-online -dedicated -mod Classic` |
+| `-online -dedicated` | `MyMod` | `-online -dedicated -mod MyMod` |
 
 Rules:
 - **Empty or `base`** (any case) → **no `-mod`**.
