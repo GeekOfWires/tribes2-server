@@ -57,6 +57,9 @@ ARG GSI_SHA256=""
 # is the distributor and no Microsoft binaries are vendored in this repo.
 ARG VCREDIST_URL="https://aka.ms/vs/17/release/vc_redist.x86.exe"
 ARG VCREDIST_SHA256=""
+# PE header-flag patches (see step 7b). 1 = apply, 0 = skip.
+ARG PE_SET_LAA=1
+ARG PE_CLEAR_ASLR=1
 ARG WINE_BRANCH=stable
 # Pinned to Wine 10 (the Tribes 2-on-Wine community's proven version); Wine 11
 # regresses the T2 mission-start path. Blank = latest for the branch.
@@ -144,6 +147,23 @@ RUN wget -O /tmp/tnext.exe "${PATCH_URL}" \
 COPY content/tribes_dual_patcher.py /opt/patcher/tribes_dual_patcher.py
 RUN python3 /opt/patcher/tribes_dual_patcher.py --exe "${GAME_DIR}/Tribes2.exe" --backup \
  && python3 /opt/patcher/tribes_dual_patcher.py --exe "${GAME_DIR}/Tribes2.exe" --dry-run
+
+# 7b. PE header flags for crash-handling + headroom. These flip named header bits (located by
+#     parsing the header), never code bytes, so they re-apply cleanly to each new QoL release
+#     and cannot conflict with upstream changes inside IFC22.dll:
+#       * Tribes2.exe LARGE_ADDRESS_AWARE -> ~4 GB of user address space instead of 2 GB on a
+#         64-bit host, so a long-running server is far less likely to die on allocation failure.
+#       * IFC22.dll DYNAMIC_BASE cleared  -> the module loads at its preferred base every run, so
+#         the fault addresses in the panel's crash reports are comparable between restarts
+#         (crash grouping actually works). Relocations stay intact as a fallback.
+#     Set PE_SET_LAA=0 / PE_CLEAR_ASLR=0 to skip either one.
+COPY content/pe_flags_patch.py /opt/patcher/pe_flags_patch.py
+RUN if [ "${PE_SET_LAA}" = "1" ]; then \
+        python3 /opt/patcher/pe_flags_patch.py --file "${GAME_DIR}/Tribes2.exe" --set-laa --backup; \
+    fi \
+ && if [ "${PE_CLEAR_ASLR}" = "1" ]; then \
+        python3 /opt/patcher/pe_flags_patch.py --file "${GAME_DIR}/IFC22.dll" --clear-aslr --backup; \
+    fi
 
 # 8. serverprefs.cs build defaults ($Host::Linux = 1;). The helper is baked in so the
 #    derived mod images (FROM this) can reuse it for their own ruleset's prefs/.

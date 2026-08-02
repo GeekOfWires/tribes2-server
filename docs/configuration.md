@@ -20,6 +20,8 @@ supervisor) and a few **build args** (baked at image build time). With Docker Co
 | `PATCH_SHA256` | *(empty)* | If set, the downloaded patch is checksum-verified. |
 | `VCREDIST_URL` | `https://aka.ms/vs/17/release/vc_redist.x86.exe` | Microsoft's **official** VC++ 2022 x86 redistributable, fetched at build time and unpacked with `cabextract`; the runtime DLLs land in the Wine `system32`. |
 | `VCREDIST_SHA256` | *(empty)* | If set, the downloaded redist is checksum-verified. |
+| `PE_SET_LAA` | `1` | Set `LARGE_ADDRESS_AWARE` on `Tribes2.exe` — a 32-bit process gets ~4 GB of user address space instead of 2 GB on a 64-bit host, so a long-running server is far less likely to die on allocation failure. `0` to skip. |
+| `PE_CLEAR_ASLR` | `1` | Clear `DYNAMIC_BASE` on `IFC22.dll` so it loads at its preferred base every run, making the fault addresses in crash reports comparable between restarts. Relocations stay intact. `0` to skip. |
 | `WINE_BRANCH` | `stable` | WineHQ branch (`stable`/`staging`/`devel`). |
 | `WINE_VERSION` | `10.0.0.0` | Pinned Wine version (Wine 11 regresses the mission-start path). Blank = latest for the branch. |
 | `BASE_IMAGE` | `tribes2-server:base` | *(mod images only)* the base image to derive from. |
