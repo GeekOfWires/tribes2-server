@@ -25,7 +25,13 @@ RUN apt-get update \
  && apt-get purge -y unar && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* \
  && test -d "${GAME_DIR}/Construction/scripts"
 
-# serverprefs.cs build defaults for the Construction prefs/ (helper baked into the base image)
-RUN sh /usr/local/bin/set-serverprefs-defaults.sh "${GAME_DIR}" Construction
+# serverprefs.cs build defaults for the Construction prefs/ (helper baked into the base image).
+# PureBuild on by default: the mod re-reads $Host::Purebuild at every mission load
+# (Construction/scripts/server.cs -> loadMissionStage2) and calls purebuildOn()/purebuildOff(),
+# so setting the pref is enough -- the pure armor/deployable/vehicle rules follow automatically.
+# Single-quoted so the shell passes $Host:: through literally (RUN vars are expanded by the
+# shell, not by Docker, so single quotes are enough).
+RUN sh /usr/local/bin/set-serverprefs-defaults.sh "${GAME_DIR}" \
+      --pref '$Host::Purebuild = 1;' Construction
 
 ENV SERVER_RULESET="Construction"
