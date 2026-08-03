@@ -10,7 +10,14 @@ usage strings; semantics still have to be established per function. Entries whos
 matched but which are plainly not commands (printf templates, CPU/locale banners) are
 filtered out.
 
-**304 functions across 2 namespace(s).**
+**This manifest is known to be incomplete.** It captures only functions whose usage string
+matches a `name(args)` shape, so any command registered without one is missed. `VectorAdd` is
+the proof: it is absent here, yet the shipped scripts reference it 380 times across 63 files,
+so it certainly exists. Treat the list as a verified lower bound on the console surface, not
+as its full extent. Cross-referencing the script-side identifier survey against this list is
+the way to find the gaps.
+
+**303 functions across 2 namespace(s).**
 
 
 ## (global) (299)
@@ -34,7 +41,6 @@ MatrixMulVector(transform, vector)
 MatrixMultiply(Left, Right)
 N()
 Q()
-SLOVAKIA (Slovak Republic)
 VectorCross(vec1,vec2)
 VectorDist(vec1,vec2)
 VectorDot(vec1,vec2)
