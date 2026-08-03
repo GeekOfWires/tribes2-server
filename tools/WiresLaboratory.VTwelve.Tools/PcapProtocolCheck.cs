@@ -27,8 +27,10 @@ public static class PcapProtocolCheck
 
         Console.WriteLine($"=== capture: {packets.Count:N0} datagrams, {packets[^1].Time - packets[0].Time:F1}s ===");
 
-        var toServer = packets.Where(p => p.DstPort == gamePort).ToList();
-        var fromServer = packets.Where(p => p.SrcPort == gamePort).ToList();
+        ReportSessions(packets, gamePort);
+
+        var toServer = packets.Where(p => p.DstPort == gamePort && !ControlPacket.IsControl(p.Payload)).ToList();
+        var fromServer = packets.Where(p => p.SrcPort == gamePort && !ControlPacket.IsControl(p.Payload)).ToList();
 
         var c2s = Analyse(toServer, "client -> server");
         var s2c = Analyse(fromServer, "server -> client");
@@ -45,6 +47,34 @@ public static class PcapProtocolCheck
             ? "RESULT: header layout and LSB-first bit order confirmed against live client traffic."
             : "RESULT: capture did not confirm the layout — see figures above.");
         return healthy ? 0 : 1;
+    }
+
+    /// <summary>
+    /// Lists the connection-control exchanges, so a capture containing several sessions shows
+    /// each handshake and teardown rather than being averaged into one blur.
+    /// </summary>
+    private static void ReportSessions(List<Datagram> packets, int gamePort)
+    {
+        var control = packets
+            .Where(p => (p.DstPort == gamePort || p.SrcPort == gamePort) && ControlPacket.IsControl(p.Payload))
+            .ToList();
+        if (control.Count == 0) return;
+
+        var t0 = packets[0].Time;
+        Console.WriteLine($"=== connection control: {control.Count} packet(s) ===");
+        var handshakes = 0;
+        var disconnects = 0;
+        foreach (var p in control)
+        {
+            var type = ControlPacket.TryGetType(p.Payload);
+            if (type == ControlPacketType.ConnectChallengeRequest) handshakes++;
+            if (type == ControlPacketType.Disconnect) disconnects++;
+            var dir = p.DstPort == gamePort ? "c->s" : "s->c";
+            var name = type?.ToString() ?? $"unknown(0x{p.Payload[0]:x2})";
+            Console.WriteLine($"  +{p.Time - t0,6:F2}s {dir} {name,-24} {p.Payload.Length,4}B");
+        }
+        Console.WriteLine($"  -> {handshakes} connect attempt(s), {disconnects} disconnect packet(s)");
+        Console.WriteLine();
     }
 
     private readonly record struct FlowStats(double Advance, uint SendMax, uint AckMax);
