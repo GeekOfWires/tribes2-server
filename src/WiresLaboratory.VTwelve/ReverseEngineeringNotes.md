@@ -52,8 +52,8 @@ where they converge. See "Datablock field registry" below.
 |---|---|
 | Console registrar | `0x00426450`, 388 call sites |
 | Registrations recovered | 372 (see the address manifest) |
-| Vtable candidates | 440 runs of >=8 consecutive code pointers |
-| Virtual dispatch slots | 19,407 total; largest table 386 entries at `0x00787428` |
+| Vtables (RTTI-backed) | 774, from descriptors at `vtable-8` |
+| ~~Virtual dispatch slots 19,407~~ | **Corrected** — that counted 209 non-vtable runs. `0x00787428` (386 entries) is a jump table with no descriptor. See `Sim/EngineClassLayout.md`. |
 | Object-model hub | **`0x0055b640`** — shared callee of both transform setters, **147 call sites engine-wide** |
 | Transform arg helpers | `0x0054f0f0`, `0x0054f120` (called only by `setTransform`) |
 
@@ -108,7 +108,9 @@ checked against a live process.
 2. Decode the two opaque handshake trailers (684 bytes client-side, 130 bytes server-side).
    The server-authored one blocks everything: until it is understood, a managed server cannot
    emit a challenge response the stock client will accept.
-3. Cross-reference the 440 vtable candidates against the class names recovered from the
-   string survey, to attach hierarchy to the dispatch surface.
-4. Reach the tick path from the object model rather than from strings: it has no literals,
-   so it can only be found by dispatch and call-graph structure.
+3. (done) Class hierarchy and virtual dispatch are recovered via RTTI — see
+   `Sim/EngineClassLayout.md`. The tick path is located: slots 54/55/56 are
+   `processTick`/`interpolateTick`/`advanceTime`, and 17/18/19 are the ghosting entry points.
+4. Disassemble `Player::processTick` (`0x005d1d70`) and `Player::packUpdate` (`0x005dae80`)
+   to recover the movement integrator and the ghost field layout — the two remaining
+   behavioural unknowns.
