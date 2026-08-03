@@ -126,9 +126,11 @@ checked against a live process.
 ## Next steps
 
 1. Characterise `0x0055b640` — its callees and the vtable slots it dispatches through.
-2. Decode the two opaque handshake trailers (684 bytes client-side, 130 bytes server-side).
-   The server-authored one blocks everything: until it is understood, a managed server cannot
-   emit a challenge response the stock client will accept.
+2. (done) The handshake trailers are decoded — see
+   `../WiresLaboratory.NextMastery/HandshakeAuthentication.md`. They are bit-packed LSB-first,
+   which is why byte-level inspection saw noise. A managed server needs **no secret** to emit a
+   valid challenge response: the block is RSA-encrypted under the *client's* public key, which
+   the client itself supplies. This unblocks real client attachment.
 3. (done) Class hierarchy and virtual dispatch are recovered via RTTI — see
    `Sim/EngineClassLayout.md`. The tick path is located: slots 54/55/56 are
    `processTick`/`interpolateTick`/`advanceTime`, and 17/18/19 are the ghosting entry points.
