@@ -30,8 +30,42 @@ public readonly record struct PacketHeader(uint Flags, uint SendSequence, uint A
     public const int FlagBits = 2;
     public const int SequenceBits = 9;
 
-    /// <summary>Total header size in bits.</summary>
+    /// <summary>
+    /// Bits consumed by the fields this type models: the two leading flag bits and the two
+    /// sequence numbers.
+    /// </summary>
+    /// <remarks>
+    /// <b>This is not the whole header.</b> See <see cref="FullHeaderBits"/> — five further
+    /// fixed bits and a variable-length ack mask follow, recovered later from
+    /// <c>buildSendPacketHeader</c> (<c>0x0043d2d0</c>) and its read side (<c>0x0043d4d0</c>).
+    /// This constant is retained because it is exactly what is needed to reach the two sequence
+    /// numbers, which is all several callers want.
+    /// </remarks>
     public const int HeaderBits = FlagBits + SequenceBits * 2;
+
+    /// <summary>Bits in the fixed part of the real header, before the variable ack mask.</summary>
+    /// <remarks>
+    /// The complete layout, confirmed against both the disassembly and the captured traffic:
+    /// <code>
+    ///   bit  0      constant 1 — marks a sequenced packet; 0 marks out-of-band control
+    ///   bit  1      connect-sequence parity; the receiver drops the packet on a mismatch
+    ///   bits 2..10  send sequence  (9 bits)
+    ///   bits 11..19 ack sequence   (9 bits)
+    ///   bits 20..21 packet type    (2 bits; the receiver rejects a value above 2)
+    ///   bits 22..24 ack byte count (3 bits; the receiver rejects a value above 4)
+    ///   then        8 * ackByteCount bits of ack mask
+    /// </code>
+    /// Only packet type 0 carries a body. Bit 0 is also what
+    /// <see cref="ControlPacket.IsControl"/> tests, which is why that classification agrees with
+    /// this layout rather than being an independent heuristic.
+    /// </remarks>
+    public const int FullHeaderBits = 25;
+
+    /// <summary>Bits of packet-type field (values above 2 are rejected by the receiver).</summary>
+    public const int PacketTypeBits = 2;
+
+    /// <summary>Bits of ack-byte-count field (values above 4 are rejected by the receiver).</summary>
+    public const int AckByteCountBits = 3;
 
     /// <summary>Sequence numbers are modulo this; both fields wrap.</summary>
     public const uint SequenceModulo = 1u << SequenceBits;

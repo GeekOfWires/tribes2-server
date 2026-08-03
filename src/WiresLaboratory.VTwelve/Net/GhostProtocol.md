@@ -110,9 +110,14 @@ width for width.
 `NetConnection::writePacket` (`0x587b90`) → `eventWritePacket` (`0x583540`) →
 `ghostWritePacket` (`0x583db0`):
 
+**Two corrections from the later packet-prefix work** (see `PacketPrefix.md`): when the
+connection is not ghosting the section is **absent entirely — not even the flag**, which is why
+client-to-server packets carry no ghost section at all; and `idSize` is clamped to at least 3,
+so it is **bounded to 3..10** rather than unbounded.
+
 ```
-writeFlag(hasGhosts)              // if 0, section empty
-writeInt(idSize - 3, 3)           // idSize = bits for the ghost count, minimum 3
+writeFlag(hasGhosts)              // only present when the connection is ghosting at all
+writeInt(idSize - 3, 3)           // idSize in 3..10, clamped to a minimum of 3
 repeat:
    writeFlag(true)                // another record follows
    writeInt(ghostIndex, idSize)
@@ -123,18 +128,17 @@ repeat:
 writeFlag(false)                  // terminator
 ```
 
-## Not verified against captured packets — and why
+## Validation status
 
-**No cross-check against `tools/fixtures/*.pcap` was achieved.** Reaching the ghost section in a
-real packet requires first decoding the `ConnectionProtocol` header and ack/notify bits, then
-`GameConnection::writePacket` (`0x5fc4e0`) which emits roughly thirty conditional fields before
-delegating, then `eventWritePacket` (`0x583540`). None of those are recovered.
+**Superseded — the prefix has since been recovered and validated.** See `PacketPrefix.md`. The
+ghost section is now reachable in real packets: 3,375 of 3,592 fully-prefix-decoded server
+packets reach it and parse its header and first record header, with zero hard failures across
+both captures.
 
-Guessing at that prefix would produce a plausible-looking alignment that means nothing, so it
-was not attempted. **Recovering `0x5fc4e0` and `0x583540` is the concrete blocker**, and once
-they exist the framing above becomes directly testable against real traffic — a strong test,
-since a correct decode implies sane `idSize`, ghost ids below 1024, class ids below 128, and a
-record stream that terminates exactly at the packet tail.
+**What remains unproven is the record *body*.** Traversing a whole ghost record needs the
+per-class `packUpdate` for whichever class each ghost is, and a mid-session capture never
+carries the class id for ghosts that already existed. So the framing above is confirmed against
+real traffic while the field layout below it is still only derived from the disassembly.
 
 ## Unidentified
 

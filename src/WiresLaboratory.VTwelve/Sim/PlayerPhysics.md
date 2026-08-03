@@ -92,10 +92,12 @@ engine compares cosines.
 
 ## Gaps
 
-- **The largest: `ExtrudedPolyList`'s clipper was not analysed.** `updatePos`'s control flow is
-  fully recovered, but every decision it makes depends on the contact time and normals produced
-  inside `extrude`/`buildPolyList`. The structure is reproducible; **bit-identical contact times
-  are not, yet**. This is the remaining barrier to exact prediction agreement.
+- ~~`ExtrudedPolyList`'s clipper was not analysed~~ **— now recovered, see
+  `CollisionClipper.md`.** The contact-time formula, tie-breaking and every tolerance are
+  documented there. Two things carried back here: `Player::updatePos` reads `colList->t`
+  **raw** and must *not* apply `adjustCollisionTime`'s 1 cm slop (that function is never called
+  on this path), and bit-exactness still cannot be claimed because the x87 precision-control
+  setting is undetermined.
 - The `recoverDelay` scaling after a hard landing — FPU stack scheduling unresolved.
 - Animation-driven ground displacement (`0x5d4e90`): a server that does not run the shape's
   animation tree cannot reproduce it.
