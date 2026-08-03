@@ -12,6 +12,11 @@ public class Program
 {
     public static int Main(string[] args)
     {
+        // --pcap <file>: replay a captured client session through the wire-format types.
+        var pcapIndex = Array.IndexOf(args, "--pcap");
+        if (pcapIndex >= 0 && pcapIndex + 1 < args.Length)
+            return PcapProtocolCheck.Run(args[pcapIndex + 1], gamePort: 28000);
+
         var root = args.Length > 0 ? args[0] : ".";
         if (!Directory.Exists(root))
         {
