@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TribesServerPanel/TribesServerPanel.csproj" />
+    <Project Path="src/WiresLaboratory.NextMastery/WiresLaboratory.NextMastery.csproj" />
+    <Project Path="src/WiresLaboratory.VTwelve.WilderzoneServer/WiresLaboratory.VTwelve.WilderzoneServer.csproj" />
+    <Project Path="src/WiresLaboratory.VTwelve/WiresLaboratory.VTwelve.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/WiresLaboratory.VTwelve.Tools/WiresLaboratory.VTwelve.Tools.csproj" />
+  </Folder>
+</Solution>

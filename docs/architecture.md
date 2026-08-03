@@ -32,7 +32,7 @@ That single decision drives the design:
 
 ## Components
 
-### ASP.NET Core panel (`panel/`)
+### ASP.NET Core panel (`src/TribesServerPanel/`)
 - **`Program.cs`** — composition root: Kestrel/TLS, EF Core + Identity, authorization
   policies, DI registrations, WebSockets, static files + SPA fallback, endpoint mapping.
 - **Endpoints** — `Endpoints.cs` (account/console/server/config/users/audit/crashes),

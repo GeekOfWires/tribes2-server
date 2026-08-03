@@ -43,7 +43,7 @@ sequences). The supervisor then:
 - writes **commands** (including `quit();`) to the bridge's stdin → the game's console input.
 
 This is also why the **root terminal** works (a separate bridge runs `bash` instead of the game,
-without escape-stripping). See [`Services/TerminalSession.cs`](https://github.com/GeekOfWires/tribes2-server/blob/main/panel/Services/TerminalSession.cs).
+without escape-stripping). See [`Services/TerminalSession.cs`](https://github.com/GeekOfWires/tribes2-server/blob/main/src/TribesServerPanel/Services/TerminalSession.cs).
 
 ## Old + new Windows runtimes side by side
 
@@ -96,6 +96,6 @@ the image can be patched. By default the game then auto-restarts (`RESTART_ON_CR
 
 ## See also
 - [Architecture](architecture.md) · [Configuration reference](configuration.md)
-- Source: [`Services/GameSupervisor.cs`](https://github.com/GeekOfWires/tribes2-server/blob/main/panel/Services/GameSupervisor.cs) ·
+- Source: [`Services/GameSupervisor.cs`](https://github.com/GeekOfWires/tribes2-server/blob/main/src/TribesServerPanel/Services/GameSupervisor.cs) ·
   [`content/tribes_dual_patcher.py`](https://github.com/GeekOfWires/tribes2-server/blob/main/content/tribes_dual_patcher.py)
 - Back to [docs index](README.md)

@@ -16,17 +16,17 @@
 # ---------------------------------------------------------------- React SPA build
 FROM node:22-bookworm-slim AS spa-build
 WORKDIR /spa
-COPY panel/ClientApp/package*.json ./
+COPY src/TribesServerPanel/ClientApp/package*.json ./
 RUN npm install
-COPY panel/ClientApp/ ./
+COPY src/TribesServerPanel/ClientApp/ ./
 RUN npm run build           # vite outDir ../wwwroot -> /wwwroot
 
 # ------------------------------------------------ ASP.NET Core publish (framework-dependent)
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS app-build
 WORKDIR /src
-COPY panel/TribesServerPanel.csproj ./
+COPY src/TribesServerPanel/TribesServerPanel.csproj ./
 RUN dotnet restore
-COPY panel/ ./
+COPY src/TribesServerPanel/ ./
 COPY --from=spa-build /wwwroot ./wwwroot
 RUN dotnet publish -c Release -o /app/publish
 

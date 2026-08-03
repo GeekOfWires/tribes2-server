@@ -287,17 +287,29 @@ content/                   (game data is fetched from the GSI at build time; not
   classic_v152.zip         Classic v1.52 mod (committed)
   Construction_v0.70a.exe  Construction mod RAR self-extractor (committed)
   tribes_dual_patcher.py   PE patcher (subsystem GUI->CUI for headless console I/O)
-panel/                     ASP.NET Core 10 control panel (PID 1)
-  Program.cs               host wiring: TLS, EF/Identity, RBAC, supervisor, endpoints
-  Bootstrap.cs             EnsureCreated + seed roles/root
-  Endpoints.cs             minimal-API: account, console SSE, lifecycle, users, audit
-  Auth/                    ApplicationUser/Role + rank-based Roles/policies
-  Data/                    AppDbContext (IdentityDbContext) + AuditEntry
-  Services/                GameSupervisor (worker; PTY bridge + stdin commands), ConsoleHub
-  Tls/TlsConfigurator.cs   self-signed / Let's Encrypt / plain HTTP from env
-  ClientApp/               React + Vite + TS SPA (built into wwwroot)
+Tribes2Server.slnx         solution covering every .NET project below
+src/
+  TribesServerPanel/       ASP.NET Core 10 control panel (PID 1; shipped in the image)
+    Program.cs             host wiring: TLS, EF/Identity, RBAC, supervisor, endpoints
+    Bootstrap.cs           EnsureCreated + seed roles/root
+    Endpoints.cs           minimal-API: account, console SSE, lifecycle, users, audit
+    Auth/                  ApplicationUser/Role + rank-based Roles/policies
+    Data/                  AppDbContext (IdentityDbContext) + AuditEntry
+    Services/              GameSupervisor (worker; PTY bridge + stdin commands), ConsoleHub
+    Tls/TlsConfigurator.cs self-signed / Let's Encrypt / plain HTTP from env
+    ClientApp/             React + Vite + TS SPA (built into wwwroot)
+  WiresLaboratory.VTwelve/ managed V12 engine: VL2 volumes, TorqueScript DSO (v174),
+                           and — in progress — the VM, physics and ghosting
+  WiresLaboratory.NextMastery/            TribesNext-specific behaviour only (depends on
+                                          VTwelve, never the reverse)
+  WiresLaboratory.VTwelve.WilderzoneServer/  standalone dedicated-server host (no panel)
+tools/
+  WiresLaboratory.VTwelve.Tools/  corpus verification harness (dev only, not shipped)
 .github/workflows/build.yml  CI: build + push base/classic/construction to GHCR
 ```
+
+Only `src/TribesServerPanel` is copied into the container image; the engine projects are
+independent and build (and run) on their own.
 
 ## License
 

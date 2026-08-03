@@ -1,7 +1,7 @@
 // Make the docs site match the Tribes 2 control panel (PlayT2-derived dark / mint theme).
 // Layered on top of just-the-docs' built-in `dark` color scheme (set in _config.yml), so
 // code highlighting stays readable while surfaces/accents follow the panel's palette
-// (see panel/ClientApp/src/styles.css).
+// (see src/TribesServerPanel/ClientApp/src/styles.css).
 
 $t2-bg:       #0a1410; // --bg
 $t2-panel:    #0e1a15; // --panel (sidebar / cards)
