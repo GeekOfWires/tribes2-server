@@ -1,3 +1,6 @@
+using WiresLaboratory.VTwelve.Script;
+using WiresLaboratory.VTwelve.Sim.Process;
+using System.Net;
 using WiresLaboratory.NextMastery;
 
 namespace WiresLaboratory.VTwelve.WilderzoneServer;
@@ -55,14 +58,81 @@ public class Program
             Console.WriteLine(failed.Count == 0
                 ? "Boot stage complete: resources mounted and all code blocks decoded."
                 : $"Boot stage finished with {failed.Count} undecodable code block(s).");
-            Console.WriteLine("Simulation is not implemented yet — the VM, physics and ghosting stages are still to come.");
-            return failed.Count == 0 ? 0 : 1;
+
+            // Configuration comes from the ruleset's prefs, the same file the engine execs at
+            // start-up — not from flags invented here. An operator who has already set
+            // $Host::Port for their server gets that port, with no second place to configure it.
+            var prefs = ServerPreferences.Load(gameDir, ruleset);
+            Console.WriteLine("[prefs] " + (prefs.Path is null
+                ? $"none found; using defaults (port {ServerPreferences.DefaultPort})"
+                : $"{Path.GetFileName(prefs.Path)}: {prefs.Values.Count} setting(s)"
+                  + (prefs.UnparsedLines > 0 ? $", {prefs.UnparsedLines} non-assignment line(s) ignored" : "")));
+            Console.WriteLine($"[prefs] $Host::Port = {prefs.Port}"
+                              + (prefs.GameName is { } gn ? $"   $Host::GameName = \"{gn}\"" : ""));
+
+            if (args.Contains("--boot-only"))
+            {
+                Console.WriteLine("--boot-only: stopping before the socket is bound.");
+                return failed.Count == 0 ? 0 : 1;
+            }
+
+            return Serve(prefs.Port, ValueOf(args, "--tick-ms"));
         }
         catch (Exception ex)
         {
             Console.Error.WriteLine($"boot failed: {ex.Message}");
             return 1;
         }
+    }
+
+    private static int Serve(int port, string? tickText)
+    {
+        var tick = ProcessList.StockTickMilliseconds;
+        if (tickText is not null)
+        {
+            if (!uint.TryParse(tickText, out tick))
+            {
+                Console.Error.WriteLine($"--tick-ms: not a number: {tickText}");
+                return 2;
+            }
+            Console.WriteLine($"[warn] running at {tick}ms rather than the stock "
+                              + $"{ProcessList.StockTickMilliseconds}ms — a stock client predicts movement at "
+                              + "the stock rate and will disagree with this server.");
+        }
+
+        using var host = new ServerHost(new IPEndPoint(IPAddress.Any, port), tick);
+        Console.WriteLine($"[net] listening on {host.LocalEndPoint} (udp), tick {host.Simulation.TickMilliseconds}ms");
+        Console.WriteLine("[net] a stock client will NOT complete a connection yet: the challenge");
+        Console.WriteLine("      response trailer (an RSA challenge under the client's own key) is");
+        Console.WriteLine("      documented but not implemented. See NextMastery/HandshakeAuthentication.md.");
+        Console.WriteLine("Ctrl+C to stop.");
+
+        using var cts = new CancellationTokenSource();
+        Console.CancelKeyPress += (_, e) => { e.Cancel = true; cts.Cancel(); };
+
+        var reporter = new Thread(() =>
+        {
+            while (!cts.IsCancellationRequested)
+            {
+                Thread.Sleep(5000);
+                Console.WriteLine($"[stat] ticks={host.TicksRun} datagrams={host.DatagramsReceived} "
+                                  + $"(control={host.ControlPacketsReceived} data={host.DataPacketsReceived} "
+                                  + $"unknown={host.UnknownControlPackets}) sessions={host.Sessions.Count}");
+            }
+        }) { IsBackground = true };
+        reporter.Start();
+
+        try
+        {
+            host.Run(cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+        }
+
+        Console.WriteLine($"[net] stopped. ticks={host.TicksRun} datagrams={host.DatagramsReceived} "
+                          + $"sessions={host.Sessions.Count}");
+        return 0;
     }
 
     private static string? ValueOf(string[] args, string name)
@@ -77,5 +147,8 @@ public class Program
         Console.WriteLine();
         Console.WriteLine("  <GameData-dir>   directory holding base/ and any ruleset directories");
         Console.WriteLine("  --mod <ruleset>  ruleset to layer over base (omit, or 'base', for stock)");
+        Console.WriteLine("  --boot-only      verify boot, then stop before binding the socket");
+        Console.WriteLine("  --tick-ms <n>    timestep override; stock is 32, and anything else");
+        Console.WriteLine("                   breaks movement prediction against a stock client");
     }
 }
