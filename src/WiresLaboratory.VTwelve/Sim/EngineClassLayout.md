@@ -92,9 +92,15 @@ Datablocks form a parallel tree: `SimDataBlock -> GameBaseData -> ShapeBaseData 
   contributes no virtuals.
 - `NetConnection : ConnectionProtocol, SimGroup` — `sizeof(ConnectionProtocol)` is **160
   (0xA0)** and the `SimGroup` subobject lives at **+0xA0**. `GameConnection`'s 42-slot table is
-  built from adjustor thunks (`add ecx, -0xA0; jmp real`), which pins the layout. **All
-  SimObject-lineage dispatch on a connection goes through the table at `this+0xA0`**, not the
-  one at offset 0.
+  built from adjustor thunks (`add ecx, -0xA0; jmp real`), which pins the layout.
+
+  **Correction.** An earlier revision of this file said all SimObject-lineage dispatch on a
+  connection goes through the table at `this+0xA0`. That is misleading as a *decoding* rule:
+  call sites index from the **offset-0 vptr** with byte displacements that run past the 8-slot
+  `ConnectionProtocol` sub-table into the adjacent one. For example `writeCompressedPoint` is
+  `[vptr0 + 0xbc]` and `writePacket` is `[vptr0 + 0x94]`, and both `NetConnection` (`0x792784`)
+  and `GameConnection` (`0x7a280c`) resolve `+0xbc` to the same `0x588ac0`. Treating the
+  `+0xA0` table's own slot numbering as the dispatch index gives wrong answers.
 
 Slot prefixes are strictly compatible throughout: every child table is its parent's with
 overrides plus appended slots, with zero violations across the 24 relationships checked.
@@ -122,7 +128,7 @@ identified from code shape rather than from a literal.
 | 39 / 40 | `renderObject` / `prepRenderImage` | inferred |
 | 42 / 43 | `onSceneAdd(SceneGraph*)` / `onSceneRemove()` (`this+0x230`) | inferred |
 | 44–49 | pure-virtual stubs | confirmed |
-| **53** | **`onNewDataBlock(GameBaseData*) -> bool`** (stores `this+0x248`) | **confirmed** |
+| **53** | **`onNewDataBlock(GameBaseData*) -> bool`** — stores its argument, then `setMaskBits(2)`; each level keeps its own down-cast copy (`GameBase +0x248`, `ShapeBase +0x2d0`, `Player +0xa20`) | **confirmed** |
 | **54** | **`processTick(const Move*)`** — the simulation tick | **confirmed** |
 | **55** | **`interpolateTick(F32 delta)`** | **confirmed** |
 | **56** | **`advanceTime(F32 dt)`** | **confirmed** |

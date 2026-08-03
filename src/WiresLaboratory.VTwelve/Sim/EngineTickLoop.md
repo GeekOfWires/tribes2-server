@@ -96,15 +96,18 @@ phase-shifted at several points (`0x55b640` among them) and silently mis-decodes
 
 ## Conflicts and gaps — unresolved
 
-- **Datablock pointer offset disagrees between two independent analyses.** One derived
-  `GameBase::mDataBlock` at **`+0x248`** from slot 53 (`onNewDataBlock` storing its argument);
-  the other observed the datablock pointer at **`+0x2d0`** along the tick path. Both cannot be
-  right for the same class. This must be resolved before either is built against — most likely
-  they are different classes, or one reading is wrong.
-- **Slot 53** (`+0xd4`, GameBase `0x5e2a80`, ShapeBase `0x5e7a80`) is overridden across the
-  hierarchy and dispatched from 29 in-loop sites, but is unidentified. It sits immediately
-  before `processTick`. A separate analysis proposed `onNewDataBlock` for this slot; that is
-  consistent with the `+0x248` store above but has not been reconciled with the above conflict.
+- ~~Datablock offset conflict~~ **RESOLVED: both were right.** Each level of the hierarchy keeps
+  its own down-cast copy of the datablock pointer, written by its own `onNewDataBlock`:
+  `GameBase` at **`+0x248`** (the raw argument), `ShapeBase` at **`+0x2d0`** (cast to
+  `ShapeBaseData*`), `Player` at **`+0xa20`** (cast to `PlayerData*`). The casts go through the
+  runtime cast helper with type descriptors naming exactly those types, and each level's
+  `packUpdate` reads its own copy — `ShapeBase` reads `maxDamage` through `+0x2d0`, `Player`
+  reads `maxEnergy` through `+0xa20`. `+0x2d4` is `mControllingClient`.
+- ~~Slot 53 unidentified~~ **RESOLVED: `onNewDataBlock(GameBaseData*) -> bool`.** `GameBase`'s
+  implementation (`0x5e2a80`, 15 instructions) stores the argument at `+0x248`, returns false if
+  null, otherwise calls `setMaskBits(2)` and returns true — and bit 2 is exactly what
+  `GameBase::packUpdate` tests to decide whether to serialise the datablock, so the two
+  functions corroborate each other. Verified directly.
 - **`0x00671ef0`** (size `0xed0`, `ecx = [0x9e8dbc]`) runs once per server tick before
   `advanceObjects`. Unidentified.
 - **`GameConnection` slots 49/50/51** (`+0xc4` fetch moves, `+0xc8` clear moves, `+0xcc` a bool
