@@ -64,11 +64,18 @@ Per object:
 | Address | Size | Role |
 |---|---|---|
 | `0x005d1d70` | `0x7a0` | `Player::processTick(const Move*)` — calls the ShapeBase base implementation |
-| `0x005d7220` | `0x1ab0` (1,686 instructions) | **the Player movement/collision integrator** — calls container routines `0x590cd0`/`0x590d20`, dispatches slot 57 (`getVelocity`) |
-| `0x005e8050` | | `ShapeBase::processTick` — per-tick energy/damage accumulation and a mount-list walk, using the tick constant `0.032f` |
+| `0x005d2d60` | `0x1e50` | **`Player::updateMove`** — the force model; turns input into `mVelocity` |
+| `0x005d7220` | `0x1ab0` | **`Player::updatePos(F32 travelTime) -> bool`** — position integration and collision |
+| `0x005e8050` | | `ShapeBase::processTick` — per-tick energy/damage accumulation and a mount-list walk |
 
-`0x005d7220` is the single function that most determines whether client prediction agrees with
-the server. It has not yet been decompiled.
+**Two corrections to an earlier revision of this file.** `0x005d7220` was described here as "the
+movement/collision integrator"; it is only the *position* half, takes a `F32` rather than a
+`Move*`, and the force model lives in the separate, larger `updateMove`. And `0x590cd0`/`0x590d20`
+were called container routines — they are `Vector<T>` constructors. `0.032f`, cited here as the
+tick constant, occurs once on the whole path in an unrelated `ShapeBase` timer; the movement
+timestep is `0.03125f` (exactly 1/32).
+
+Both functions are now recovered — see `Sim/PlayerPhysics.md`.
 
 ## `.exc` is an authoritative function table
 
