@@ -96,11 +96,22 @@ Class attribution is not guessed. Each class-rep stores its name, its vtable slo
 out of the vtable. The parent link comes from `init()` calling the parent's class-rep
 accessor, which is what disambiguates registrars shared by inheritance.
 
-**Independent cross-check:** across the 119 class pairs where both child and parent register
-fields, every child's lowest offset sits above its parent's highest offset plus size —
-**zero violations**. That check played no part in building the mapping, so it is genuine
-corroboration, and it also reproduces the expected lineage on its own
-(`PlayerData -> ShapeBaseData -> GameBaseData -> SimDataBlock`).
+**Independent cross-check, and what it caught.** Across the **122** class pairs where both
+child and parent register fields, a child's lowest offset should sit above its parent's
+highest offset plus size. It holds for **120**. The **2** failures are
+`GuiAviBitmapCtrl` and `ShellTextList` — which are *precisely* the only two classes whose
+attribution was marked `inferred-by-elimination` rather than proven from the vtable.
+
+So the invariant is not broken; it is working as a **detector of bad attribution**. Every
+vtable-proven mapping satisfies it, and both guessed mappings fail it. Those two attributions
+should be treated as wrong until re-derived.
+
+(An earlier revision of this file claimed "119 pairs, zero violations". That came from a check
+run with the two low-confidence classes excluded; the committed table yields 122 and 2. The
+corrected figures are the ones above.)
+
+The check played no part in building the mapping, and it reproduces the expected lineage on
+its own (`PlayerData -> ShapeBaseData -> GameBaseData -> SimDataBlock`).
 
 Type codes with sizes derived from consecutive offset deltas: 1=S32(4), 3=bool(1), 5=F32(4),
 7=char*(4), 8=StringTable(4), 9=enum(4), 11=ColorI(4), 12=ColorF(16), 14=Point2I(8),
