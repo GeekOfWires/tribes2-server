@@ -19,6 +19,14 @@ public class Program
             return 2;
         }
 
+        // --symbols: report the engine surface the shipped scripts actually depend on.
+        if (args.Contains("--symbols"))
+        {
+            var dso = Directory.GetFiles(root, "*.dso", SearchOption.AllDirectories);
+            IdentifierSurvey.Report(IdentifierSurvey.Run(dso, engineOnly: true), top: 55);
+            return 0;
+        }
+
         var failures = 0;
         failures += SweepVolumes(root);
         failures += SweepDso(root);
