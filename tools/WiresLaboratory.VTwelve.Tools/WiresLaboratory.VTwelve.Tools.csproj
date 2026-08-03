@@ -8,6 +8,25 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <RootNamespace>WiresLaboratory.VTwelve.Tools</RootNamespace>
+    <!--
+      Two entry points now live in this project: Program (default) and TickLoopSelfCheck
+      (Sim/Process tick-loop self-check, see that file's remarks). StartupObject picks between
+      them and defaults to Program, unchanged from before. It is driven off a project-local
+      "RunSelfCheck" property rather than being set directly from the StartupObject property on
+      the command line, because StartupObject is acted on by MSBuild's common targets for EVERY
+      project in the build graph (setting it fails the build with CS2017 if it reaches a library
+      project such as WiresLaboratory.VTwelve via ProjectReference global property propagation).
+      "RunSelfCheck" means nothing to any other project, so it propagates harmlessly.
+
+      Default entry point (Program), from this directory:
+        dotnet run -c Release
+
+      Self-check entry point (TickLoopSelfCheck), pass RunSelfCheck=true as an MSBuild property,
+      from this directory:
+        dotnet run -c Release -p:RunSelfCheck=true
+    -->
+    <StartupObject Condition="'$(RunSelfCheck)' == 'true'">WiresLaboratory.VTwelve.Tools.TickLoopSelfCheck</StartupObject>
+    <StartupObject Condition="'$(RunSelfCheck)' != 'true'">WiresLaboratory.VTwelve.Tools.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

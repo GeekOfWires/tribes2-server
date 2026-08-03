@@ -12,6 +12,10 @@ public class Program
 {
     public static int Main(string[] args)
     {
+        // --tickcheck: run the Sim/Process tick-loop self-check.
+        if (args.Contains("--tickcheck"))
+            return TickLoopSelfCheck.Run(args);
+
         // --pcap <file>: replay a captured client session through the wire-format types.
         var pcapIndex = Array.IndexOf(args, "--pcap");
         if (pcapIndex >= 0 && pcapIndex + 1 < args.Length)
