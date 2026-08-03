@@ -30,3 +30,10 @@ content/tribesinstall.7z
 # Licensing: keep Microsoft binaries out of the repo and its history. The Dockerfile
 # downloads the official vc_redist at build time instead. See docs/building-and-deploying.md.
 content/vcrun22.zip
+
+# --- Visual Studio local state ---
+.vs/
+
+# --- .NET build output ---
+bin/
+obj/

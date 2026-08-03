@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Wilderzone — the standalone V12 dedicated server host.
+
+    Deliberately usable on its own, with no dependency on the control panel: point it at a
+    GameData directory and it boots. The panel can also host it in-process as an alternative
+    backend to the Wine-managed Tribes2.exe, but nothing here knows or cares about that.
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>WiresLaboratory.VTwelve.WilderzoneServer</AssemblyName>
+    <RootNamespace>WiresLaboratory.VTwelve.WilderzoneServer</RootNamespace>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WiresLaboratory.VTwelve\WiresLaboratory.VTwelve.csproj" />
+    <ProjectReference Include="..\WiresLaboratory.NextMastery\WiresLaboratory.NextMastery.csproj" />
+  </ItemGroup>
+
+</Project>

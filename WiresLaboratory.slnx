@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="WiresLaboratory.NextMastery/WiresLaboratory.NextMastery.csproj" />
+  <Project Path="WiresLaboratory.VTwelve.Tools/WiresLaboratory.VTwelve.Tools.csproj" />
+  <Project Path="WiresLaboratory.VTwelve.WilderzoneServer/WiresLaboratory.VTwelve.WilderzoneServer.csproj" />
+  <Project Path="WiresLaboratory.VTwelve/WiresLaboratory.VTwelve.csproj" />
+</Solution>

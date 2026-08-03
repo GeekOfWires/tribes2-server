@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    WiresLaboratory.NextMastery — everything specific to the TribesNext community patch:
+    the master-server heartbeat/registration, the account auth + crypto layer, and the
+    QoL additions that live in IFC22.dll rather than in the original engine.
+
+    Kept separate from WiresLaboratory.VTwelve on purpose: VTwelve is a faithful V12 engine
+    and must stay free of community-patch behaviour, so it can run stock content on its own.
+    The dependency only ever points this way (NextMastery -> VTwelve), never back.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>WiresLaboratory.NextMastery</AssemblyName>
+    <RootNamespace>WiresLaboratory.NextMastery</RootNamespace>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WiresLaboratory.VTwelve\WiresLaboratory.VTwelve.csproj" />
+  </ItemGroup>
+
+</Project>

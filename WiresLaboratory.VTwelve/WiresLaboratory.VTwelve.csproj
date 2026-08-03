@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    WiresLaboratory.VTwelve — a faithful managed re-implementation of the Dynamix V12
+    (Torque-lineage) dedicated server: VL2 volumes, the TorqueScript DSO compiler and
+    bytecode VM, the console/sim object system, physics, and the ghosting protocol.
+
+    Deliberately free of any dependency on the panel, so it can be hosted by the control
+    panel as an alternative backend OR run entirely on its own.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>WiresLaboratory.VTwelve</AssemblyName>
+    <RootNamespace>WiresLaboratory.VTwelve</RootNamespace>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+</Project>
