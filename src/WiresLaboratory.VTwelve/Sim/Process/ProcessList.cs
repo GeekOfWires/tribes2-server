@@ -27,11 +27,65 @@ namespace WiresLaboratory.VTwelve.Sim.Process;
 public sealed class ProcessList
 {
     /// <summary>
-    /// The fixed simulation timestep, in milliseconds. Evidenced directly in the disassembly:
-    /// <c>and esi, 0xffffffe0</c> / <c>shr ... , 5</c> / <c>add dword ptr [ebx+0x288], 0x20</c> —
-    /// TickShift 5, i.e. 31.25 Hz.
+    /// The timestep the shipped engine uses: 32 ms, i.e. 31.25 Hz. Evidenced directly in the
+    /// disassembly: <c>and esi, 0xffffffe0</c> / <c>shr ... , 5</c> /
+    /// <c>add dword ptr [ebx+0x288], 0x20</c> — TickShift 5.
     /// </summary>
-    public const uint TickMilliseconds = 0x20;
+    /// <remarks>
+    /// <para>
+    /// <b>This is a protocol constant, not a tuning knob.</b> The stock game client runs its own
+    /// local movement prediction at this exact timestep. A server ticking at any other rate
+    /// predicts different positions from the client that is talking to it, and players see that
+    /// as rubber-banding. For any session with an unmodified client this value is the only
+    /// correct one.
+    /// </para>
+    /// </remarks>
+    public const uint StockTickMilliseconds = 0x20;
+
+    /// <summary>
+    /// The fixed simulation timestep this list actually runs at, in milliseconds. Defaults to
+    /// <see cref="StockTickMilliseconds"/>.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Configurable so the simulation can be driven at other rates for purposes that do not
+    /// involve a stock client — deterministic replay, accelerated headless tests, profiling, or
+    /// a future client that agrees on a different rate. <b>Changing it breaks compatibility with
+    /// the stock client</b>; see <see cref="StockTickMilliseconds"/>.
+    /// </para>
+    /// <para>
+    /// Constrained to a power of two because the engine's tick arithmetic is bitwise
+    /// (<c>total &amp; ~(tick-1)</c> to find the boundary, <c>&amp; (tick-1)</c> for the sub-tick
+    /// remainder). Those are reproduced here exactly rather than replaced with division, so a
+    /// non-power-of-two would silently compute the wrong boundary instead of failing.
+    /// </para>
+    /// </remarks>
+    public uint TickMilliseconds { get; }
+
+    /// <summary>Creates a list running at the stock 32 ms timestep.</summary>
+    public ProcessList() : this(StockTickMilliseconds)
+    {
+    }
+
+    /// <summary>
+    /// Creates a list running at a given timestep. Prefer the parameterless constructor unless
+    /// you specifically intend to diverge from the stock client — see
+    /// <see cref="TickMilliseconds"/>.
+    /// </summary>
+    /// <param name="tickMilliseconds">Timestep in milliseconds; must be a power of two.</param>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// The value is zero or not a power of two, which the bitwise tick arithmetic cannot express.
+    /// </exception>
+    public ProcessList(uint tickMilliseconds)
+    {
+        if (tickMilliseconds == 0 || (tickMilliseconds & (tickMilliseconds - 1)) != 0)
+            throw new ArgumentOutOfRangeException(
+                nameof(tickMilliseconds), tickMilliseconds,
+                "The tick timestep must be a non-zero power of two: the engine's tick arithmetic "
+                + "is bitwise, so any other value computes the wrong boundary rather than failing.");
+
+        TickMilliseconds = tickMilliseconds;
+    }
 
     /// <summary>
     /// <c>GameInterface::processTime</c> clamps incoming elapsed time to this many milliseconds

@@ -197,13 +197,13 @@ public static class TickLoopSelfCheck
         // Simulate a multi-second stall: without the clamp this would be ~156 ticks.
         var ticks = list.AdvanceServerTime(5000);
 
-        var expectedTicks = (int)(ProcessList.ElapsedClampMilliseconds / ProcessList.TickMilliseconds);
+        var expectedTicks = (int)(ProcessList.ElapsedClampMilliseconds / ProcessList.StockTickMilliseconds);
         Assert(ticks == expectedTicks, $"expected the clamp to bound this to {expectedTicks} ticks, got {ticks}");
         Assert(list.LastTime == ProcessList.ElapsedClampMilliseconds,
             $"expected LastTime clamped to {ProcessList.ElapsedClampMilliseconds}, got {list.LastTime}");
         Assert(list.LastTime != 5000, "elapsed time must have been clamped, not applied as-is");
 
-        Console.WriteLine($"        5000ms stall clamped to {ProcessList.ElapsedClampMilliseconds}ms -> {ticks} ticks (unclamped would be {5000 / ProcessList.TickMilliseconds})");
+        Console.WriteLine($"        5000ms stall clamped to {ProcessList.ElapsedClampMilliseconds}ms -> {ticks} ticks (unclamped would be {5000 / ProcessList.StockTickMilliseconds})");
     }
 
     // ------------------------------------------------------------------------------------------
