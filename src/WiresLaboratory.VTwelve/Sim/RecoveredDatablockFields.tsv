@@ -1,0 +1,1416 @@
+class	parent_class	field	type_code	type_size_bytes	type_guess	offset_dec	offset_hex	elem_count	enum_table	reg_func	parent_reg_func	call_site	class_confidence
+AIObjective	MissionMarker	description	7	4	string(char*)	2184	0x888	1		0x0047d880		0x0047d898	vtable-init
+AIObjective	MissionMarker	mode	7	4	string(char*)	2188	0x88c	1		0x0047d880		0x0047d8b0	vtable-init
+AIObjective	MissionMarker	targetClient	7	4	string(char*)	2192	0x890	1		0x0047d880		0x0047d8c8	vtable-init
+AIObjective	MissionMarker	targetObject	7	4	string(char*)	2196	0x894	1		0x0047d880		0x0047d8e0	vtable-init
+AIObjective	MissionMarker	targetClientId	1	4	S32	2200	0x898	1		0x0047d880		0x0047d8f8	vtable-init
+AIObjective	MissionMarker	targetObjectId	1	4	S32	2204	0x89c	1		0x0047d880		0x0047d910	vtable-init
+AIObjective	MissionMarker	location	16	12	Point3F(12B)	2208	0x8a0	1		0x0047d880		0x0047d928	vtable-init
+AIObjective	MissionMarker	weightLevel1	1	4	S32	2220	0x8ac	1		0x0047d880		0x0047d940	vtable-init
+AIObjective	MissionMarker	weightLevel2	1	4	S32	2224	0x8b0	1		0x0047d880		0x0047d958	vtable-init
+AIObjective	MissionMarker	weightLevel3	1	4	S32	2228	0x8b4	1		0x0047d880		0x0047d970	vtable-init
+AIObjective	MissionMarker	weightLevel4	1	4	S32	2232	0x8b8	1		0x0047d880		0x0047d988	vtable-init
+AIObjective	MissionMarker	offense	3	1	bool(4)	2236	0x8bc	1		0x0047d880		0x0047d9a0	vtable-init
+AIObjective	MissionMarker	defense	3	1	bool(4)	2237	0x8bd	1		0x0047d880		0x0047d9b8	vtable-init
+AIObjective	MissionMarker	equipment	7	4	string(char*)	2240	0x8c0	1		0x0047d880		0x0047d9d0	vtable-init
+AIObjective	MissionMarker	desiredEquipment	7	4	string(char*)	2244	0x8c4	1		0x0047d880		0x0047d9e8	vtable-init
+AIObjective	MissionMarker	buyEquipmentSet	7	4	string(char*)	2248	0x8c8	1		0x0047d880		0x0047da00	vtable-init
+AIObjective	MissionMarker	chat	7	4	string(char*)	2252	0x8cc	1		0x0047d880		0x0047da18	vtable-init
+AIObjective	MissionMarker	locked	3	1	bool(4)	2256	0x8d0	1		0x0047d880		0x0047da78	vtable-init
+AIObjective	MissionMarker	issuedByHuman	3	1	bool(4)	2257	0x8d1	1		0x0047d880		0x0047da30	vtable-init
+AIObjective	MissionMarker	issuedByClientId	1	4	S32	2260	0x8d4	1		0x0047d880		0x0047da48	vtable-init
+AIObjective	MissionMarker	forceClientId	1	4	S32	2264	0x8d8	1		0x0047d880		0x0047da60	vtable-init
+AudioDescription	SimDataBlock	volume	5	4	F32	60	0x3c	1		0x0040bd40		0x0040bd50	vtable-init
+AudioDescription	SimDataBlock	isLooping	3	1	bool(4)	64	0x40	1		0x0040bd40		0x0040bd65	vtable-init
+AudioDescription	SimDataBlock	is3D	3	1	bool(4)	65	0x41	1		0x0040bd40		0x0040bd7a	vtable-init
+AudioDescription	SimDataBlock	minDistance	5	4	F32	68	0x44	1		0x0040bd40		0x0040bd8f	vtable-init
+AudioDescription	SimDataBlock	maxDistance	5	4	F32	72	0x48	1		0x0040bd40		0x0040bda4	vtable-init
+AudioDescription	SimDataBlock	coneInsideAngle	1	4	S32	76	0x4c	1		0x0040bd40		0x0040bdb9	vtable-init
+AudioDescription	SimDataBlock	coneOutsideAngle	1	4	S32	80	0x50	1		0x0040bd40		0x0040bdce	vtable-init
+AudioDescription	SimDataBlock	coneOutsideVolume	5	4	F32	84	0x54	1		0x0040bd40		0x0040bde3	vtable-init
+AudioDescription	SimDataBlock	coneVector	16	12	Point3F(12B)	88	0x58	1		0x0040bd40		0x0040bdf8	vtable-init
+AudioDescription	SimDataBlock	environmentLevel	5	4	F32	100	0x64	1		0x0040bd40		0x0040be0d	vtable-init
+AudioDescription	SimDataBlock	loopCount	1	4	S32	104	0x68	1		0x0040bd40		0x0040be22	vtable-init
+AudioDescription	SimDataBlock	minLoopGap	1	4	S32	108	0x6c	1		0x0040bd40		0x0040be37	vtable-init
+AudioDescription	SimDataBlock	maxLoopGap	1	4	S32	112	0x70	1		0x0040bd40		0x0040be4c	vtable-init
+AudioDescription	SimDataBlock	type	1	4	S32	116	0x74	1		0x0040bd40		0x0040be61	vtable-init
+AudioEmitter	SceneObject	profile	34	4	AudioProfile*	596	0x254	1		0x0067fa40	0x0058c7f0	0x0067fa58	vtable-init
+AudioEmitter	SceneObject	description	33	4	?	600	0x258	1		0x0067fa40	0x0058c7f0	0x0067fa70	vtable-init
+AudioEmitter	SceneObject	fileName	7	4	string(char*)	604	0x25c	1		0x0067fa40	0x0058c7f0	0x0067fa88	vtable-init
+AudioEmitter	SceneObject	useProfileDescription	3	1	bool(4)	608	0x260	1		0x0067fa40	0x0058c7f0	0x0067faa0	vtable-init
+AudioEmitter	SceneObject	volume	5	4	F32	612	0x264	1		0x0067fa40	0x0058c7f0	0x0067fad0	vtable-init
+AudioEmitter	SceneObject	isLooping	3	1	bool(4)	616	0x268	1		0x0067fa40	0x0058c7f0	0x0067fae8	vtable-init
+AudioEmitter	SceneObject	is3D	3	1	bool(4)	617	0x269	1		0x0067fa40	0x0058c7f0	0x0067fb00	vtable-init
+AudioEmitter	SceneObject	minDistance	5	4	F32	620	0x26c	1		0x0067fa40	0x0058c7f0	0x0067fb18	vtable-init
+AudioEmitter	SceneObject	maxDistance	5	4	F32	624	0x270	1		0x0067fa40	0x0058c7f0	0x0067fb30	vtable-init
+AudioEmitter	SceneObject	coneInsideAngle	1	4	S32	628	0x274	1		0x0067fa40	0x0058c7f0	0x0067fb48	vtable-init
+AudioEmitter	SceneObject	coneOutsideAngle	1	4	S32	632	0x278	1		0x0067fa40	0x0058c7f0	0x0067fb60	vtable-init
+AudioEmitter	SceneObject	coneOutsideVolume	5	4	F32	636	0x27c	1		0x0067fa40	0x0058c7f0	0x0067fb78	vtable-init
+AudioEmitter	SceneObject	coneVector	16	12	Point3F(12B)	640	0x280	1		0x0067fa40	0x0058c7f0	0x0067fb90	vtable-init
+AudioEmitter	SceneObject	loopCount	1	4	S32	656	0x290	1		0x0067fa40	0x0058c7f0	0x0067fba8	vtable-init
+AudioEmitter	SceneObject	minLoopGap	1	4	S32	660	0x294	1		0x0067fa40	0x0058c7f0	0x0067fbc0	vtable-init
+AudioEmitter	SceneObject	maxLoopGap	1	4	S32	664	0x298	1		0x0067fa40	0x0058c7f0	0x0067fbd8	vtable-init
+AudioEmitter	SceneObject	type	9	4	enum(S32)+table	668	0x29c	1	0x842350	0x0067fa40	0x0058c7f0	0x0067fbf3	vtable-init
+AudioEmitter	SceneObject	outsideAmbient	3	1	bool(4)	672	0x2a0	1		0x0067fa40	0x0058c7f0	0x0067fab8	vtable-init
+AudioEnvironment	SimDataBlock	useRoom	3	1	bool(4)	60	0x3c	1		0x0040b1e0		0x0040b1f0	vtable-init
+AudioEnvironment	SimDataBlock	room	9	4	enum(S32)+table	64	0x40	1	0x7df834	0x0040b1e0		0x0040b208	vtable-init
+AudioEnvironment	SimDataBlock	roomHF	1	4	S32	68	0x44	1		0x0040b1e0		0x0040b21d	vtable-init
+AudioEnvironment	SimDataBlock	reflections	1	4	S32	72	0x48	1		0x0040b1e0		0x0040b232	vtable-init
+AudioEnvironment	SimDataBlock	reverb	1	4	S32	76	0x4c	1		0x0040b1e0		0x0040b247	vtable-init
+AudioEnvironment	SimDataBlock	roomRolloffFactor	5	4	F32	80	0x50	1		0x0040b1e0		0x0040b25c	vtable-init
+AudioEnvironment	SimDataBlock	decayTime	5	4	F32	84	0x54	1		0x0040b1e0		0x0040b271	vtable-init
+AudioEnvironment	SimDataBlock	decayHFRatio	5	4	F32	88	0x58	1		0x0040b1e0		0x0040b286	vtable-init
+AudioEnvironment	SimDataBlock	reflectionsDelay	5	4	F32	92	0x5c	1		0x0040b1e0		0x0040b29b	vtable-init
+AudioEnvironment	SimDataBlock	reverbDelay	5	4	F32	96	0x60	1		0x0040b1e0		0x0040b2b0	vtable-init
+AudioEnvironment	SimDataBlock	roomVolume	1	4	S32	100	0x64	1		0x0040b1e0		0x0040b2c5	vtable-init
+AudioEnvironment	SimDataBlock	effectVolume	5	4	F32	104	0x68	1		0x0040b1e0		0x0040b2da	vtable-init
+AudioEnvironment	SimDataBlock	damping	5	4	F32	108	0x6c	1		0x0040b1e0		0x0040b2ef	vtable-init
+AudioEnvironment	SimDataBlock	environmentSize	5	4	F32	112	0x70	1		0x0040b1e0		0x0040b304	vtable-init
+AudioEnvironment	SimDataBlock	environmentDiffusion	5	4	F32	116	0x74	1		0x0040b1e0		0x0040b319	vtable-init
+AudioEnvironment	SimDataBlock	airAbsorption	5	4	F32	120	0x78	1		0x0040b1e0		0x0040b32e	vtable-init
+AudioEnvironment	SimDataBlock	flags	1	4	S32	124	0x7c	1		0x0040b1e0		0x0040b343	vtable-init
+AudioProfile	SimDataBlock	description	33	4	?	60	0x3c	1		0x0040c400		0x0040c425	vtable-init
+AudioProfile	SimDataBlock	effect	42	4	EffectProfile*	64	0x40	1		0x0040c400		0x0040c43a	vtable-init
+AudioProfile	SimDataBlock	environment	44	16	AudioEnvironment*?	68	0x44	1		0x0040c400		0x0040c44f	vtable-init
+AudioProfile	SimDataBlock	filename	7	4	string(char*)	84	0x54	1		0x0040c400		0x0040c410	vtable-init
+AudioProfile	SimDataBlock	preload	3	1	bool(4)	88	0x58	1		0x0040c400		0x0040c464	vtable-init
+AudioSampleEnvironment	SimDataBlock	direct	1	4	S32	60	0x3c	1		0x0040b850		0x0040b860	vtable-init
+AudioSampleEnvironment	SimDataBlock	directHF	1	4	S32	64	0x40	1		0x0040b850		0x0040b875	vtable-init
+AudioSampleEnvironment	SimDataBlock	room	1	4	S32	68	0x44	1		0x0040b850		0x0040b88a	vtable-init
+AudioSampleEnvironment	SimDataBlock	obstruction	5	4	F32	76	0x4c	1		0x0040b850		0x0040b89f	vtable-init
+AudioSampleEnvironment	SimDataBlock	obstructionLFRatio	5	4	F32	80	0x50	1		0x0040b850		0x0040b8b4	vtable-init
+AudioSampleEnvironment	SimDataBlock	occlusion	5	4	F32	84	0x54	1		0x0040b850		0x0040b8c9	vtable-init
+AudioSampleEnvironment	SimDataBlock	occlusionLFRatio	5	4	F32	88	0x58	1		0x0040b850		0x0040b8de	vtable-init
+AudioSampleEnvironment	SimDataBlock	occlusionRoomRatio	5	4	F32	92	0x5c	1		0x0040b850		0x0040b8f3	vtable-init
+AudioSampleEnvironment	SimDataBlock	roomRolloff	5	4	F32	96	0x60	1		0x0040b850		0x0040b908	vtable-init
+AudioSampleEnvironment	SimDataBlock	airAbsorption	5	4	F32	100	0x64	1		0x0040b850		0x0040b91d	vtable-init
+AudioSampleEnvironment	SimDataBlock	outsideVolumeHF	1	4	S32	104	0x68	1		0x0040b850		0x0040b932	vtable-init
+AudioSampleEnvironment	SimDataBlock	flags	1	4	S32	108	0x6c	1		0x0040b850		0x0040b947	vtable-init
+BeaconObject	StaticShape	beaconType	9	4	enum(S32)+table	2184	0x888	1	0x842840	0x006a3cd0		0x006a3ceb	vtable-init
+BombProjectileData	GrenadeProjectileData	texture	7	4	string(char*)	344	0x158	2		0x00699360	0x006333d0	0x00699378	vtable-init
+BombProjectileData	GrenadeProjectileData	minRotSpeed	16	12	Point3F(12B)	360	0x168	1		0x00699360	0x006333d0	0x00699390	vtable-init
+BombProjectileData	GrenadeProjectileData	maxRotSpeed	16	12	Point3F(12B)	372	0x174	1		0x00699360	0x006333d0	0x006993a8	vtable-init
+CannedChatItem	SimDataBlock	name	7	4	string(char*)	60	0x3c	1		0x00593340		0x00593350	vtable-init
+CannedChatItem	SimDataBlock	text	7	4	string(char*)	64	0x40	1		0x00593340		0x00593365	vtable-init
+CannedChatItem	SimDataBlock	audioFile	7	4	string(char*)	68	0x44	1		0x00593340		0x0059337a	vtable-init
+CannedChatItem	SimDataBlock	animation	7	4	string(char*)	72	0x48	1		0x00593340		0x0059338f	vtable-init
+CannedChatItem	SimDataBlock	teamOnly	3	1	bool(4)	76	0x4c	1		0x00593340		0x005933a4	vtable-init
+CannedChatItem	SimDataBlock	play3D	3	1	bool(4)	77	0x4d	1		0x00593340		0x005933b9	vtable-init
+CommanderIconData	SimDataBlock	images	7	4	string(char*)	80	0x50	5		0x00666910		0x00666925	vtable-init
+CommanderIconData	SimDataBlock	baseImage	7	4	string(char*)	80	0x50	1		0x00666910		0x0066693a	vtable-init
+CommanderIconData	SimDataBlock	activeImage	7	4	string(char*)	84	0x54	1		0x00666910		0x0066694f	vtable-init
+CommanderIconData	SimDataBlock	inactiveImage	7	4	string(char*)	88	0x58	1		0x00666910		0x00666964	vtable-init
+CommanderIconData	SimDataBlock	selectImage	7	4	string(char*)	92	0x5c	1		0x00666910		0x00666979	vtable-init
+CommanderIconData	SimDataBlock	hilightImage	7	4	string(char*)	96	0x60	1		0x00666910		0x0066698e	vtable-init
+Debris	GameBase	lifetime	5	4	F32	676	0x2a4	1		0x00684aa0		0x00684ab3	vtable-init
+DebrisData	GameBaseData	velocity	5	4	F32	68	0x44	1		0x00684000	0x005e27d0	0x00684187	vtable-init
+DebrisData	GameBaseData	velocityVariance	5	4	F32	72	0x48	1		0x00684000	0x005e27d0	0x0068419c	vtable-init
+DebrisData	GameBaseData	friction	5	4	F32	76	0x4c	1		0x00684000	0x005e27d0	0x00684088	vtable-init
+DebrisData	GameBaseData	elasticity	5	4	F32	80	0x50	1		0x00684000	0x005e27d0	0x00684073	vtable-init
+DebrisData	GameBaseData	lifetime	5	4	F32	84	0x54	1		0x00684000	0x005e27d0	0x0068415d	vtable-init
+DebrisData	GameBaseData	lifetimeVariance	5	4	F32	88	0x58	1		0x00684000	0x005e27d0	0x00684172	vtable-init
+DebrisData	GameBaseData	numBounces	1	4	S32	92	0x5c	1		0x00684000	0x005e27d0	0x0068409d	vtable-init
+DebrisData	GameBaseData	bounceVariance	1	4	S32	96	0x60	1		0x00684000	0x005e27d0	0x006840b2	vtable-init
+DebrisData	GameBaseData	minSpinSpeed	5	4	F32	100	0x64	1		0x00684000	0x005e27d0	0x006840c7	vtable-init
+DebrisData	GameBaseData	maxSpinSpeed	5	4	F32	104	0x68	1		0x00684000	0x005e27d0	0x006840dc	vtable-init
+DebrisData	GameBaseData	render2D	3	1	bool(4)	108	0x6c	1		0x00684000	0x005e27d0	0x006840f1	vtable-init
+DebrisData	GameBaseData	explodeOnMaxBounce	3	1	bool(4)	109	0x6d	1		0x00684000	0x005e27d0	0x0068411e	vtable-init
+DebrisData	GameBaseData	staticOnMaxBounce	3	1	bool(4)	110	0x6e	1		0x00684000	0x005e27d0	0x00684133	vtable-init
+DebrisData	GameBaseData	snapOnMaxBounce	3	1	bool(4)	111	0x6f	1		0x00684000	0x005e27d0	0x00684148	vtable-init
+DebrisData	GameBaseData	fade	3	1	bool(4)	112	0x70	1		0x00684000	0x005e27d0	0x006841b1	vtable-init
+DebrisData	GameBaseData	useRadiusMass	3	1	bool(4)	113	0x71	1		0x00684000	0x005e27d0	0x006841c6	vtable-init
+DebrisData	GameBaseData	baseRadius	5	4	F32	116	0x74	1		0x00684000	0x005e27d0	0x006841db	vtable-init
+DebrisData	GameBaseData	gravModifier	5	4	F32	120	0x78	1		0x00684000	0x005e27d0	0x006841f0	vtable-init
+DebrisData	GameBaseData	terminalVelocity	5	4	F32	124	0x7c	1		0x00684000	0x005e27d0	0x00684205	vtable-init
+DebrisData	GameBaseData	ignoreWater	3	1	bool(4)	128	0x80	1		0x00684000	0x005e27d0	0x0068421d	vtable-init
+DebrisData	GameBaseData	shapeName	7	4	string(char*)	132	0x84	1		0x00684000	0x005e27d0	0x00684109	vtable-init
+DebrisData	GameBaseData	texture	7	4	string(char*)	140	0x8c	1		0x00684000	0x005e27d0	0x0068402e	vtable-init
+DebrisData	GameBaseData	explosion	25	4	ExplosionData*	152	0x98	1		0x00684000	0x005e27d0	0x0068405e	vtable-init
+DebrisData	GameBaseData	emitters	32	8	ParticleEmitterData*	156	0x9c	2		0x00684000	0x005e27d0	0x00684046	vtable-init
+DecalData	SimDataBlock	sizeX	5	4	F32	60	0x3c	1		0x00593970		0x00593996	vtable-init
+DecalData	SimDataBlock	sizeY	5	4	F32	64	0x40	1		0x00593970		0x005939ab	vtable-init
+DecalData	SimDataBlock	textureName	7	4	string(char*)	68	0x44	1		0x00593970		0x005939c0	vtable-init
+ELFProjectileData	ProjectileData	beamRange	5	4	F32	312	0x138	1		0x0064a860	0x006303f0	0x0064a878	vtable-init
+ELFProjectileData	ProjectileData	beamHitWidth	5	4	F32	316	0x13c	1		0x0064a860	0x006303f0	0x0064a890	vtable-init
+ELFProjectileData	ProjectileData	textures	7	4	string(char*)	320	0x140	3		0x0064a860	0x006303f0	0x0064a8a8	vtable-init
+ELFProjectileData	ProjectileData	emitter	32	8	ParticleEmitterData*	332	0x14c	1		0x0064a860	0x006303f0	0x0064a938	vtable-init
+ELFProjectileData	ProjectileData	mainBeamWidth	5	4	F32	340	0x154	1		0x0064a860	0x006303f0	0x0064a8c0	vtable-init
+ELFProjectileData	ProjectileData	mainBeamSpeed	5	4	F32	344	0x158	1		0x0064a860	0x006303f0	0x0064a8d8	vtable-init
+ELFProjectileData	ProjectileData	mainBeamRepeat	5	4	F32	348	0x15c	1		0x0064a860	0x006303f0	0x0064a8f0	vtable-init
+ELFProjectileData	ProjectileData	lightningWidth	5	4	F32	352	0x160	1		0x0064a860	0x006303f0	0x0064a908	vtable-init
+ELFProjectileData	ProjectileData	lightningDist	5	4	F32	356	0x164	1		0x0064a860	0x006303f0	0x0064a920	vtable-init
+EditTSCtrl	GuiTSCtrl	renderMissionArea	3	1	bool(4)	544	0x220	1		0x00467320	0x004b6960	0x00467338	vtable-init
+EditTSCtrl	GuiTSCtrl	missionAreaFillColor	11	4	ColorI(4B)	545	0x221	1		0x00467320	0x004b6960	0x00467350	vtable-init
+EditTSCtrl	GuiTSCtrl	missionAreaFrameColor	11	4	ColorI(4B)	549	0x225	1		0x00467320	0x004b6960	0x00467368	vtable-init
+EditTSCtrl	GuiTSCtrl	consoleFrameColor	11	4	ColorI(4B)	553	0x229	1		0x00467320	0x004b6960	0x00467380	vtable-init
+EditTSCtrl	GuiTSCtrl	consoleFillColor	11	4	ColorI(4B)	557	0x22d	1		0x00467320	0x004b6960	0x00467398	vtable-init
+EditTSCtrl	GuiTSCtrl	consoleSphereLevel	1	4	S32	564	0x234	1		0x00467320	0x004b6960	0x004673b0	vtable-init
+EditTSCtrl	GuiTSCtrl	consoleCircleSegments	1	4	S32	568	0x238	1		0x00467320	0x004b6960	0x004673c8	vtable-init
+EditTSCtrl	GuiTSCtrl	consoleLineWidth	1	4	S32	572	0x23c	1		0x00467320	0x004b6960	0x004673e0	vtable-init
+EffectProfile	SimDataBlock	effectname	7	4	string(char*)	60	0x3c	1		0x0050dc70		0x0050dc80	vtable-init
+EffectProfile	SimDataBlock	minDistance	5	4	F32	64	0x40	1		0x0050dc70		0x0050dc95	vtable-init
+EffectProfile	SimDataBlock	maxDistance	5	4	F32	68	0x44	1		0x0050dc70		0x0050dcaa	vtable-init
+EffectProfile	SimDataBlock	audioScale	5	4	F32	72	0x48	1		0x0050dc70		0x0050dcbf	vtable-init
+EffectProfile	SimDataBlock	directional	3	1	bool(4)	76	0x4c	1		0x0050dc70		0x0050dcd4	vtable-init
+EnergyProjectileData	GrenadeProjectileData	texture	7	4	string(char*)	344	0x158	2		0x00694b40	0x006333d0	0x00694b58	vtable-init
+EnergyProjectileData	GrenadeProjectileData	crossViewAng	5	4	F32	360	0x168	1		0x00694b40	0x006333d0	0x00694b70	vtable-init
+EnergyProjectileData	GrenadeProjectileData	crossSize	5	4	F32	364	0x16c	1		0x00694b40	0x006333d0	0x00694b88	vtable-init
+EnergyProjectileData	GrenadeProjectileData	blurLifetime	5	4	F32	368	0x170	1		0x00694b40	0x006333d0	0x00694ba0	vtable-init
+EnergyProjectileData	GrenadeProjectileData	blurWidth	5	4	F32	372	0x174	1		0x00694b40	0x006333d0	0x00694bb8	vtable-init
+EnergyProjectileData	GrenadeProjectileData	blurColor	12	16	ColorF(16B)	376	0x178	1		0x00694b40	0x006333d0	0x00694bd0	vtable-init
+ExplosionData	GameBaseData	explosionShape	7	4	string(char*)	68	0x44	1		0x0061e7a0	0x005e27d0	0x0061e7cb	vtable-init
+ExplosionData	GameBaseData	faceViewer	3	1	bool(4)	72	0x48	1		0x0061e7a0	0x005e27d0	0x0061e7f5	vtable-init
+ExplosionData	GameBaseData	particleDensity	1	4	S32	76	0x4c	1		0x0061e7a0	0x005e27d0	0x0061e81f	vtable-init
+ExplosionData	GameBaseData	particleRadius	5	4	F32	80	0x50	1		0x0061e7a0	0x005e27d0	0x0061e834	vtable-init
+ExplosionData	GameBaseData	soundProfile	34	4	AudioProfile*	84	0x54	1		0x0061e7a0	0x005e27d0	0x0061e7e0	vtable-init
+ExplosionData	GameBaseData	particleEmitter	32	8	ParticleEmitterData*	88	0x58	1		0x0061e7a0	0x005e27d0	0x0061e80a	vtable-init
+ExplosionData	GameBaseData	explosionScale	16	12	Point3F(12B)	100	0x64	1		0x0061e7a0	0x005e27d0	0x0061e849	vtable-init
+ExplosionData	GameBaseData	playSpeed	5	4	F32	112	0x70	1		0x0061e7a0	0x005e27d0	0x0061e85e	vtable-init
+ExplosionData	GameBaseData	emitter	32	8	ParticleEmitterData*	124	0x7c	4		0x0061e7a0	0x005e27d0	0x0061e873	vtable-init
+ExplosionData	GameBaseData	shockwave	26	8	ShockwaveData*	156	0x9c	1		0x0061e7a0	0x005e27d0	0x0061e8a3	vtable-init
+ExplosionData	GameBaseData	shockwaveOnTerrain	3	1	bool(4)	164	0xa4	1		0x0061e7a0	0x005e27d0	0x0061e8bb	vtable-init
+ExplosionData	GameBaseData	debris	39	8	DebrisData*	168	0xa8	1		0x0061e7a0	0x005e27d0	0x0061e88b	vtable-init
+ExplosionData	GameBaseData	debrisThetaMin	5	4	F32	176	0xb0	1		0x0061e7a0	0x005e27d0	0x0061e8d3	vtable-init
+ExplosionData	GameBaseData	debrisThetaMax	5	4	F32	180	0xb4	1		0x0061e7a0	0x005e27d0	0x0061e8eb	vtable-init
+ExplosionData	GameBaseData	debrisPhiMin	5	4	F32	184	0xb8	1		0x0061e7a0	0x005e27d0	0x0061e903	vtable-init
+ExplosionData	GameBaseData	debrisPhiMax	5	4	F32	188	0xbc	1		0x0061e7a0	0x005e27d0	0x0061e91b	vtable-init
+ExplosionData	GameBaseData	debrisNum	1	4	S32	192	0xc0	1		0x0061e7a0	0x005e27d0	0x0061e933	vtable-init
+ExplosionData	GameBaseData	debrisNumVariance	1	4	S32	196	0xc4	1		0x0061e7a0	0x005e27d0	0x0061e94b	vtable-init
+ExplosionData	GameBaseData	debrisVelocity	5	4	F32	200	0xc8	1		0x0061e7a0	0x005e27d0	0x0061e963	vtable-init
+ExplosionData	GameBaseData	debrisVelocityVariance	5	4	F32	204	0xcc	1		0x0061e7a0	0x005e27d0	0x0061e97b	vtable-init
+ExplosionData	GameBaseData	subExplosion	25	4	ExplosionData*	208	0xd0	5		0x0061e7a0	0x005e27d0	0x0061e993	vtable-init
+ExplosionData	GameBaseData	delayMS	1	4	S32	248	0xf8	1		0x0061e7a0	0x005e27d0	0x0061e9ab	vtable-init
+ExplosionData	GameBaseData	delayVariance	1	4	S32	252	0xfc	1		0x0061e7a0	0x005e27d0	0x0061e9c3	vtable-init
+ExplosionData	GameBaseData	lifetimeMS	1	4	S32	256	0x100	1		0x0061e7a0	0x005e27d0	0x0061e9db	vtable-init
+ExplosionData	GameBaseData	lifetimeVariance	1	4	S32	260	0x104	1		0x0061e7a0	0x005e27d0	0x0061e9f3	vtable-init
+ExplosionData	GameBaseData	offset	5	4	F32	264	0x108	1		0x0061e7a0	0x005e27d0	0x0061ea0b	vtable-init
+ExplosionData	GameBaseData	sizes	16	12	Point3F(12B)	268	0x10c	4		0x0061e7a0	0x005e27d0	0x0061ea3b	vtable-init
+ExplosionData	GameBaseData	times	5	4	F32	316	0x13c	4		0x0061e7a0	0x005e27d0	0x0061ea23	vtable-init
+ExplosionData	GameBaseData	shakeCamera	3	1	bool(4)	332	0x14c	1		0x0061e7a0	0x005e27d0	0x0061ea53	vtable-init
+ExplosionData	GameBaseData	camShakeFreq	16	12	Point3F(12B)	336	0x150	1		0x0061e7a0	0x005e27d0	0x0061ea6b	vtable-init
+ExplosionData	GameBaseData	camShakeAmp	16	12	Point3F(12B)	348	0x15c	1		0x0061e7a0	0x005e27d0	0x0061ea83	vtable-init
+ExplosionData	GameBaseData	camShakeDuration	5	4	F32	360	0x168	1		0x0061e7a0	0x005e27d0	0x0061ea9b	vtable-init
+ExplosionData	GameBaseData	camShakeRadius	5	4	F32	364	0x16c	1		0x0061e7a0	0x005e27d0	0x0061eab3	vtable-init
+ExplosionData	GameBaseData	camShakeFalloff	5	4	F32	368	0x170	1		0x0061e7a0	0x005e27d0	0x0061eacb	vtable-init
+FireballAtmosphere	GameBase	dropRadius	5	4	F32	656	0x290	1		0x0069b0f0	0x005e3670	0x0069b108	vtable-init
+FireballAtmosphere	GameBase	dropsPerMinute	5	4	F32	660	0x294	1		0x0069b0f0	0x005e3670	0x0069b120	vtable-init
+FireballAtmosphere	GameBase	minDropAngle	5	4	F32	664	0x298	1		0x0069b0f0	0x005e3670	0x0069b138	vtable-init
+FireballAtmosphere	GameBase	maxDropAngle	5	4	F32	668	0x29c	1		0x0069b0f0	0x005e3670	0x0069b150	vtable-init
+FireballAtmosphere	GameBase	startVelocity	5	4	F32	672	0x2a0	1		0x0069b0f0	0x005e3670	0x0069b168	vtable-init
+FireballAtmosphere	GameBase	dropHeight	5	4	F32	676	0x2a4	1		0x0069b0f0	0x005e3670	0x0069b180	vtable-init
+FireballAtmosphere	GameBase	dropDir	16	12	Point3F(12B)	680	0x2a8	1		0x0069b0f0	0x005e3670	0x0069b198	vtable-init
+FireballAtmosphereData	GameBaseData	fireball	39	8	DebrisData*	68	0x44	1		0x0069af10	0x005e27d0	0x0069af3b	vtable-init
+FlareProjectileData	GrenadeProjectileData	size	5	4	F32	344	0x158	1		0x00687110	0x006333d0	0x00687140	vtable-init
+FlareProjectileData	GrenadeProjectileData	useLensFlare	3	1	bool(4)	352	0x160	1		0x00687110	0x006333d0	0x00687158	vtable-init
+FlareProjectileData	GrenadeProjectileData	texture	7	4	string(char*)	356	0x164	2		0x00687110	0x006333d0	0x00687128	vtable-init
+FlyingVehicleData	VehicleData	jetSound	34	4	AudioProfile*	1072	0x430	1		0x0060f820	0x006099e0	0x0060f838	vtable-init
+FlyingVehicleData	VehicleData	engineSound	34	4	AudioProfile*	1076	0x434	1		0x0060f820	0x006099e0	0x0060f850	vtable-init
+FlyingVehicleData	VehicleData	forwardJetEmitter	32	8	ParticleEmitterData*	1088	0x440	1		0x0060f820	0x006099e0	0x0060f9b8	vtable-init
+FlyingVehicleData	VehicleData	backwardJetEmitter	32	8	ParticleEmitterData*	1092	0x444	1		0x0060f820	0x006099e0	0x0060f9d0	vtable-init
+FlyingVehicleData	VehicleData	downJetEmitter	32	8	ParticleEmitterData*	1096	0x448	1		0x0060f820	0x006099e0	0x0060f9e8	vtable-init
+FlyingVehicleData	VehicleData	trailEmitter	32	8	ParticleEmitterData*	1100	0x44c	1		0x0060f820	0x006099e0	0x0060fa00	vtable-init
+FlyingVehicleData	VehicleData	minTrailSpeed	5	4	F32	1120	0x460	1		0x0060f820	0x006099e0	0x0060fa18	vtable-init
+FlyingVehicleData	VehicleData	maneuveringForce	5	4	F32	1124	0x464	1		0x0060f820	0x006099e0	0x0060f868	vtable-init
+FlyingVehicleData	VehicleData	horizontalSurfaceForce	5	4	F32	1128	0x468	1		0x0060f820	0x006099e0	0x0060f880	vtable-init
+FlyingVehicleData	VehicleData	verticalSurfaceForce	5	4	F32	1132	0x46c	1		0x0060f820	0x006099e0	0x0060f898	vtable-init
+FlyingVehicleData	VehicleData	autoInputDamping	5	4	F32	1136	0x470	1		0x0060f820	0x006099e0	0x0060f8b0	vtable-init
+FlyingVehicleData	VehicleData	steeringForce	5	4	F32	1140	0x474	1		0x0060f820	0x006099e0	0x0060f8c8	vtable-init
+FlyingVehicleData	VehicleData	steeringRollForce	5	4	F32	1144	0x478	1		0x0060f820	0x006099e0	0x0060f8e0	vtable-init
+FlyingVehicleData	VehicleData	rollForce	5	4	F32	1148	0x47c	1		0x0060f820	0x006099e0	0x0060f8f8	vtable-init
+FlyingVehicleData	VehicleData	autoAngularForce	5	4	F32	1152	0x480	1		0x0060f820	0x006099e0	0x0060f910	vtable-init
+FlyingVehicleData	VehicleData	rotationalDrag	5	4	F32	1156	0x484	1		0x0060f820	0x006099e0	0x0060f928	vtable-init
+FlyingVehicleData	VehicleData	maxAutoSpeed	5	4	F32	1160	0x488	1		0x0060f820	0x006099e0	0x0060f958	vtable-init
+FlyingVehicleData	VehicleData	autoLinearForce	5	4	F32	1164	0x48c	1		0x0060f820	0x006099e0	0x0060f940	vtable-init
+FlyingVehicleData	VehicleData	hoverHeight	5	4	F32	1168	0x490	1		0x0060f820	0x006099e0	0x0060f988	vtable-init
+FlyingVehicleData	VehicleData	createHoverHeight	5	4	F32	1172	0x494	1		0x0060f820	0x006099e0	0x0060f9a0	vtable-init
+FlyingVehicleData	VehicleData	maxForwardSpeed	5	4	F32	1176	0x498	1		0x0060f820	0x006099e0	0x0060f970	vtable-init
+FlyingVehicleData	VehicleData	vertThrustMultiple	5	4	F32	1180	0x49c	1		0x0060f820	0x006099e0	0x0060fa30	vtable-init
+ForceFieldBareData	GameBaseData	fadeMS	1	4	S32	68	0x44	1		0x006751a0	0x005e27d0	0x006751b5	vtable-init
+ForceFieldBareData	GameBaseData	baseTranslucency	5	4	F32	72	0x48	1		0x006751a0	0x005e27d0	0x006751ca	vtable-init
+ForceFieldBareData	GameBaseData	powerOffTranslucency	5	4	F32	76	0x4c	1		0x006751a0	0x005e27d0	0x006751df	vtable-init
+ForceFieldBareData	GameBaseData	texture	7	4	string(char*)	80	0x50	5		0x006751a0	0x005e27d0	0x00675254	vtable-init
+ForceFieldBareData	GameBaseData	umapping	5	4	F32	120	0x78	1		0x006751a0	0x005e27d0	0x006752b1	vtable-init
+ForceFieldBareData	GameBaseData	vmapping	5	4	F32	124	0x7c	1		0x006751a0	0x005e27d0	0x006752c6	vtable-init
+ForceFieldBareData	GameBaseData	scrollSpeed	5	4	F32	128	0x80	1		0x006751a0	0x005e27d0	0x0067529c	vtable-init
+ForceFieldBareData	GameBaseData	framesPerSec	1	4	S32	132	0x84	1		0x006751a0	0x005e27d0	0x0067526c	vtable-init
+ForceFieldBareData	GameBaseData	numFrames	1	4	S32	136	0x88	1		0x006751a0	0x005e27d0	0x00675284	vtable-init
+ForceFieldBareData	GameBaseData	teamPermiable	3	1	bool(4)	140	0x8c	1		0x006751a0	0x005e27d0	0x006751f7	vtable-init
+ForceFieldBareData	GameBaseData	otherPermiable	3	1	bool(4)	141	0x8d	1		0x006751a0	0x005e27d0	0x0067520f	vtable-init
+ForceFieldBareData	GameBaseData	color	12	16	ColorF(16B)	144	0x90	1		0x006751a0	0x005e27d0	0x00675227	vtable-init
+ForceFieldBareData	GameBaseData	powerOffColor	12	16	ColorF(16B)	160	0xa0	1		0x006751a0	0x005e27d0	0x0067523f	vtable-init
+GameBase	SceneObject	dataBlock	24	4	DataBlock*	584	0x248	1		0x005e3670	0x0058c7f0	0x005e36b6	vtable-init
+GameBase	SceneObject	nameTag	8	4	string-ptr	588	0x24c	1		0x005e3670	0x0058c7f0	0x005e369e	vtable-init
+GameBase	SceneObject	lockCount	1	4	S32	636	0x27c	1		0x005e3670	0x0058c7f0	0x005e36ce	vtable-init
+GameBase	SceneObject	homingCount	1	4	S32	640	0x280	1		0x005e3670	0x0058c7f0	0x005e36e6	vtable-init
+GameBaseData	SimDataBlock	catagory	8	4	string-ptr	60	0x3c	1		0x005e27d0		0x005e27e5	vtable-init
+GameBaseData	SimDataBlock	className	7	4	string(char*)	64	0x40	1		0x005e27d0		0x005e27fa	vtable-init
+GameTSCtrl	GuiTSCtrl	beaconBaseTextureName	7	4	string(char*)	508	0x1fc	1		0x0068a560	0x004b6960	0x0068a578	vtable-init
+GameTSCtrl	GuiTSCtrl	beaconTargetTextureName	7	4	string(char*)	512	0x200	1		0x0068a560	0x004b6960	0x0068a590	vtable-init
+GameTSCtrl	GuiTSCtrl	beaconTargetPeriod	1	4	S32	516	0x204	1		0x0068a560	0x004b6960	0x0068a5a8	vtable-init
+GameTSCtrl	GuiTSCtrl	beaconsVisible	3	1	bool(4)	520	0x208	1		0x0068a560	0x004b6960	0x0068a5c0	vtable-init
+GameTSCtrl	GuiTSCtrl	enemyBeaconLineBeginColor	12	16	ColorF(16B)	524	0x20c	1		0x0068a560	0x004b6960	0x0068a5d8	vtable-init
+GameTSCtrl	GuiTSCtrl	enemyBeaconLineEndColor	12	16	ColorF(16B)	540	0x21c	1		0x0068a560	0x004b6960	0x0068a5f0	vtable-init
+GameTSCtrl	GuiTSCtrl	vehicleBeaconLineBeginColor	12	16	ColorF(16B)	556	0x22c	1		0x0068a560	0x004b6960	0x0068a608	vtable-init
+GameTSCtrl	GuiTSCtrl	vehicleBeaconLineEndColor	12	16	ColorF(16B)	572	0x23c	1		0x0068a560	0x004b6960	0x0068a620	vtable-init
+GameTSCtrl	GuiTSCtrl	friendBeaconLineBeginColor	12	16	ColorF(16B)	588	0x24c	1		0x0068a560	0x004b6960	0x0068a638	vtable-init
+GameTSCtrl	GuiTSCtrl	friendBeaconLineEndColor	12	16	ColorF(16B)	604	0x25c	1		0x0068a560	0x004b6960	0x0068a650	vtable-init
+GameTSCtrl	GuiTSCtrl	beaconLineWidth	5	4	F32	620	0x26c	1		0x0068a560	0x004b6960	0x0068a668	vtable-init
+GameTSCtrl	GuiTSCtrl	beaconTextYOffset	1	4	S32	624	0x270	1		0x0068a560	0x004b6960	0x0068a680	vtable-init
+GameTSCtrl	GuiTSCtrl	showAlternateTarget	3	1	bool(4)	628	0x274	1		0x0068a560	0x004b6960	0x0068a698	vtable-init
+GrenadeProjectileData	ProjectileData	grenadeElasticity	5	4	F32	312	0x138	1		0x006333d0	0x006303f0	0x00633418	vtable-init
+GrenadeProjectileData	ProjectileData	grenadeFriction	5	4	F32	316	0x13c	1		0x006333d0	0x006303f0	0x00633430	vtable-init
+GrenadeProjectileData	ProjectileData	gravityMod	5	4	F32	320	0x140	1		0x006333d0	0x006303f0	0x00633478	vtable-init
+GrenadeProjectileData	ProjectileData	muzzleVelocity	5	4	F32	324	0x144	1		0x006333d0	0x006303f0	0x00633400	vtable-init
+GrenadeProjectileData	ProjectileData	armingDelayMS	1	4	S32	328	0x148	1		0x006333d0	0x006303f0	0x006333e8	vtable-init
+GrenadeProjectileData	ProjectileData	drag	5	4	F32	332	0x14c	1		0x006333d0	0x006303f0	0x00633448	vtable-init
+GrenadeProjectileData	ProjectileData	density	5	4	F32	336	0x150	1		0x006333d0	0x006303f0	0x00633460	vtable-init
+GrenadeProjectileData	ProjectileData	lifetimeMS	1	4	S32	340	0x154	1		0x006333d0	0x006303f0	0x00633490	vtable-init
+GuiAviBitmapCtrl	GuiBitmapCtrl	aviFilename	7	4	string(char*)	148	0x94	1		0x004df6e0	0x004b6960	0x004df6f8	inferred-by-elimination
+GuiAviBitmapCtrl	GuiBitmapCtrl	wavFilename	7	4	string(char*)	152	0x98	1		0x004df6e0	0x004b6960	0x004df710	inferred-by-elimination
+GuiAviBitmapCtrl	GuiBitmapCtrl	done	3	1	bool(4)	197	0xc5	1		0x004df6e0	0x004b6960	0x004df740	inferred-by-elimination
+GuiAviBitmapCtrl	GuiBitmapCtrl	letterBox	3	1	bool(4)	198	0xc6	1		0x004df6e0	0x004b6960	0x004df758	inferred-by-elimination
+GuiAviBitmapCtrl	GuiBitmapCtrl	speed	5	4	F32	204	0xcc	1		0x004df6e0	0x004b6960	0x004df770	inferred-by-elimination
+GuiAviBitmapCtrl	GuiBitmapCtrl	swapRB	3	1	bool(4)	276	0x114	1		0x004df6e0	0x004b6960	0x004df728	inferred-by-elimination
+GuiBitmapCtrl	GuiControl	bitmap	7	4	string(char*)	148	0x94	1		0x004ad700	0x004b6960	0x004ad718	vtable-init
+GuiBitmapCtrl	GuiControl	wrap	3	1	bool(4)	164	0xa4	1		0x004ad700	0x004b6960	0x004ad730	vtable-init
+GuiButtonBaseCtrl	GuiControl	text	8	4	string-ptr	148	0x94	1		0x004c5cc0	0x004b6960	0x004c5cd8	vtable-init
+GuiButtonBaseCtrl	GuiControl	buttonType	9	4	enum(S32)+table	156	0x9c	1	0x7ee47c	0x004c5cc0	0x004b6960	0x004c5d0b	vtable-init
+GuiButtonBaseCtrl	GuiControl	groupNum	1	4	S32	160	0xa0	1		0x004c5cc0	0x004b6960	0x004c5cf0	vtable-init
+GuiButtonCtrl	GuiControl	text	8	4	string-ptr	156	0x9c	1		0x004adcc0	0x004b6960	0x004adcd8	vtable-init
+GuiChatMenuTreeCtrl	GuiTreeViewCtrl	altFontColor	11	4	ColorI(4B)	288	0x120	1		0x004da7f0	0x004ced90	0x004da808	vtable-init
+GuiChatMenuTreeCtrl	GuiTreeViewCtrl	altFontColorHL	11	4	ColorI(4B)	292	0x124	1		0x004da7f0	0x004ced90	0x004da820	vtable-init
+GuiChatMenuTreeCtrl	GuiTreeViewCtrl	altFontColorSE	11	4	ColorI(4B)	296	0x128	1		0x004da7f0	0x004ced90	0x004da838	vtable-init
+GuiChunkedBitmapCtrl	GuiControl	bitmap	7	4	string(char*)	148	0x94	1		0x004b44e0	0x004b6960	0x004b44f8	vtable-init
+GuiChunkedBitmapCtrl	GuiControl	useVariable	3	1	bool(4)	156	0x9c	1		0x004b44e0	0x004b6960	0x004b4510	vtable-init
+GuiCommanderMap	GuiTSCtrl	defaultCursor	7	4	string(char*)	61704	0xf108	1		0x0065f650	0x004b6960	0x0065f668	vtable-init
+GuiCommanderMap	GuiTSCtrl	arrowCursor	7	4	string(char*)	61708	0xf10c	1		0x0065f650	0x004b6960	0x0065f680	vtable-init
+GuiCommanderMap	GuiTSCtrl	handCursor	7	4	string(char*)	61712	0xf110	1		0x0065f650	0x004b6960	0x0065f698	vtable-init
+GuiCommanderMap	GuiTSCtrl	moveCursor	7	4	string(char*)	61716	0xf114	1		0x0065f650	0x004b6960	0x0065f6b0	vtable-init
+GuiCommanderMap	GuiTSCtrl	zoomCursor	7	4	string(char*)	61720	0xf118	1		0x0065f650	0x004b6960	0x0065f6c8	vtable-init
+GuiCommanderMap	GuiTSCtrl	addCursor	7	4	string(char*)	61724	0xf11c	1		0x0065f650	0x004b6960	0x0065f6e0	vtable-init
+GuiCommanderMap	GuiTSCtrl	removeCursor	7	4	string(char*)	61728	0xf120	1		0x0065f650	0x004b6960	0x0065f6f8	vtable-init
+GuiCommanderMap	GuiTSCtrl	cameraOffset	5	4	F32	61732	0xf124	1		0x0065f650	0x004b6960	0x0065f728	vtable-init
+GuiCommanderMap	GuiTSCtrl	cameraZoomTime	1	4	S32	61736	0xf128	1		0x0065f650	0x004b6960	0x0065f740	vtable-init
+GuiCommanderMap	GuiTSCtrl	cameraMoveTime	1	4	S32	61740	0xf12c	1		0x0065f650	0x004b6960	0x0065f758	vtable-init
+GuiCommanderMap	GuiTSCtrl	mouseSelectRectColor	11	4	ColorI(4B)	61748	0xf134	1		0x0065f650	0x004b6960	0x0065f710	vtable-init
+GuiCommanderMap	GuiTSCtrl	defaultIconName	7	4	string(char*)	61752	0xf138	1		0x0065f650	0x004b6960	0x0065f770	vtable-init
+GuiCommanderMap	GuiTSCtrl	waypointIconName	7	4	string(char*)	61756	0xf13c	1		0x0065f650	0x004b6960	0x0065f788	vtable-init
+GuiCommanderMap	GuiTSCtrl	assignedTaskIconName	7	4	string(char*)	61760	0xf140	1		0x0065f650	0x004b6960	0x0065f7a0	vtable-init
+GuiCommanderMap	GuiTSCtrl	potentialTaskIconName	7	4	string(char*)	61764	0xf144	1		0x0065f650	0x004b6960	0x0065f7b8	vtable-init
+GuiCommanderMap	GuiTSCtrl	sensorSphereFrameAlpha	1	4	S32	61768	0xf148	1		0x0065f650	0x004b6960	0x0065f7d0	vtable-init
+GuiCommanderMap	GuiTSCtrl	sensorSphereFillAlpha	1	4	S32	61772	0xf14c	1		0x0065f650	0x004b6960	0x0065f7e8	vtable-init
+GuiCommanderMap	GuiTSCtrl	sensorSphereDetailLevel	1	4	S32	61776	0xf150	1		0x0065f650	0x004b6960	0x0065f800	vtable-init
+GuiCommanderMap	GuiTSCtrl	renderMissionArea	3	1	bool(4)	61780	0xf154	1		0x0065f650	0x004b6960	0x0065f818	vtable-init
+GuiCommanderMap	GuiTSCtrl	missionAreaFillColor	11	4	ColorI(4B)	61781	0xf155	1		0x0065f650	0x004b6960	0x0065f830	vtable-init
+GuiCommanderMap	GuiTSCtrl	missionAreaFrameColor	11	4	ColorI(4B)	61785	0xf159	1		0x0065f650	0x004b6960	0x0065f848	vtable-init
+GuiCommanderMap	GuiTSCtrl	renderText	3	1	bool(4)	61789	0xf15d	1		0x0065f650	0x004b6960	0x0065f860	vtable-init
+GuiCommanderMap	GuiTSCtrl	textOffset	1	4	S32	61792	0xf160	1		0x0065f650	0x004b6960	0x0065f878	vtable-init
+GuiCommanderMap	GuiTSCtrl	hilightedObjectColor	11	4	ColorI(4B)	61796	0xf164	1		0x0065f650	0x004b6960	0x0065f890	vtable-init
+GuiCommanderMap	GuiTSCtrl	selectedObjectColor	11	4	ColorI(4B)	61800	0xf168	1		0x0065f650	0x004b6960	0x0065f8a8	vtable-init
+GuiCommanderMap	GuiTSCtrl	playerMarkerAngle	5	4	F32	61804	0xf16c	1		0x0065f650	0x004b6960	0x0065f8c0	vtable-init
+GuiCommanderMap	GuiTSCtrl	playerMarkerOffset	5	4	F32	61808	0xf170	1		0x0065f650	0x004b6960	0x0065f8d8	vtable-init
+GuiCommanderMap	GuiTSCtrl	playerMarkerLen	5	4	F32	61812	0xf174	1		0x0065f650	0x004b6960	0x0065f8f0	vtable-init
+GuiCommanderMap	GuiTSCtrl	playerMarkerColor	11	4	ColorI(4B)	61816	0xf178	1		0x0065f650	0x004b6960	0x0065f908	vtable-init
+GuiCommanderMap	GuiTSCtrl	enableEdgeMarkers	3	1	bool(4)	61820	0xf17c	1		0x0065f650	0x004b6960	0x0065f920	vtable-init
+GuiCommanderMap	GuiTSCtrl	edgeMarkerSize	14	8	Point2I(8B)	61824	0xf180	1		0x0065f650	0x004b6960	0x0065f938	vtable-init
+GuiCommanderMap	GuiTSCtrl	edgeMarkerTextureName	7	4	string(char*)	61828	0xf184	1		0x0065f650	0x004b6960	0x0065f950	vtable-init
+GuiCommanderMap	GuiTSCtrl	renderSensors	3	1	bool(4)	61832	0xf188	1		0x0065f650	0x004b6960	0x0065f968	vtable-init
+GuiCommanderMap	GuiTSCtrl	minIconSize	1	4	S32	61836	0xf18c	1		0x0065f650	0x004b6960	0x0065f980	vtable-init
+GuiCommanderMap	GuiTSCtrl	maxIconSize	1	4	S32	61840	0xf190	1		0x0065f650	0x004b6960	0x0065f998	vtable-init
+GuiCommanderMap	GuiTSCtrl	iconProjLen	5	4	F32	61844	0xf194	1		0x0065f650	0x004b6960	0x0065f9b0	vtable-init
+GuiCommanderMap	GuiTSCtrl	minDistanceScale	5	4	F32	61848	0xf198	1		0x0065f650	0x004b6960	0x0065f9c8	vtable-init
+GuiCommanderMap	GuiTSCtrl	maxDistanceScale	5	4	F32	61852	0xf19c	1		0x0065f650	0x004b6960	0x0065f9e0	vtable-init
+GuiCommanderMap	GuiTSCtrl	screenFrameSize	5	4	F32	61856	0xf1a0	1		0x0065f650	0x004b6960	0x0065f9f8	vtable-init
+GuiCommanderMapButton	GuiButtonCtrl	bitmap	7	4	string(char*)	228	0xe4	1		0x00664bd0	0x004adcc0	0x00664be8	vtable-init
+GuiCommanderMapButton	GuiButtonCtrl	mouseRegion	18	16	RectI(16B)	232	0xe8	1		0x00664bd0	0x004adcc0	0x00664c00	vtable-init
+GuiCommanderMapCheckbox	GuiCheckBoxCtrl	bitmap	7	4	string(char*)	244	0xf4	1		0x00665360	0x004c1360	0x00665378	vtable-init
+GuiCommanderMapCheckbox	GuiCheckBoxCtrl	mouseRegion	18	16	RectI(16B)	248	0xf8	1		0x00665360	0x004c1360	0x00665390	vtable-init
+GuiCommanderMapPopupMenu	GuiPopUpMenuCtrl	entryHilightColor	11	4	ColorI(4B)	264	0x108	1		0x00665c70	0x004c8ae0	0x00665c88	vtable-init
+GuiCommanderMapPopupMenu	GuiPopUpMenuCtrl	entrySelectColor	11	4	ColorI(4B)	268	0x10c	1		0x00665c70	0x004c8ae0	0x00665ca0	vtable-init
+GuiCommanderMapPopupMenu	GuiPopUpMenuCtrl	backdropBitmapName	7	4	string(char*)	272	0x110	1		0x00665c70	0x004c8ae0	0x00665cb8	vtable-init
+GuiCommanderMapPopupMenu	GuiPopUpMenuCtrl	frameOffset	1	4	S32	276	0x114	1		0x00665c70	0x004c8ae0	0x00665cd0	vtable-init
+GuiCommanderMapPopupMenu	GuiPopUpMenuCtrl	frameSize	1	4	S32	280	0x118	1		0x00665c70	0x004c8ae0	0x00665ce8	vtable-init
+GuiCommanderTV	GameTSCtrl	frameBitmap	7	4	string(char*)	660	0x294	1		0x00660190	0x0068a560	0x006601a8	vtable-init
+GuiCommanderTV	GameTSCtrl	staticBitmap	7	4	string(char*)	664	0x298	1		0x00660190	0x0068a560	0x006601c0	vtable-init
+GuiCommanderTV	GameTSCtrl	attached	3	1	bool(4)	668	0x29c	1		0x00660190	0x0068a560	0x006601d8	vtable-init
+GuiCommanderTree	GuiControl	backdropBitmapName	7	4	string(char*)	2448	0x990	1		0x006641b0	0x004b6960	0x006641c8	vtable-init
+GuiCommanderTree	GuiControl	headerFontType	7	4	string(char*)	2452	0x994	1		0x006641b0	0x004b6960	0x006641e0	vtable-init
+GuiCommanderTree	GuiControl	entryFontType	7	4	string(char*)	2456	0x998	1		0x006641b0	0x004b6960	0x006641f8	vtable-init
+GuiCommanderTree	GuiControl	clientNoneFontType	7	4	string(char*)	2460	0x99c	1		0x006641b0	0x004b6960	0x00664210	vtable-init
+GuiCommanderTree	GuiControl	headerFontSize	1	4	S32	2464	0x9a0	1		0x006641b0	0x004b6960	0x00664228	vtable-init
+GuiCommanderTree	GuiControl	entryFontSize	1	4	S32	2468	0x9a4	1		0x006641b0	0x004b6960	0x00664240	vtable-init
+GuiCommanderTree	GuiControl	clientNoneFontSize	1	4	S32	2472	0x9a8	1		0x006641b0	0x004b6960	0x00664258	vtable-init
+GuiCommanderTree	GuiControl	entryIconOffset	14	8	Point2I(8B)	2476	0x9ac	1		0x006641b0	0x004b6960	0x00664270	vtable-init
+GuiCommanderTree	GuiControl	entryTextOffset	14	8	Point2I(8B)	2484	0x9b4	1		0x006641b0	0x004b6960	0x00664288	vtable-init
+GuiCommanderTree	GuiControl	headerBitmapName	7	4	string(char*)	2492	0x9bc	1		0x006641b0	0x004b6960	0x006642a0	vtable-init
+GuiCommanderTree	GuiControl	headerTextOffset	14	8	Point2I(8B)	2496	0x9c0	1		0x006641b0	0x004b6960	0x006642b8	vtable-init
+GuiCommanderTree	GuiControl	clientNoneText	7	4	string(char*)	2504	0x9c8	1		0x006641b0	0x004b6960	0x006642d0	vtable-init
+GuiCommanderTree	GuiControl	headerHeight	1	4	S32	2508	0x9cc	1		0x006641b0	0x004b6960	0x006642e8	vtable-init
+GuiCommanderTree	GuiControl	entryHeight	1	4	S32	2512	0x9d0	1		0x006641b0	0x004b6960	0x00664300	vtable-init
+GuiCommanderTree	GuiControl	entryHilightColor	11	4	ColorI(4B)	2516	0x9d4	1		0x006641b0	0x004b6960	0x00664318	vtable-init
+GuiCommanderTree	GuiControl	entrySelectColor	11	4	ColorI(4B)	2520	0x9d8	1		0x006641b0	0x004b6960	0x00664330	vtable-init
+GuiCommanderTree	GuiControl	categoryOpenTime	1	4	S32	2524	0x9dc	1		0x006641b0	0x004b6960	0x00664348	vtable-init
+GuiCommanderTree	GuiControl	damageColors	2	12	S32?	2528	0x9e0	1		0x006641b0	0x004b6960	0x00664360	vtable-init
+GuiCommanderTree	GuiControl	objectControlRect	18	16	RectI(16B)	2540	0x9ec	1		0x006641b0	0x004b6960	0x00664378	vtable-init
+GuiCommanderTree	GuiControl	objectControlBitmapName	7	4	string(char*)	2556	0x9fc	1		0x006641b0	0x004b6960	0x00664390	vtable-init
+GuiConsoleTextCtrl	GuiControl	expression	8	4	string-ptr	148	0x94	1		0x004b51b0	0x004b6960	0x004b51c8	vtable-init
+GuiControl	SimGroup	profile	23	4	GuiProfile*	72	0x48	1		0x004b6960		0x004b6975	vtable-init(ambiguous:GuiControl/GuiNoMouseCtrl)
+GuiControl	SimGroup	visible	3	1	bool(4)	76	0x4c	1		0x004b6960		0x004b69f9	vtable-init(ambiguous:GuiControl/GuiNoMouseCtrl)
+GuiControl	SimGroup	hideCursor	3	1	bool(4)	80	0x50	1		0x004b6960		0x004b6a24	vtable-init(ambiguous:GuiControl/GuiNoMouseCtrl)
+GuiControl	SimGroup	bypassHideCursor	3	1	bool(4)	81	0x51	1		0x004b6960		0x004b6a39	vtable-init(ambiguous:GuiControl/GuiNoMouseCtrl)
+GuiControl	SimGroup	position	14	8	Point2I(8B)	88	0x58	1		0x004b6960		0x004b69ba	vtable-init(ambiguous:GuiControl/GuiNoMouseCtrl)
+GuiControl	SimGroup	extent	14	8	Point2I(8B)	96	0x60	1		0x004b6960		0x004b69cf	vtable-init(ambiguous:GuiControl/GuiNoMouseCtrl)
+GuiControl	SimGroup	minExtent	14	8	Point2I(8B)	104	0x68	1		0x004b6960		0x004b69e4	vtable-init(ambiguous:GuiControl/GuiNoMouseCtrl)
+GuiControl	SimGroup	horizSizing	9	4	enum(S32)+table	116	0x74	1	0x7ee2c0	0x004b6960		0x004b698d	vtable-init(ambiguous:GuiControl/GuiNoMouseCtrl)
+GuiControl	SimGroup	vertSizing	9	4	enum(S32)+table	120	0x78	1	0x7ee2c8	0x004b6960		0x004b69a5	vtable-init(ambiguous:GuiControl/GuiNoMouseCtrl)
+GuiControl	SimGroup	variable	7	4	string(char*)	124	0x7c	1		0x004b6960		0x004b6a4e	vtable-init(ambiguous:GuiControl/GuiNoMouseCtrl)
+GuiControl	SimGroup	command	7	4	string(char*)	128	0x80	1		0x004b6960		0x004b6a66	vtable-init(ambiguous:GuiControl/GuiNoMouseCtrl)
+GuiControl	SimGroup	altCommand	7	4	string(char*)	132	0x84	1		0x004b6960		0x004b6a7e	vtable-init(ambiguous:GuiControl/GuiNoMouseCtrl)
+GuiControl	SimGroup	accelerator	7	4	string(char*)	136	0x88	1		0x004b6960		0x004b6a96	vtable-init(ambiguous:GuiControl/GuiNoMouseCtrl)
+GuiControl	SimGroup	helpTag	1	4	S32	140	0x8c	1		0x004b6960		0x004b6aae	vtable-init(ambiguous:GuiControl/GuiNoMouseCtrl)
+GuiControlProfile	SimObject	tab	3	1	bool(4)	52	0x34	1		0x004c69c0		0x004c69d5	vtable-init
+GuiControlProfile	SimObject	canKeyFocus	3	1	bool(4)	53	0x35	1		0x004c69c0		0x004c69ea	vtable-init
+GuiControlProfile	SimObject	modal	3	1	bool(4)	54	0x36	1		0x004c69c0		0x004c69ff	vtable-init
+GuiControlProfile	SimObject	opaque	3	1	bool(4)	55	0x37	1		0x004c69c0		0x004c6a14	vtable-init
+GuiControlProfile	SimObject	fillColor	11	4	ColorI(4B)	56	0x38	1		0x004c69c0		0x004c6a29	vtable-init
+GuiControlProfile	SimObject	fillColorHL	11	4	ColorI(4B)	60	0x3c	1		0x004c69c0		0x004c6a3e	vtable-init
+GuiControlProfile	SimObject	fillColorNA	11	4	ColorI(4B)	64	0x40	1		0x004c69c0		0x004c6a53	vtable-init
+GuiControlProfile	SimObject	border	3	1	bool(4)	68	0x44	1		0x004c69c0		0x004c6a68	vtable-init
+GuiControlProfile	SimObject	borderColor	11	4	ColorI(4B)	69	0x45	1		0x004c69c0		0x004c6a7d	vtable-init
+GuiControlProfile	SimObject	borderColorHL	11	4	ColorI(4B)	73	0x49	1		0x004c69c0		0x004c6a92	vtable-init
+GuiControlProfile	SimObject	borderColorNA	11	4	ColorI(4B)	77	0x4d	1		0x004c69c0		0x004c6aa7	vtable-init
+GuiControlProfile	SimObject	fontType	7	4	string(char*)	84	0x54	1		0x004c69c0		0x004c6abc	vtable-init
+GuiControlProfile	SimObject	fontSize	1	4	S32	88	0x58	1		0x004c69c0		0x004c6ad1	vtable-init
+GuiControlProfile	SimObject	fontColors	11	4	ColorI(4B)	92	0x5c	10		0x004c69c0		0x004c6ae6	vtable-init
+GuiControlProfile	SimObject	fontColor	11	4	ColorI(4B)	92	0x5c	1		0x004c69c0		0x004c6afb	vtable-init
+GuiControlProfile	SimObject	fontColorHL	11	4	ColorI(4B)	96	0x60	1		0x004c69c0		0x004c6b10	vtable-init
+GuiControlProfile	SimObject	fontColorNA	11	4	ColorI(4B)	100	0x64	1		0x004c69c0		0x004c6b25	vtable-init
+GuiControlProfile	SimObject	fontColorSEL	11	4	ColorI(4B)	104	0x68	1		0x004c69c0		0x004c6b3a	vtable-init
+GuiControlProfile	SimObject	justify	9	4	enum(S32)+table	152	0x98	1	0x7ee498	0x004c69c0		0x004c6b55	vtable-init
+GuiControlProfile	SimObject	autoSizeWidth	3	1	bool(4)	156	0x9c	1		0x004c69c0		0x004c6b9d	vtable-init
+GuiControlProfile	SimObject	autoSizeHeight	3	1	bool(4)	157	0x9d	1		0x004c69c0		0x004c6bb5	vtable-init
+GuiControlProfile	SimObject	returnTab	3	1	bool(4)	158	0x9e	1		0x004c69c0		0x004c6bcd	vtable-init
+GuiControlProfile	SimObject	numbersOnly	3	1	bool(4)	159	0x9f	1		0x004c69c0		0x004c6be5	vtable-init
+GuiControlProfile	SimObject	cursorColor	11	4	ColorI(4B)	160	0xa0	1		0x004c69c0		0x004c6bfd	vtable-init
+GuiControlProfile	SimObject	bitmapBase	7	4	string(char*)	164	0xa4	1		0x004c69c0		0x004c6b85	vtable-init
+GuiControlProfile	SimObject	textOffset	14	8	Point2I(8B)	168	0xa8	1		0x004c69c0		0x004c6b6d	vtable-init
+GuiControlProfile	SimObject	bitmap	7	4	string(char*)	176	0xb0	1		0x004c69c0		0x004c6c15	vtable-init
+GuiControlProfile	SimObject	soundButtonDown	34	4	AudioProfile*	184	0xb8	1		0x004c69c0		0x004c6c2d	vtable-init
+GuiControlProfile	SimObject	soundButtonOver	34	4	AudioProfile*	188	0xbc	1		0x004c69c0		0x004c6c45	vtable-init
+GuiCursor	SimObject	bitmapName	7	4	string(char*)	48	0x30	1		0x004c6570		0x004c659a	vtable-init
+GuiCursor	SimObject	hotSpot	14	8	Point2I(8B)	52	0x34	1		0x004c6570		0x004c6585	vtable-init
+GuiEmailBrowser	ShellFancyArray	iconBase	7	4	string(char*)	544	0x220	1		0x0067bb90	0x004eb9e0	0x0067bba8	vtable-init
+GuiEmailBrowser	ShellFancyArray	unreadFontType	7	4	string(char*)	556	0x22c	1		0x0067bb90	0x004eb9e0	0x0067bbc0	vtable-init
+GuiEmailBrowser	ShellFancyArray	unreadFontSize	1	4	S32	560	0x230	1		0x0067bb90	0x004eb9e0	0x0067bbd8	vtable-init
+GuiEmailBrowser	ShellFancyArray	unreadFontColor	11	4	ColorI(4B)	564	0x234	1		0x0067bb90	0x004eb9e0	0x0067bbf0	vtable-init
+GuiFadeinBitmapCtrl	GuiBitmapCtrl	done	3	1	bool(4)	172	0xac	1		0x004b5840	0x004ad700	0x004b589a	vtable-init(inlined-into-init)
+GuiFadeinBitmapCtrl	GuiBitmapCtrl	fadeTime	1	4	S32	176	0xb0	1		0x004b5840	0x004ad700	0x004b5882	vtable-init(inlined-into-init)
+GuiFadeinBitmapCtrl	GuiBitmapCtrl	fadeOut	3	1	bool(4)	181	0xb5	1		0x004b5840	0x004ad700	0x004b58b2	vtable-init(inlined-into-init)
+GuiFilterCtrl	GuiControl	controlPoints	1	4	S32	148	0x94	1		0x004b5c00	0x004b6960	0x004b5c18	vtable-init
+GuiFilterCtrl	GuiControl	filter	6		?	156	0x9c	1		0x004b5c00	0x004b6960	0x004b5c30	vtable-init
+GuiFrameSetCtrl	GuiControl	columns	2	12	S32?	148	0x94	1		0x004ca4f0	0x004b6960	0x004ca508	vtable-init
+GuiFrameSetCtrl	GuiControl	rows	2	12	S32?	160	0xa0	1		0x004ca4f0	0x004b6960	0x004ca520	vtable-init
+GuiFrameSetCtrl	GuiControl	borderWidth	1	4	S32	188	0xbc	1		0x004ca4f0	0x004b6960	0x004ca538	vtable-init
+GuiFrameSetCtrl	GuiControl	borderColor	11	4	ColorI(4B)	192	0xc0	1		0x004ca4f0	0x004b6960	0x004ca550	vtable-init
+GuiFrameSetCtrl	GuiControl	borderEnable	9	4	enum(S32)+table	196	0xc4	1	0x7ee5b4	0x004ca4f0	0x004b6960	0x004ca56b	vtable-init
+GuiFrameSetCtrl	GuiControl	borderMovable	9	4	enum(S32)+table	200	0xc8	1	0x7ee5b4	0x004ca4f0	0x004b6960	0x004ca586	vtable-init
+GuiFrameSetCtrl	GuiControl	autoBalance	3	1	bool(4)	224	0xe0	1		0x004ca4f0	0x004b6960	0x004ca59e	vtable-init
+GuiFrameSetCtrl	GuiControl	fudgeFactor	1	4	S32	228	0xe4	1		0x004ca4f0	0x004b6960	0x004ca5b6	vtable-init
+GuiInspector	GuiControl	editControlOffset	1	4	S32	152	0x98	1		0x004bdc60	0x004b6960	0x004bdc78	vtable-init
+GuiInspector	GuiControl	entryHeight	1	4	S32	156	0x9c	1		0x004bdc60	0x004b6960	0x004bdc90	vtable-init
+GuiInspector	GuiControl	textExtent	1	4	S32	160	0xa0	1		0x004bdc60	0x004b6960	0x004bdca8	vtable-init
+GuiInspector	GuiControl	entrySpacing	1	4	S32	164	0xa4	1		0x004bdc60	0x004b6960	0x004bdcc0	vtable-init
+GuiInspector	GuiControl	maxMenuExtent	1	4	S32	168	0xa8	1		0x004bdc60	0x004b6960	0x004bdcd8	vtable-init
+GuiMLTextCtrl	GuiControl	maxChars	1	4	S32	332	0x14c	1		0x004d3650	0x004b6960	0x004d3698	vtable-init
+GuiMLTextCtrl	GuiControl	lineSpacing	1	4	S32	376	0x178	1		0x004d3650	0x004b6960	0x004d3668	vtable-init
+GuiMLTextCtrl	GuiControl	allowColorChars	3	1	bool(4)	380	0x17c	1		0x004d3650	0x004b6960	0x004d3680	vtable-init
+GuiMLTextCtrl	GuiControl	deniedSound	34	4	AudioProfile*	384	0x180	1		0x004d3650	0x004b6960	0x004d36b0	vtable-init
+GuiMLTextEditCtrl	GuiMLTextCtrl	escapeCommand	7	4	string(char*)	388	0x184	1		0x004d6d90	0x004d3650	0x004d6da8	vtable-init
+GuiMessageVectorCtrl	GuiControl	lineSpacing	1	4	S32	156	0x9c	1		0x004d8480	0x004b6960	0x004d8498	vtable-init
+GuiMessageVectorCtrl	GuiControl	lineContinuedIndex	1	4	S32	160	0xa0	1		0x004d8480	0x004b6960	0x004d84b0	vtable-init
+GuiMessageVectorCtrl	GuiControl	allowedMatches	7	4	string(char*)	164	0xa4	16		0x004d8480	0x004b6960	0x004d84c8	vtable-init
+GuiMessageVectorCtrl	GuiControl	matchColor	11	4	ColorI(4B)	228	0xe4	1		0x004d8480	0x004b6960	0x004d84e0	vtable-init
+GuiMessageVectorCtrl	GuiControl	maxColorIndex	1	4	S32	232	0xe8	1		0x004d8480	0x004b6960	0x004d84f8	vtable-init
+GuiMouseEventCtrl	GuiControl	lockMouse	3	1	bool(4)	148	0x94	1		0x004da2e0	0x004b6960	0x004da2f8	vtable-init
+GuiPopUpMenuCtrl	GuiTextCtrl	maxPopupHeight	1	4	S32	216	0xd8	1		0x004c8ae0	0x004c1360	0x004c8af8	vtable-init
+GuiRadioCtrl	GuiTextCtrl	groupNum	1	4	S32	176	0xb0	1		0x004bddd0	0x004c1360	0x004bdde8	vtable-init
+GuiScrollCtrl	GuiControl	childMargin	14	8	Point2I(8B)	164	0xa4	1		0x004be6e0	0x004b6960	0x004be776	vtable-init
+GuiScrollCtrl	GuiControl	defaultLineHeight	1	4	S32	316	0x13c	1		0x004be6e0	0x004b6960	0x004be75e	vtable-init
+GuiScrollCtrl	GuiControl	hScrollBar	9	4	enum(S32)+table	368	0x170	1	0x7ee320	0x004be6e0	0x004b6960	0x004be713	vtable-init
+GuiScrollCtrl	GuiControl	vScrollBar	9	4	enum(S32)+table	372	0x174	1	0x7ee320	0x004be6e0	0x004b6960	0x004be72e	vtable-init
+GuiScrollCtrl	GuiControl	constantThumbHeight	3	1	bool(4)	376	0x178	1		0x004be6e0	0x004b6960	0x004be746	vtable-init
+GuiScrollCtrl	GuiControl	willFirstRespond	3	1	bool(4)	377	0x179	1		0x004be6e0	0x004b6960	0x004be6f8	vtable-init
+GuiServerBrowser	ShellFancyArray	iconBase	7	4	string(char*)	532	0x214	1		0x00679120	0x004eb9e0	0x00679138	vtable-init
+GuiSliderCtrl	GuiControl	range	15	8	?	148	0x94	1		0x004c0800	0x004b6960	0x004c0818	vtable-init
+GuiSliderCtrl	GuiControl	ticks	1	4	S32	156	0x9c	1		0x004c0800	0x004b6960	0x004c0830	vtable-init
+GuiSliderCtrl	GuiControl	value	5	4	F32	160	0xa0	1		0x004c0800	0x004b6960	0x004c0848	vtable-init
+GuiTextCtrl	GuiControl	text	8	4	string-ptr	148	0x94	1		0x004c1360	0x004b6960	0x004c1378	vtable-init
+GuiTextCtrl	GuiControl	longTextBuffer	3	1	bool(4)	156	0x9c	1		0x004c1360	0x004b6960	0x004c1390	vtable-init
+GuiTextCtrl	GuiControl	maxLength	1	4	S32	164	0xa4	1		0x004c1360	0x004b6960	0x004c13a8	vtable-init
+GuiTextEditCtrl	GuiTextCtrl	validate	7	4	string(char*)	172	0xac	1		0x004c1c50	0x004c1360	0x004c1c68	vtable-init
+GuiTextEditCtrl	GuiTextCtrl	escapeCommand	7	4	string(char*)	176	0xb0	1		0x004c1c50	0x004c1360	0x004c1c80	vtable-init
+GuiTextEditCtrl	GuiTextCtrl	deniedSound	34	4	AudioProfile*	180	0xb4	1		0x004c1c50	0x004c1360	0x004c1cf8	vtable-init
+GuiTextEditCtrl	GuiTextCtrl	tabComplete	3	1	bool(4)	213	0xd5	1		0x004c1c50	0x004c1360	0x004c1ce0	vtable-init
+GuiTextEditCtrl	GuiTextCtrl	historySize	1	4	S32	260	0x104	1		0x004c1c50	0x004c1360	0x004c1c98	vtable-init
+GuiTextEditCtrl	GuiTextCtrl	password	3	1	bool(4)	264	0x108	1		0x004c1c50	0x004c1360	0x004c1cb0	vtable-init
+GuiTextEditCtrl	GuiTextCtrl	IRCName	3	1	bool(4)	265	0x109	1		0x004c1c50	0x004c1360	0x004c1cc8	vtable-init
+GuiTextEditSliderCtrl	GuiTextEditCtrl	range	14	8	Point2I(8B)	272	0x110	1		0x004ccc90	0x004c1c50	0x004cccc0	vtable-init
+GuiTextEditSliderCtrl	GuiTextEditCtrl	increment	5	4	F32	280	0x118	1		0x004ccc90	0x004c1c50	0x004cccd8	vtable-init
+GuiTextEditSliderCtrl	GuiTextEditCtrl	format	7	4	string(char*)	296	0x128	1		0x004ccc90	0x004c1c50	0x004ccca8	vtable-init
+GuiTextListCtrl	GuiArrayCtrl	enumerate	3	1	bool(4)	204	0xcc	1		0x004c3f70	0x004b6960	0x004c3f88	vtable-init
+GuiTextListCtrl	GuiArrayCtrl	resizeCell	3	1	bool(4)	205	0xcd	1		0x004c3f70	0x004b6960	0x004c3fa0	vtable-init
+GuiTextListCtrl	GuiArrayCtrl	columns	2	12	S32?	208	0xd0	1		0x004c3f70	0x004b6960	0x004c3fb8	vtable-init
+GuiTextListCtrl	GuiArrayCtrl	fitParentWidth	3	1	bool(4)	220	0xdc	1		0x004c3f70	0x004b6960	0x004c3fd0	vtable-init
+GuiTextListCtrl	GuiArrayCtrl	clipColumnText	3	1	bool(4)	221	0xdd	1		0x004c3f70	0x004b6960	0x004c3fe8	vtable-init
+GuiTreeView	GuiArrayCtrl	allowMultipleSelections	3	1	bool(4)	408	0x198	1		0x004cf310	0x004b6960	0x004cf328	vtable-init
+GuiTreeView	GuiArrayCtrl	recurseSets	3	1	bool(4)	409	0x199	1		0x004cf310	0x004b6960	0x004cf340	vtable-init
+GuiTreeViewCtrl	GuiArrayCtrl	tabSize	1	4	S32	256	0x100	1		0x004ced90	0x004b6960	0x004ceda8	vtable-init
+GuiTreeViewCtrl	GuiArrayCtrl	imagesBitmap	7	4	string(char*)	260	0x104	1		0x004ced90	0x004b6960	0x004cedc0	vtable-init
+GuiTreeViewCtrl	GuiArrayCtrl	numImages	1	4	S32	264	0x108	1		0x004ced90	0x004b6960	0x004cedd8	vtable-init
+GuiTreeViewCtrl	GuiArrayCtrl	textOffset	1	4	S32	268	0x10c	1		0x004ced90	0x004b6960	0x004cedf0	vtable-init
+GuiTreeViewCtrl	GuiArrayCtrl	fullRowSelect	3	1	bool(4)	272	0x110	1		0x004ced90	0x004b6960	0x004cee08	vtable-init
+GuiTreeViewCtrl	GuiArrayCtrl	itemHeight	1	4	S32	276	0x114	1		0x004ced90	0x004b6960	0x004cee20	vtable-init
+GuiWindowCtrl	GuiTextCtrl	resizeWidth	3	1	bool(4)	172	0xac	1		0x004c7150	0x004c1360	0x004c7168	vtable-init
+GuiWindowCtrl	GuiTextCtrl	resizeHeight	3	1	bool(4)	173	0xad	1		0x004c7150	0x004c1360	0x004c7180	vtable-init
+GuiWindowCtrl	GuiTextCtrl	canMove	3	1	bool(4)	174	0xae	1		0x004c7150	0x004c1360	0x004c7198	vtable-init
+GuiWindowCtrl	GuiTextCtrl	canClose	3	1	bool(4)	175	0xaf	1		0x004c7150	0x004c1360	0x004c71b0	vtable-init
+GuiWindowCtrl	GuiTextCtrl	canMinimize	3	1	bool(4)	176	0xb0	1		0x004c7150	0x004c1360	0x004c71c8	vtable-init
+GuiWindowCtrl	GuiTextCtrl	canMaximize	3	1	bool(4)	177	0xb1	1		0x004c7150	0x004c1360	0x004c71e0	vtable-init
+GuiWindowCtrl	GuiTextCtrl	minSize	14	8	Point2I(8B)	184	0xb8	1		0x004c7150	0x004c1360	0x004c71f8	vtable-init
+GuiWindowCtrl	GuiTextCtrl	closeCommand	7	4	string(char*)	192	0xc0	1		0x004c7150	0x004c1360	0x004c7210	vtable-init
+HoverVehicleData	VehicleData	jetSound	34	4	AudioProfile*	1072	0x430	1		0x006161e0	0x006099e0	0x00616390	vtable-init
+HoverVehicleData	VehicleData	engineSound	34	4	AudioProfile*	1076	0x434	1		0x006161e0	0x006099e0	0x006163a8	vtable-init
+HoverVehicleData	VehicleData	floatSound	34	4	AudioProfile*	1080	0x438	1		0x006161e0	0x006099e0	0x006163c0	vtable-init
+HoverVehicleData	VehicleData	forwardJetEmitter	32	8	ParticleEmitterData*	1096	0x448	1		0x006161e0	0x006099e0	0x00616480	vtable-init
+HoverVehicleData	VehicleData	dragForce	5	4	F32	1144	0x478	1		0x006161e0	0x006099e0	0x006161f8	vtable-init
+HoverVehicleData	VehicleData	vertFactor	5	4	F32	1148	0x47c	1		0x006161e0	0x006099e0	0x00616210	vtable-init
+HoverVehicleData	VehicleData	floatingThrustFactor	5	4	F32	1152	0x480	1		0x006161e0	0x006099e0	0x00616228	vtable-init
+HoverVehicleData	VehicleData	mainThrustForce	5	4	F32	1156	0x484	1		0x006161e0	0x006099e0	0x00616240	vtable-init
+HoverVehicleData	VehicleData	reverseThrustForce	5	4	F32	1160	0x488	1		0x006161e0	0x006099e0	0x00616258	vtable-init
+HoverVehicleData	VehicleData	strafeThrustForce	5	4	F32	1164	0x48c	1		0x006161e0	0x006099e0	0x00616270	vtable-init
+HoverVehicleData	VehicleData	turboFactor	5	4	F32	1168	0x490	1		0x006161e0	0x006099e0	0x00616288	vtable-init
+HoverVehicleData	VehicleData	stabLenMin	5	4	F32	1172	0x494	1		0x006161e0	0x006099e0	0x006162a0	vtable-init
+HoverVehicleData	VehicleData	stabLenMax	5	4	F32	1176	0x498	1		0x006161e0	0x006099e0	0x006162b8	vtable-init
+HoverVehicleData	VehicleData	stabSpringConstant	5	4	F32	1180	0x49c	1		0x006161e0	0x006099e0	0x006162d0	vtable-init
+HoverVehicleData	VehicleData	stabDampingConstant	5	4	F32	1184	0x4a0	1		0x006161e0	0x006099e0	0x006162e8	vtable-init
+HoverVehicleData	VehicleData	gyroDrag	5	4	F32	1188	0x4a4	1		0x006161e0	0x006099e0	0x00616300	vtable-init
+HoverVehicleData	VehicleData	normalForce	5	4	F32	1192	0x4a8	1		0x006161e0	0x006099e0	0x00616318	vtable-init
+HoverVehicleData	VehicleData	restorativeForce	5	4	F32	1196	0x4ac	1		0x006161e0	0x006099e0	0x00616330	vtable-init
+HoverVehicleData	VehicleData	steeringForce	5	4	F32	1200	0x4b0	1		0x006161e0	0x006099e0	0x00616348	vtable-init
+HoverVehicleData	VehicleData	rollForce	5	4	F32	1204	0x4b4	1		0x006161e0	0x006099e0	0x00616360	vtable-init
+HoverVehicleData	VehicleData	pitchForce	5	4	F32	1208	0x4b8	1		0x006161e0	0x006099e0	0x00616378	vtable-init
+HoverVehicleData	VehicleData	floatingGravMag	5	4	F32	1212	0x4bc	1		0x006161e0	0x006099e0	0x00616438	vtable-init
+HoverVehicleData	VehicleData	brakingForce	5	4	F32	1216	0x4c0	1		0x006161e0	0x006099e0	0x00616450	vtable-init
+HoverVehicleData	VehicleData	brakingActivationSpeed	5	4	F32	1220	0x4c4	1		0x006161e0	0x006099e0	0x00616468	vtable-init
+HoverVehicleData	VehicleData	dustTrailEmitter	32	8	ParticleEmitterData*	1224	0x4c8	1		0x006161e0	0x006099e0	0x006163d8	vtable-init
+HoverVehicleData	VehicleData	dustTrailOffset	16	12	Point3F(12B)	1232	0x4d0	1		0x006161e0	0x006099e0	0x006163f0	vtable-init
+HoverVehicleData	VehicleData	triggerTrailHeight	5	4	F32	1244	0x4dc	1		0x006161e0	0x006099e0	0x00616408	vtable-init
+HoverVehicleData	VehicleData	dustTrailFreqMod	5	4	F32	1248	0x4e0	1		0x006161e0	0x006099e0	0x00616420	vtable-init
+HudBarBaseCtrl	HudBitmapFrameCtrl	value	5	4	F32	212	0xd4	1		0x00501130	0x004fd560	0x005011a8	vtable-init
+HudBarBaseCtrl	HudBitmapFrameCtrl	pulseRate	1	4	S32	216	0xd8	1		0x00501130	0x004fd560	0x00501160	vtable-init
+HudBarBaseCtrl	HudBitmapFrameCtrl	pulseThreshold	5	4	F32	220	0xdc	1		0x00501130	0x004fd560	0x00501178	vtable-init
+HudBarBaseCtrl	HudBitmapFrameCtrl	verticalFill	3	1	bool(4)	224	0xe0	1		0x00501130	0x004fd560	0x00501190	vtable-init
+HudBarBaseCtrl	HudBitmapFrameCtrl	displayMounted	3	1	bool(4)	226	0xe2	1		0x00501130	0x004fd560	0x00501148	vtable-init
+HudBitmapCtrl	HudCtrl	bitmap	7	4	string(char*)	188	0xbc	1		0x004fd190	0x004fcaa0	0x004fd1a8	vtable-init
+HudBitmapCtrl	HudCtrl	autoResize	3	1	bool(4)	192	0xc0	1		0x004fd190	0x004fcaa0	0x004fd1d8	vtable-init
+HudBitmapCtrl	HudCtrl	autoCenter	3	1	bool(4)	193	0xc1	1		0x004fd190	0x004fcaa0	0x004fd1c0	vtable-init
+HudBitmapCtrl	HudCtrl	flipVertical	3	1	bool(4)	194	0xc2	1		0x004fd190	0x004fcaa0	0x004fd1f0	vtable-init
+HudBitmapCtrl	HudCtrl	flipHorizontal	3	1	bool(4)	195	0xc3	1		0x004fd190	0x004fcaa0	0x004fd208	vtable-init
+HudBitmapFrameCtrl	HudBitmapCtrl	subRegion	18	16	RectI(16B)	196	0xc4	1		0x004fd560	0x004fd190	0x004fd578	vtable-init(ambiguous:HudBitmapFrameCtrl/HudChat/HudCommandMsg)
+HudBombSight	HudCtrl	Shape	7	4	string(char*)	188	0xbc	1		0x0050a3f0	0x004fcaa0	0x0050a408	vtable-init
+HudBombSight	HudCtrl	minDisplayHeight	5	4	F32	192	0xc0	1		0x0050a3f0	0x004fcaa0	0x0050a420	vtable-init
+HudCompass	HudCtrl	textColor	11	4	ColorI(4B)	184	0xb8	1		0x00502c50	0x004fcaa0	0x00502c68	vtable-init
+HudCtrl	GuiControl	fillColor	12	16	ColorF(16B)	148	0x94	1		0x004fcaa0	0x004b6960	0x004fcab8	vtable-init
+HudCtrl	GuiControl	frameColor	12	16	ColorF(16B)	164	0xa4	1		0x004fcaa0	0x004b6960	0x004fcad0	vtable-init
+HudCtrl	GuiControl	opacity	5	4	F32	180	0xb4	1		0x004fcaa0	0x004b6960	0x004fcae8	vtable-init
+HudHeat	HudBarBaseCtrl	heatWarning	5	4	F32	228	0xe4	1		0x00501c00	0x00501130	0x00501c18	vtable-init
+HudHelpTag	HudCtrl	flip	3	1	bool(4)	188	0xbc	1		0x0050b6f0	0x004fcaa0	0x0050b708	vtable-init
+HudNavDisplay	HudBitmapCtrl	renderXYProjection	3	1	bool(4)	280	0x118	1		0x00509550	0x004fd190	0x00509568	vtable-init
+HudNavDisplay	HudBitmapCtrl	markerHitRadius	5	4	F32	284	0x11c	1		0x00509550	0x004fd190	0x00509598	vtable-init
+HudNavDisplay	HudBitmapCtrl	renderEdgeMarkers	3	1	bool(4)	288	0x120	1		0x00509550	0x004fd190	0x00509580	vtable-init
+HudNavDisplay	HudBitmapCtrl	markerAngle	5	4	F32	292	0x124	1		0x00509550	0x004fd190	0x005095b0	vtable-init
+HudNavDisplay	HudBitmapCtrl	markerLen	5	4	F32	296	0x128	1		0x00509550	0x004fd190	0x005095c8	vtable-init
+HudNavDisplay	HudBitmapCtrl	defaultMarkerColor	11	4	ColorI(4B)	300	0x12c	1		0x00509550	0x004fd190	0x005095e0	vtable-init
+HudNavDisplay	HudBitmapCtrl	acquireScreenRadius	1	4	S32	304	0x130	1		0x00509550	0x004fd190	0x005095f8	vtable-init
+HudNavDisplay	HudBitmapCtrl	playerEyeZOffset	5	4	F32	308	0x134	1		0x00509550	0x004fd190	0x00509610	vtable-init
+HudNavDisplay	HudBitmapCtrl	damageRectSize	14	8	Point2I(8B)	312	0x138	1		0x00509550	0x004fd190	0x00509628	vtable-init
+HudNavDisplay	HudBitmapCtrl	infoOffset	14	8	Point2I(8B)	320	0x140	1		0x00509550	0x004fd190	0x00509640	vtable-init
+HudNavDisplay	HudBitmapCtrl	minProjectSize	1	4	S32	328	0x148	1		0x00509550	0x004fd190	0x00509658	vtable-init
+HudNavDisplay	HudBitmapCtrl	acquireBoxCheckDistance	5	4	F32	332	0x14c	1		0x00509550	0x004fd190	0x00509670	vtable-init
+HudNavDisplay	HudBitmapCtrl	minMarkerScale	5	4	F32	336	0x150	1		0x00509550	0x004fd190	0x005096b8	vtable-init
+HudNavDisplay	HudBitmapCtrl	markerScaleDistance	5	4	F32	340	0x154	1		0x00509550	0x004fd190	0x005096d0	vtable-init
+HudNavDisplay	HudBitmapCtrl	renderMarkerText	3	1	bool(4)	344	0x158	1		0x00509550	0x004fd190	0x00509718	vtable-init
+HudNavDisplay	HudBitmapCtrl	markerTextEdgeOffset	1	4	S32	348	0x15c	1		0x00509550	0x004fd190	0x00509700	vtable-init
+HudNavDisplay	HudBitmapCtrl	protectedStatics	3	1	bool(4)	376	0x178	1		0x00509550	0x004fd190	0x00509730	vtable-init
+HudNavDisplay	HudBitmapCtrl	targetLockedFrameColor	11	4	ColorI(4B)	377	0x179	1		0x00509550	0x004fd190	0x00509688	vtable-init
+HudNavDisplay	HudBitmapCtrl	damageFrameColor	11	4	ColorI(4B)	385	0x181	1		0x00509550	0x004fd190	0x005096a0	vtable-init
+HudNavDisplay	HudBitmapCtrl	markerImageNames	7	4	string(char*)	392	0x188	6		0x00509550	0x004fd190	0x005096e8	vtable-init
+HudNavDisplay	HudBitmapCtrl	missileMarker1	7	4	string(char*)	416	0x1a0	1		0x00509550	0x004fd190	0x005097a8	vtable-init
+HudNavDisplay	HudBitmapCtrl	missileMarker2	7	4	string(char*)	420	0x1a4	1		0x00509550	0x004fd190	0x005097c0	vtable-init
+HudNavDisplay	HudBitmapCtrl	missileFlash1	7	4	string(char*)	424	0x1a8	1		0x00509550	0x004fd190	0x005097d8	vtable-init
+HudNavDisplay	HudBitmapCtrl	missileFlash2	7	4	string(char*)	428	0x1ac	1		0x00509550	0x004fd190	0x005097f0	vtable-init
+HudNavDisplay	HudBitmapCtrl	missileTargetRing	7	4	string(char*)	432	0x1b0	1		0x00509550	0x004fd190	0x00509820	vtable-init
+HudNavDisplay	HudBitmapCtrl	missileMarkerHilite	7	4	string(char*)	436	0x1b4	1		0x00509550	0x004fd190	0x00509808	vtable-init
+HudNavDisplay	HudBitmapCtrl	enemyBeaconColor	11	4	ColorI(4B)	440	0x1b8	1		0x00509550	0x004fd190	0x00509748	vtable-init
+HudNavDisplay	HudBitmapCtrl	friendBeaconColor	11	4	ColorI(4B)	444	0x1bc	1		0x00509550	0x004fd190	0x00509760	vtable-init
+HudNavDisplay	HudBitmapCtrl	vehicleBeaconColor	11	4	ColorI(4B)	448	0x1c0	1		0x00509550	0x004fd190	0x00509778	vtable-init
+HudNavDisplay	HudBitmapCtrl	imageOffset	1	4	S32	452	0x1c4	1		0x00509550	0x004fd190	0x00509790	vtable-init
+HudNetDisplay	HudCtrl	upperBound	5	4	F32	184	0xb8	6		0x0050d040	0x004fcaa0	0x0050d0d0	vtable-init
+HudNetDisplay	HudCtrl	lowerBound	5	4	F32	208	0xd0	6		0x0050d040	0x004fcaa0	0x0050d0b8	vtable-init
+HudNetDisplay	HudCtrl	historySize	1	4	S32	252	0xfc	1		0x0050d040	0x004fcaa0	0x0050d058	vtable-init
+HudNetDisplay	HudCtrl	updatePeriod	1	4	S32	256	0x100	1		0x0050d040	0x004fcaa0	0x0050d070	vtable-init
+HudNetDisplay	HudCtrl	renderField	3	1	bool(4)	260	0x104	6		0x0050d040	0x004fcaa0	0x0050d088	vtable-init
+HudNetDisplay	HudCtrl	fieldColors	11	4	ColorI(4B)	266	0x10a	6		0x0050d040	0x004fcaa0	0x0050d0a0	vtable-init
+HudNetDisplay	HudCtrl	infoCallback	3	1	bool(4)	290	0x122	1		0x0050d040	0x004fcaa0	0x0050d0e8	vtable-init
+HudNetDisplay	HudCtrl	renderGraph	3	1	bool(4)	291	0x123	1		0x0050d040	0x004fcaa0	0x0050d100	vtable-init
+HudPulsingBitmap	HudBitmapCtrl	color	11	4	ColorI(4B)	196	0xc4	1		0x00503090	0x004fd190	0x005030a8	vtable-init
+HudPulsingBitmap	HudBitmapCtrl	pulse	3	1	bool(4)	200	0xc8	1		0x00503090	0x004fd190	0x005030c0	vtable-init
+HudPulsingBitmap	HudBitmapCtrl	pulseRate	1	4	S32	204	0xcc	1		0x00503090	0x004fd190	0x005030d8	vtable-init
+HudScoreCtrl	HudCtrl	verticalInset	14	8	Point2I(8B)	252	0xfc	1		0x0050ac50	0x004fcaa0	0x0050ac68	vtable-init
+HudScoreCtrl	HudCtrl	horizontalInset	14	8	Point2I(8B)	260	0x104	1		0x0050ac50	0x004fcaa0	0x0050ac80	vtable-init
+HudWeaponInvBase	HudCtrl	ammoOffset	14	8	Point2I(8B)	224	0xe0	1		0x004ff970	0x004fcaa0	0x004ff988	vtable-init
+HudWeaponInvBase	HudCtrl	backGroundOffset	14	8	Point2I(8B)	232	0xe8	1		0x004ff970	0x004fcaa0	0x004ff9a0	vtable-init
+HudWeaponInvBase	HudCtrl	highLightOffset	14	8	Point2I(8B)	240	0xf0	1		0x004ff970	0x004fcaa0	0x004ff9b8	vtable-init
+HudWeaponInvBase	HudCtrl	iconOffset	14	8	Point2I(8B)	248	0xf8	1		0x004ff970	0x004fcaa0	0x004ff9d0	vtable-init
+HudWeaponInvBase	HudCtrl	backGroundSpace	1	4	S32	256	0x100	1		0x004ff970	0x004fcaa0	0x004ff9e8	vtable-init
+InteriorInstance	SceneObject	interiorFile	7	4	string(char*)	592	0x250	1		0x00520730	0x0058c7f0	0x00520748	vtable-init
+InteriorInstance	SceneObject	showTerrainInside	3	1	bool(4)	632	0x278	1		0x00520730	0x0058c7f0	0x00520760	vtable-init
+InteriorInstance	SceneObject	audioProfile	34	4	AudioProfile*	640	0x280	1		0x00520730	0x0058c7f0	0x00520778	vtable-init
+InteriorInstance	SceneObject	audioEnvironment	43		AudioEnvironment*	644	0x284	1		0x00520730	0x0058c7f0	0x00520790	vtable-init
+Item	ShapeBase	collideable	3	1	bool(4)	2220	0x8ac	1		0x00607420		0x00607438	vtable-init
+Item	ShapeBase	static	3	1	bool(4)	2221	0x8ad	1		0x00607420		0x00607450	vtable-init
+Item	ShapeBase	rotate	3	1	bool(4)	2222	0x8ae	1		0x00607420		0x00607468	vtable-init
+ItemData	ShapeBaseData	friction	5	4	F32	812	0x32c	1		0x006034c0	0x005e4c20	0x006034d8	vtable-init
+ItemData	ShapeBaseData	elasticity	5	4	F32	816	0x330	1		0x006034c0	0x005e4c20	0x006034f0	vtable-init
+ItemData	ShapeBaseData	sticky	3	1	bool(4)	820	0x334	1		0x006034c0	0x005e4c20	0x00603508	vtable-init
+ItemData	ShapeBaseData	gravityMod	5	4	F32	824	0x338	1		0x006034c0	0x005e4c20	0x00603520	vtable-init
+ItemData	ShapeBaseData	maxVelocity	5	4	F32	828	0x33c	1		0x006034c0	0x005e4c20	0x00603538	vtable-init
+ItemData	ShapeBaseData	dynamicType	1	4	S32	832	0x340	1		0x006034c0	0x005e4c20	0x00603550	vtable-init
+ItemData	ShapeBaseData	pickUpName	7	4	string(char*)	836	0x344	1		0x006034c0	0x005e4c20	0x00603568	vtable-init
+ItemData	ShapeBaseData	lightOnlyStatic	3	1	bool(4)	840	0x348	1		0x006034c0	0x005e4c20	0x006035e3	vtable-init
+ItemData	ShapeBaseData	lightType	9	4	enum(S32)+table	844	0x34c	1	0x840a50	0x006034c0	0x005e4c20	0x00603583	vtable-init
+ItemData	ShapeBaseData	lightColor	12	16	ColorF(16B)	848	0x350	1		0x006034c0	0x005e4c20	0x0060359b	vtable-init
+ItemData	ShapeBaseData	lightTime	1	4	S32	864	0x360	1		0x006034c0	0x005e4c20	0x006035b3	vtable-init
+ItemData	ShapeBaseData	lightRadius	5	4	F32	868	0x364	1		0x006034c0	0x005e4c20	0x006035cb	vtable-init
+JetEffectData	GameBaseData	coolColor	12	16	ColorF(16B)	68	0x44	1		0x0069fc50	0x005e27d0	0x0069fc93	vtable-init
+JetEffectData	GameBaseData	hotColor	12	16	ColorF(16B)	84	0x54	1		0x0069fc50	0x005e27d0	0x0069fca8	vtable-init
+JetEffectData	GameBaseData	activateTime	5	4	F32	100	0x64	1		0x0069fc50	0x005e27d0	0x0069fcbd	vtable-init
+JetEffectData	GameBaseData	deactivateTime	5	4	F32	104	0x68	1		0x0069fc50	0x005e27d0	0x0069fcd2	vtable-init
+JetEffectData	GameBaseData	length	5	4	F32	108	0x6c	1		0x0069fc50	0x005e27d0	0x0069fce7	vtable-init
+JetEffectData	GameBaseData	width	5	4	F32	112	0x70	1		0x0069fc50	0x005e27d0	0x0069fcfc	vtable-init
+JetEffectData	GameBaseData	speed	5	4	F32	116	0x74	1		0x0069fc50	0x005e27d0	0x0069fd11	vtable-init
+JetEffectData	GameBaseData	stretch	5	4	F32	120	0x78	1		0x0069fc50	0x005e27d0	0x0069fd26	vtable-init
+JetEffectData	GameBaseData	yOffset	5	4	F32	124	0x7c	1		0x0069fc50	0x005e27d0	0x0069fd3b	vtable-init
+JetEffectData	GameBaseData	texture	7	4	string(char*)	128	0x80	1		0x0069fc50	0x005e27d0	0x0069fc7e	vtable-init
+Lightning	GameBase	strikesPerMinute	1	4	S32	644	0x284	1		0x00627610	0x005e3670	0x00627628	vtable-init
+Lightning	GameBase	strikeWidth	5	4	F32	648	0x288	1		0x00627610	0x005e3670	0x00627640	vtable-init
+Lightning	GameBase	chanceToHitTarget	5	4	F32	652	0x28c	1		0x00627610	0x005e3670	0x00627658	vtable-init
+Lightning	GameBase	strikeRadius	5	4	F32	656	0x290	1		0x00627610	0x005e3670	0x00627670	vtable-init
+Lightning	GameBase	boltStartRadius	5	4	F32	660	0x294	1		0x00627610	0x005e3670	0x00627688	vtable-init
+Lightning	GameBase	color	12	16	ColorF(16B)	664	0x298	1		0x00627610	0x005e3670	0x006276a0	vtable-init
+Lightning	GameBase	fadeColor	12	16	ColorF(16B)	680	0x2a8	1		0x00627610	0x005e3670	0x006276b8	vtable-init
+Lightning	GameBase	useFog	3	1	bool(4)	696	0x2b8	1		0x00627610	0x005e3670	0x006276d0	vtable-init
+LightningData	GameBaseData	thunderSounds	34	4	AudioProfile*	68	0x44	8		0x00627150	0x005e27d0	0x0062717a	vtable-init
+LightningData	GameBaseData	strikeSound	34	4	AudioProfile*	100	0x64	1		0x00627150	0x005e27d0	0x00627165	vtable-init
+LightningData	GameBaseData	strikeTextures	7	4	string(char*)	104	0x68	8		0x00627150	0x005e27d0	0x0062718f	vtable-init
+LinearFlareProjectileData	LinearProjectileData	numFlares	1	4	S32	360	0x168	1		0x0063d870	0x0062b3c0	0x0063d888	vtable-init
+LinearFlareProjectileData	LinearProjectileData	size	5	4	F32	364	0x16c	3		0x0063d870	0x0062b3c0	0x0063d8a0	vtable-init
+LinearFlareProjectileData	LinearProjectileData	flareColor	12	16	ColorF(16B)	376	0x178	1		0x0063d870	0x0062b3c0	0x0063d8b8	vtable-init
+LinearFlareProjectileData	LinearProjectileData	flareModTexture	7	4	string(char*)	392	0x188	1		0x0063d870	0x0062b3c0	0x0063d8d0	vtable-init
+LinearFlareProjectileData	LinearProjectileData	flareBaseTexture	7	4	string(char*)	396	0x18c	1		0x0063d870	0x0062b3c0	0x0063d8e8	vtable-init
+LinearProjectileData	ProjectileData	dryVelocity	5	4	F32	312	0x138	1		0x0062b3c0	0x006303f0	0x0062b3d8	vtable-init
+LinearProjectileData	ProjectileData	wetVelocity	5	4	F32	316	0x13c	1		0x0062b3c0	0x006303f0	0x0062b3f0	vtable-init
+LinearProjectileData	ProjectileData	fizzleTimeMS	1	4	S32	320	0x140	1		0x0062b3c0	0x006303f0	0x0062b408	vtable-init
+LinearProjectileData	ProjectileData	lifetimeMS	1	4	S32	324	0x144	1		0x0062b3c0	0x006303f0	0x0062b420	vtable-init
+LinearProjectileData	ProjectileData	explodeOnDeath	3	1	bool(4)	328	0x148	1		0x0062b3c0	0x006303f0	0x0062b438	vtable-init
+LinearProjectileData	ProjectileData	reflectOnWaterImpactAngle	5	4	F32	332	0x14c	1		0x0062b3c0	0x006303f0	0x0062b450	vtable-init
+LinearProjectileData	ProjectileData	deflectionOnWaterImpact	5	4	F32	336	0x150	1		0x0062b3c0	0x006303f0	0x0062b468	vtable-init
+LinearProjectileData	ProjectileData	fizzleUnderwaterMS	1	4	S32	340	0x154	1		0x0062b3c0	0x006303f0	0x0062b480	vtable-init
+LinearProjectileData	ProjectileData	activateDelayMS	1	4	S32	344	0x158	1		0x0062b3c0	0x006303f0	0x0062b498	vtable-init
+LinearProjectileData	ProjectileData	doDynamicClientHits	3	1	bool(4)	348	0x15c	1		0x0062b3c0	0x006303f0	0x0062b4b0	vtable-init
+Marker	SceneObject	seqNum	1	4	S32	584	0x248	1		0x00592830	0x0058c7f0	0x00592848	vtable-init
+Marker	SceneObject	msToNext	1	4	S32	588	0x24c	1		0x00592830	0x0058c7f0	0x00592860	vtable-init
+MissionArea	NetObject	area	18	16	RectI(16B)	584	0x248	1		0x00619b30		0x00619b48	vtable-init
+MissionArea	NetObject	flightCeiling	5	4	F32	600	0x258	1		0x00619b30		0x00619b60	vtable-init
+MissionArea	NetObject	flightCeilingRange	5	4	F32	604	0x25c	1		0x00619b30		0x00619b78	vtable-init
+MissionAreaEditor	GuiBitmapCtrl	squareBitmap	3	1	bool(4)	240	0xf0	1		0x0046be40	0x004ad700	0x0046be58	vtable-init
+MissionAreaEditor	GuiBitmapCtrl	enableEditing	3	1	bool(4)	241	0xf1	1		0x0046be40	0x004ad700	0x0046be70	vtable-init
+MissionAreaEditor	GuiBitmapCtrl	renderCamera	3	1	bool(4)	242	0xf2	1		0x0046be40	0x004ad700	0x0046be88	vtable-init
+MissionAreaEditor	GuiBitmapCtrl	handleFrameColor	11	4	ColorI(4B)	243	0xf3	1		0x0046be40	0x004ad700	0x0046bea0	vtable-init
+MissionAreaEditor	GuiBitmapCtrl	handleFillColor	11	4	ColorI(4B)	247	0xf7	1		0x0046be40	0x004ad700	0x0046beb8	vtable-init
+MissionAreaEditor	GuiBitmapCtrl	defaultObjectColor	11	4	ColorI(4B)	251	0xfb	1		0x0046be40	0x004ad700	0x0046bed0	vtable-init
+MissionAreaEditor	GuiBitmapCtrl	waterObjectColor	11	4	ColorI(4B)	255	0xff	1		0x0046be40	0x004ad700	0x0046bee8	vtable-init
+MissionAreaEditor	GuiBitmapCtrl	missionBoundsColor	11	4	ColorI(4B)	259	0x103	1		0x0046be40	0x004ad700	0x0046bf00	vtable-init
+MissionAreaEditor	GuiBitmapCtrl	cameraColor	11	4	ColorI(4B)	263	0x107	1		0x0046be40	0x004ad700	0x0046bf18	vtable-init
+MissionAreaEditor	GuiBitmapCtrl	enableMirroring	3	1	bool(4)	267	0x10b	1		0x0046be40	0x004ad700	0x0046bf30	vtable-init
+MissionAreaEditor	GuiBitmapCtrl	mirrorIndex	1	4	S32	268	0x10c	1		0x0046be40	0x004ad700	0x0046bf48	vtable-init
+MissionAreaEditor	GuiBitmapCtrl	mirrorLineColor	11	4	ColorI(4B)	272	0x110	1		0x0046be40	0x004ad700	0x0046bf60	vtable-init
+MissionAreaEditor	GuiBitmapCtrl	mirrorArrowColor	11	4	ColorI(4B)	276	0x114	1		0x0046be40	0x004ad700	0x0046bf78	vtable-init
+NavigationGraph	SimObject	cullDensity	5	4	F32	7472	0x1d30	1		0x00480940		0x00480970	vtable-init
+NavigationGraph	SimObject	conjoinAngleDev	5	4	F32	7476	0x1d34	1		0x00480940		0x00480958	vtable-init
+NavigationGraph	SimObject	customArea	18	16	RectI(16B)	7488	0x1d40	1		0x00480940		0x00480988	vtable-init
+ParticleData	SimDataBlock	dragCoefficient	5	4	F32	60	0x3c	1		0x00622e60		0x00622e75	vtable-init
+ParticleData	SimDataBlock	windCoefficient	5	4	F32	64	0x40	1		0x00622e60		0x00622e8a	vtable-init
+ParticleData	SimDataBlock	gravityCoefficient	5	4	F32	68	0x44	1		0x00622e60		0x00622e9f	vtable-init
+ParticleData	SimDataBlock	inheritedVelFactor	5	4	F32	72	0x48	1		0x00622e60		0x00622eb4	vtable-init
+ParticleData	SimDataBlock	constantAcceleration	5	4	F32	76	0x4c	1		0x00622e60		0x00622ec9	vtable-init
+ParticleData	SimDataBlock	lifetimeMS	1	4	S32	80	0x50	1		0x00622e60		0x00622ede	vtable-init
+ParticleData	SimDataBlock	lifetimeVarianceMS	1	4	S32	84	0x54	1		0x00622e60		0x00622ef3	vtable-init
+ParticleData	SimDataBlock	spinSpeed	5	4	F32	88	0x58	1		0x00622e60		0x00622f08	vtable-init
+ParticleData	SimDataBlock	spinRandomMin	5	4	F32	92	0x5c	1		0x00622e60		0x00622f1d	vtable-init
+ParticleData	SimDataBlock	spinRandomMax	5	4	F32	96	0x60	1		0x00622e60		0x00622f32	vtable-init
+ParticleData	SimDataBlock	useInvAlpha	3	1	bool(4)	100	0x64	1		0x00622e60		0x00622f47	vtable-init
+ParticleData	SimDataBlock	animateTexture	3	1	bool(4)	101	0x65	1		0x00622e60		0x00622f5c	vtable-init
+ParticleData	SimDataBlock	framesPerSec	1	4	S32	108	0x6c	1		0x00622e60		0x00622f71	vtable-init
+ParticleData	SimDataBlock	colors	12	16	ColorF(16B)	112	0x70	4		0x00622e60		0x00622fb6	vtable-init
+ParticleData	SimDataBlock	sizes	5	4	F32	176	0xb0	4		0x00622e60		0x00622fce	vtable-init
+ParticleData	SimDataBlock	times	5	4	F32	192	0xc0	4		0x00622e60		0x00622fe6	vtable-init
+ParticleData	SimDataBlock	textureName	7	4	string(char*)	208	0xd0	1		0x00622e60		0x00622f89	vtable-init
+ParticleData	SimDataBlock	animTexName	7	4	string(char*)	208	0xd0	50		0x00622e60		0x00622fa1	vtable-init
+ParticleEmissionDummy	GameBase	emitter	32	8	ParticleEmitterData*	648	0x288	1		0x00626240	0x005e3670	0x00626258	vtable-init
+ParticleEmissionDummy	GameBase	velocity	5	4	F32	660	0x294	1		0x00626240	0x005e3670	0x00626270	vtable-init
+ParticleEmissionDummyData	GameBaseData	timeMultiple	5	4	F32	68	0x44	1		0x00626080	0x005e27d0	0x00626095	vtable-init
+ParticleEmitterData	GameBaseData	ejectionPeriodMS	1	4	S32	68	0x44	1		0x00621df0	0x005e27d0	0x00621e1b	vtable-init
+ParticleEmitterData	GameBaseData	periodVarianceMS	1	4	S32	72	0x48	1		0x00621df0	0x005e27d0	0x00621e30	vtable-init
+ParticleEmitterData	GameBaseData	ejectionVelocity	5	4	F32	76	0x4c	1		0x00621df0	0x005e27d0	0x00621e45	vtable-init
+ParticleEmitterData	GameBaseData	velocityVariance	5	4	F32	80	0x50	1		0x00621df0	0x005e27d0	0x00621e5a	vtable-init
+ParticleEmitterData	GameBaseData	ejectionOffset	5	4	F32	84	0x54	1		0x00621df0	0x005e27d0	0x00621e6f	vtable-init
+ParticleEmitterData	GameBaseData	thetaMin	5	4	F32	88	0x58	1		0x00621df0	0x005e27d0	0x00621e84	vtable-init
+ParticleEmitterData	GameBaseData	thetaMax	5	4	F32	92	0x5c	1		0x00621df0	0x005e27d0	0x00621e99	vtable-init
+ParticleEmitterData	GameBaseData	phiReferenceVel	5	4	F32	96	0x60	1		0x00621df0	0x005e27d0	0x00621eae	vtable-init
+ParticleEmitterData	GameBaseData	phiVariance	5	4	F32	100	0x64	1		0x00621df0	0x005e27d0	0x00621ec3	vtable-init
+ParticleEmitterData	GameBaseData	lifetimeMS	1	4	S32	104	0x68	1		0x00621df0	0x005e27d0	0x00621f2c	vtable-init
+ParticleEmitterData	GameBaseData	lifetimeVarianceMS	1	4	S32	108	0x6c	1		0x00621df0	0x005e27d0	0x00621f41	vtable-init
+ParticleEmitterData	GameBaseData	overrideAdvance	3	1	bool(4)	112	0x70	1		0x00621df0	0x005e27d0	0x00621ed8	vtable-init
+ParticleEmitterData	GameBaseData	orientParticles	3	1	bool(4)	113	0x71	1		0x00621df0	0x005e27d0	0x00621eed	vtable-init
+ParticleEmitterData	GameBaseData	orientOnVelocity	3	1	bool(4)	114	0x72	1		0x00621df0	0x005e27d0	0x00621f02	vtable-init
+ParticleEmitterData	GameBaseData	useEmitterSizes	3	1	bool(4)	115	0x73	1		0x00621df0	0x005e27d0	0x00621f56	vtable-init
+ParticleEmitterData	GameBaseData	useEmitterColors	3	1	bool(4)	116	0x74	1		0x00621df0	0x005e27d0	0x00621f6b	vtable-init
+ParticleEmitterData	GameBaseData	particles	7	4	string(char*)	120	0x78	1		0x00621df0	0x005e27d0	0x00621f17	vtable-init
+PhysicalZone	SceneObject	velocityMod	5	4	F32	584	0x248	1		0x0068aaa0	0x0058c7f0	0x0068aab8	vtable-init
+PhysicalZone	SceneObject	gravityMod	5	4	F32	588	0x24c	1		0x0068aaa0	0x0058c7f0	0x0068aad0	vtable-init
+PhysicalZone	SceneObject	appliedForce	16	12	Point3F(12B)	592	0x250	1		0x0068aaa0	0x0058c7f0	0x0068aae8	vtable-init
+PhysicalZone	SceneObject	polyhedron	35		polyhedron	604	0x25c	1		0x0068aaa0	0x0058c7f0	0x0068ab00	vtable-init
+PlayerData	ShapeBaseData	pickupRadius	5	4	F32	812	0x32c	1		0x005ce810	0x005e4c20	0x005ce828	vtable-init
+PlayerData	ShapeBaseData	maxTimeScale	5	4	F32	816	0x330	1		0x005ce810	0x005e4c20	0x005ce8a0	vtable-init
+PlayerData	ShapeBaseData	minLookAngle	5	4	F32	820	0x334	1		0x005ce810	0x005e4c20	0x005ce858	vtable-init
+PlayerData	ShapeBaseData	maxLookAngle	5	4	F32	824	0x338	1		0x005ce810	0x005e4c20	0x005ce870	vtable-init
+PlayerData	ShapeBaseData	maxFreelookAngle	5	4	F32	828	0x33c	1		0x005ce810	0x005e4c20	0x005ce888	vtable-init
+PlayerData	ShapeBaseData	noFrictionOnSki	3	1	bool(4)	832	0x340	1		0x005ce810	0x005e4c20	0x005ce840	vtable-init
+PlayerData	ShapeBaseData	jetForce	5	4	F32	836	0x344	1		0x005ce810	0x005e4c20	0x005ce8d0	vtable-init
+PlayerData	ShapeBaseData	underwaterJetForce	5	4	F32	840	0x348	1		0x005ce810	0x005e4c20	0x005ce8e8	vtable-init
+PlayerData	ShapeBaseData	underwaterVertJetFactor	5	4	F32	844	0x34c	1		0x005ce810	0x005e4c20	0x005ce900	vtable-init
+PlayerData	ShapeBaseData	jetEnergyDrain	5	4	F32	848	0x350	1		0x005ce810	0x005e4c20	0x005ce918	vtable-init
+PlayerData	ShapeBaseData	underwaterJetEnergyDrain	5	4	F32	852	0x354	1		0x005ce810	0x005e4c20	0x005ce930	vtable-init
+PlayerData	ShapeBaseData	minJetEnergy	5	4	F32	856	0x358	1		0x005ce810	0x005e4c20	0x005ce948	vtable-init
+PlayerData	ShapeBaseData	maxJetForwardSpeed	5	4	F32	860	0x35c	1		0x005ce810	0x005e4c20	0x005ce960	vtable-init
+PlayerData	ShapeBaseData	maxJetHorizontalPercentage	5	4	F32	864	0x360	1		0x005ce810	0x005e4c20	0x005ce978	vtable-init
+PlayerData	ShapeBaseData	jetEmitter	32	8	ParticleEmitterData*	868	0x364	1		0x005ce810	0x005e4c20	0x005ce990	vtable-init
+PlayerData	ShapeBaseData	jetEffect	31	8	JetEffectData*	876	0x36c	1		0x005ce810	0x005e4c20	0x005ce9a8	vtable-init
+PlayerData	ShapeBaseData	runForce	5	4	F32	884	0x374	1		0x005ce810	0x005e4c20	0x005ce9c0	vtable-init
+PlayerData	ShapeBaseData	runEnergyDrain	5	4	F32	888	0x378	1		0x005ce810	0x005e4c20	0x005ce9d8	vtable-init
+PlayerData	ShapeBaseData	minRunEnergy	5	4	F32	892	0x37c	1		0x005ce810	0x005e4c20	0x005ce9f0	vtable-init
+PlayerData	ShapeBaseData	maxForwardSpeed	5	4	F32	896	0x380	1		0x005ce810	0x005e4c20	0x005cea08	vtable-init
+PlayerData	ShapeBaseData	maxBackwardSpeed	5	4	F32	900	0x384	1		0x005ce810	0x005e4c20	0x005cea20	vtable-init
+PlayerData	ShapeBaseData	maxSideSpeed	5	4	F32	904	0x388	1		0x005ce810	0x005e4c20	0x005cea38	vtable-init
+PlayerData	ShapeBaseData	maxUnderwaterForwardSpeed	5	4	F32	908	0x38c	1		0x005ce810	0x005e4c20	0x005cea50	vtable-init
+PlayerData	ShapeBaseData	maxUnderwaterBackwardSpeed	5	4	F32	912	0x390	1		0x005ce810	0x005e4c20	0x005cea68	vtable-init
+PlayerData	ShapeBaseData	maxUnderwaterSideSpeed	5	4	F32	916	0x394	1		0x005ce810	0x005e4c20	0x005cea80	vtable-init
+PlayerData	ShapeBaseData	maxStepHeight	5	4	F32	920	0x398	1		0x005ce810	0x005e4c20	0x005ce8b8	vtable-init
+PlayerData	ShapeBaseData	runSurfaceAngle	5	4	F32	924	0x39c	1		0x005ce810	0x005e4c20	0x005cea98	vtable-init
+PlayerData	ShapeBaseData	horizMaxSpeed	5	4	F32	928	0x3a0	1		0x005ce810	0x005e4c20	0x005cec48	vtable-init
+PlayerData	ShapeBaseData	horizResistSpeed	5	4	F32	932	0x3a4	1		0x005ce810	0x005e4c20	0x005cec60	vtable-init
+PlayerData	ShapeBaseData	horizResistFactor	5	4	F32	936	0x3a8	1		0x005ce810	0x005e4c20	0x005cec78	vtable-init
+PlayerData	ShapeBaseData	upMaxSpeed	5	4	F32	940	0x3ac	1		0x005ce810	0x005e4c20	0x005cec90	vtable-init
+PlayerData	ShapeBaseData	upResistSpeed	5	4	F32	944	0x3b0	1		0x005ce810	0x005e4c20	0x005ceca8	vtable-init
+PlayerData	ShapeBaseData	upResistFactor	5	4	F32	948	0x3b4	1		0x005ce810	0x005e4c20	0x005cecc0	vtable-init
+PlayerData	ShapeBaseData	recoverDelay	1	4	S32	952	0x3b8	1		0x005ce810	0x005e4c20	0x005ceab0	vtable-init
+PlayerData	ShapeBaseData	recoverRunForceScale	5	4	F32	956	0x3bc	1		0x005ce810	0x005e4c20	0x005ceac8	vtable-init
+PlayerData	ShapeBaseData	jumpForce	5	4	F32	960	0x3c0	1		0x005ce810	0x005e4c20	0x005ceae0	vtable-init
+PlayerData	ShapeBaseData	jumpEnergyDrain	5	4	F32	964	0x3c4	1		0x005ce810	0x005e4c20	0x005ceaf8	vtable-init
+PlayerData	ShapeBaseData	minJumpEnergy	5	4	F32	968	0x3c8	1		0x005ce810	0x005e4c20	0x005ceb10	vtable-init
+PlayerData	ShapeBaseData	minJumpSpeed	5	4	F32	972	0x3cc	1		0x005ce810	0x005e4c20	0x005ceb28	vtable-init
+PlayerData	ShapeBaseData	maxJumpSpeed	5	4	F32	976	0x3d0	1		0x005ce810	0x005e4c20	0x005ceb40	vtable-init
+PlayerData	ShapeBaseData	jumpSurfaceAngle	5	4	F32	980	0x3d4	1		0x005ce810	0x005e4c20	0x005ceb58	vtable-init
+PlayerData	ShapeBaseData	jumpDelay	1	4	S32	984	0x3d8	1		0x005ce810	0x005e4c20	0x005ceb70	vtable-init
+PlayerData	ShapeBaseData	boxHeadPercentage	5	4	F32	988	0x3dc	1		0x005ce810	0x005e4c20	0x005cebb8	vtable-init
+PlayerData	ShapeBaseData	boxTorsoPercentage	5	4	F32	992	0x3e0	1		0x005ce810	0x005e4c20	0x005cebd0	vtable-init
+PlayerData	ShapeBaseData	boxHeadLeftPercentage	1	4	S32	996	0x3e4	1		0x005ce810	0x005e4c20	0x005cebe8	vtable-init
+PlayerData	ShapeBaseData	boxHeadRightPercentage	1	4	S32	1000	0x3e8	1		0x005ce810	0x005e4c20	0x005cec00	vtable-init
+PlayerData	ShapeBaseData	boxHeadBackPercentage	1	4	S32	1004	0x3ec	1		0x005ce810	0x005e4c20	0x005cec18	vtable-init
+PlayerData	ShapeBaseData	boxHeadFrontPercentage	1	4	S32	1008	0x3f0	1		0x005ce810	0x005e4c20	0x005cec30	vtable-init
+PlayerData	ShapeBaseData	minImpactSpeed	5	4	F32	1012	0x3f4	1		0x005ce810	0x005e4c20	0x005ceb88	vtable-init
+PlayerData	ShapeBaseData	decalOffset	5	4	F32	1016	0x3f8	1		0x005ce810	0x005e4c20	0x005cecf0	vtable-init
+PlayerData	ShapeBaseData	heatDecayPerSec	5	4	F32	1020	0x3fc	1		0x005ce810	0x005e4c20	0x005cf170	vtable-init
+PlayerData	ShapeBaseData	heatIncreasePerSec	5	4	F32	1024	0x400	1		0x005ce810	0x005e4c20	0x005cf188	vtable-init
+PlayerData	ShapeBaseData	groundImpactMinSpeed	5	4	F32	1028	0x404	1		0x005ce810	0x005e4c20	0x005cf1a0	vtable-init
+PlayerData	ShapeBaseData	groundImpactShakeFreq	16	12	Point3F(12B)	1032	0x408	1		0x005ce810	0x005e4c20	0x005cf1b8	vtable-init
+PlayerData	ShapeBaseData	groundImpactShakeAmp	16	12	Point3F(12B)	1044	0x414	1		0x005ce810	0x005e4c20	0x005cf1d0	vtable-init
+PlayerData	ShapeBaseData	groundImpactShakeDuration	5	4	F32	1056	0x420	1		0x005ce810	0x005e4c20	0x005cf1e8	vtable-init
+PlayerData	ShapeBaseData	groundImpactShakeFalloff	5	4	F32	1060	0x424	1		0x005ce810	0x005e4c20	0x005cf200	vtable-init
+PlayerData	ShapeBaseData	jetSound	34	4	AudioProfile*	1064	0x428	1		0x005ce810	0x005e4c20	0x005ced68	vtable-init
+PlayerData	ShapeBaseData	wetJetSound	34	4	AudioProfile*	1068	0x42c	1		0x005ce810	0x005e4c20	0x005ced80	vtable-init
+PlayerData	ShapeBaseData	LFootSoftSound	34	4	AudioProfile*	1072	0x430	1		0x005ce810	0x005e4c20	0x005ced98	vtable-init
+PlayerData	ShapeBaseData	RFootSoftSound	34	4	AudioProfile*	1076	0x434	1		0x005ce810	0x005e4c20	0x005cedb0	vtable-init
+PlayerData	ShapeBaseData	LFootHardSound	34	4	AudioProfile*	1080	0x438	1		0x005ce810	0x005e4c20	0x005cedc8	vtable-init
+PlayerData	ShapeBaseData	RFootHardSound	34	4	AudioProfile*	1084	0x43c	1		0x005ce810	0x005e4c20	0x005cede0	vtable-init
+PlayerData	ShapeBaseData	LFootMetalSound	34	4	AudioProfile*	1088	0x440	1		0x005ce810	0x005e4c20	0x005cedf8	vtable-init
+PlayerData	ShapeBaseData	RFootMetalSound	34	4	AudioProfile*	1092	0x444	1		0x005ce810	0x005e4c20	0x005cee10	vtable-init
+PlayerData	ShapeBaseData	LFootSnowSound	34	4	AudioProfile*	1096	0x448	1		0x005ce810	0x005e4c20	0x005cee28	vtable-init
+PlayerData	ShapeBaseData	RFootSnowSound	34	4	AudioProfile*	1100	0x44c	1		0x005ce810	0x005e4c20	0x005cee40	vtable-init
+PlayerData	ShapeBaseData	LFootShallowSound	34	4	AudioProfile*	1104	0x450	1		0x005ce810	0x005e4c20	0x005cee58	vtable-init
+PlayerData	ShapeBaseData	RFootShallowSound	34	4	AudioProfile*	1108	0x454	1		0x005ce810	0x005e4c20	0x005cee70	vtable-init
+PlayerData	ShapeBaseData	LFootWadingSound	34	4	AudioProfile*	1112	0x458	1		0x005ce810	0x005e4c20	0x005cee88	vtable-init
+PlayerData	ShapeBaseData	RFootWadingSound	34	4	AudioProfile*	1116	0x45c	1		0x005ce810	0x005e4c20	0x005ceea0	vtable-init
+PlayerData	ShapeBaseData	LFootUnderwaterSound	34	4	AudioProfile*	1120	0x460	1		0x005ce810	0x005e4c20	0x005ceeb8	vtable-init
+PlayerData	ShapeBaseData	RFootUnderwaterSound	34	4	AudioProfile*	1124	0x464	1		0x005ce810	0x005e4c20	0x005ceed0	vtable-init
+PlayerData	ShapeBaseData	LFootBubblesSound	34	4	AudioProfile*	1128	0x468	1		0x005ce810	0x005e4c20	0x005ceee8	vtable-init
+PlayerData	ShapeBaseData	RFootBubblesSound	34	4	AudioProfile*	1132	0x46c	1		0x005ce810	0x005e4c20	0x005cef00	vtable-init
+PlayerData	ShapeBaseData	movingBubblesSound	34	4	AudioProfile*	1136	0x470	1		0x005ce810	0x005e4c20	0x005cef18	vtable-init
+PlayerData	ShapeBaseData	waterBreathSound	34	4	AudioProfile*	1140	0x474	1		0x005ce810	0x005e4c20	0x005cef30	vtable-init
+PlayerData	ShapeBaseData	impactSoftSound	34	4	AudioProfile*	1144	0x478	1		0x005ce810	0x005e4c20	0x005cef48	vtable-init
+PlayerData	ShapeBaseData	impactHardSound	34	4	AudioProfile*	1148	0x47c	1		0x005ce810	0x005e4c20	0x005cef60	vtable-init
+PlayerData	ShapeBaseData	impactMetalSound	34	4	AudioProfile*	1152	0x480	1		0x005ce810	0x005e4c20	0x005cef78	vtable-init
+PlayerData	ShapeBaseData	impactSnowSound	34	4	AudioProfile*	1156	0x484	1		0x005ce810	0x005e4c20	0x005cef90	vtable-init
+PlayerData	ShapeBaseData	impactWaterEasy	34	4	AudioProfile*	1160	0x488	1		0x005ce810	0x005e4c20	0x005cefa8	vtable-init
+PlayerData	ShapeBaseData	impactWaterMedium	34	4	AudioProfile*	1164	0x48c	1		0x005ce810	0x005e4c20	0x005cefc0	vtable-init
+PlayerData	ShapeBaseData	impactWaterHard	34	4	AudioProfile*	1168	0x490	1		0x005ce810	0x005e4c20	0x005cefd8	vtable-init
+PlayerData	ShapeBaseData	exitingWater	34	4	AudioProfile*	1172	0x494	1		0x005ce810	0x005e4c20	0x005ceff0	vtable-init
+PlayerData	ShapeBaseData	skiSoftSound	34	4	AudioProfile*	1176	0x498	1		0x005ce810	0x005e4c20	0x005cf008	vtable-init
+PlayerData	ShapeBaseData	skiHardSound	34	4	AudioProfile*	1180	0x49c	1		0x005ce810	0x005e4c20	0x005cf020	vtable-init
+PlayerData	ShapeBaseData	skiMetalSound	34	4	AudioProfile*	1184	0x4a0	1		0x005ce810	0x005e4c20	0x005cf038	vtable-init
+PlayerData	ShapeBaseData	skiSnowSound	34	4	AudioProfile*	1188	0x4a4	1		0x005ce810	0x005e4c20	0x005cf050	vtable-init
+PlayerData	ShapeBaseData	boundingBox	16	12	Point3F(12B)	1320	0x528	1		0x005ce810	0x005e4c20	0x005ceba0	vtable-init
+PlayerData	ShapeBaseData	footPuffEmitter	32	8	ParticleEmitterData*	3308	0xcec	1		0x005ce810	0x005e4c20	0x005ced08	vtable-init
+PlayerData	ShapeBaseData	footPuffNumParts	1	4	S32	3316	0xcf4	1		0x005ce810	0x005e4c20	0x005ced20	vtable-init
+PlayerData	ShapeBaseData	footPuffRadius	5	4	F32	3320	0xcf8	1		0x005ce810	0x005e4c20	0x005ced38	vtable-init
+PlayerData	ShapeBaseData	decalData	41	8	DecalData*	3324	0xcfc	1		0x005ce810	0x005e4c20	0x005cecd8	vtable-init
+PlayerData	ShapeBaseData	dustEmitter	32	8	ParticleEmitterData*	3332	0xd04	1		0x005ce810	0x005e4c20	0x005ced50	vtable-init
+PlayerData	ShapeBaseData	splash	27	8	SplashData*	3340	0xd0c	1		0x005ce810	0x005e4c20	0x005cf068	vtable-init
+PlayerData	ShapeBaseData	splashVelocity	5	4	F32	3348	0xd14	1		0x005ce810	0x005e4c20	0x005cf080	vtable-init
+PlayerData	ShapeBaseData	splashAngle	5	4	F32	3352	0xd18	1		0x005ce810	0x005e4c20	0x005cf098	vtable-init
+PlayerData	ShapeBaseData	splashFreqMod	5	4	F32	3356	0xd1c	1		0x005ce810	0x005e4c20	0x005cf0b0	vtable-init
+PlayerData	ShapeBaseData	splashVelEpsilon	5	4	F32	3360	0xd20	1		0x005ce810	0x005e4c20	0x005cf0c8	vtable-init
+PlayerData	ShapeBaseData	bubbleEmitTime	5	4	F32	3364	0xd24	1		0x005ce810	0x005e4c20	0x005cf0e0	vtable-init
+PlayerData	ShapeBaseData	mediumSplashSoundVelocity	5	4	F32	3368	0xd28	1		0x005ce810	0x005e4c20	0x005cf110	vtable-init
+PlayerData	ShapeBaseData	hardSplashSoundVelocity	5	4	F32	3372	0xd2c	1		0x005ce810	0x005e4c20	0x005cf128	vtable-init
+PlayerData	ShapeBaseData	exitSplashSoundVelocity	5	4	F32	3376	0xd30	1		0x005ce810	0x005e4c20	0x005cf140	vtable-init
+PlayerData	ShapeBaseData	footstepSplashHeight	5	4	F32	3380	0xd34	1		0x005ce810	0x005e4c20	0x005cf158	vtable-init
+PlayerData	ShapeBaseData	splashEmitter	32	8	ParticleEmitterData*	3384	0xd38	3		0x005ce810	0x005e4c20	0x005cf0f8	vtable-init
+Precipitation	GameBase	percentage	5	4	F32	216972	0x34f8c	1		0x00680ab0	0x005e3670	0x00680ac8	vtable-init
+Precipitation	GameBase	color1	12	16	ColorF(16B)	217072	0x34ff0	1		0x00680ab0	0x005e3670	0x00680ae0	vtable-init
+Precipitation	GameBase	color2	12	16	ColorF(16B)	217088	0x35000	1		0x00680ab0	0x005e3670	0x00680af8	vtable-init
+Precipitation	GameBase	color3	12	16	ColorF(16B)	217104	0x35010	1		0x00680ab0	0x005e3670	0x00680b10	vtable-init
+Precipitation	GameBase	minVelocity	5	4	F32	217120	0x35020	1		0x00680ab0	0x005e3670	0x00680b40	vtable-init
+Precipitation	GameBase	maxVelocity	5	4	F32	217124	0x35024	1		0x00680ab0	0x005e3670	0x00680b58	vtable-init
+Precipitation	GameBase	maxNumDrops	1	4	S32	217128	0x35028	1		0x00680ab0	0x005e3670	0x00680b70	vtable-init
+Precipitation	GameBase	maxRadius	1	4	S32	217132	0x3502c	1		0x00680ab0	0x005e3670	0x00680b88	vtable-init
+Precipitation	GameBase	offsetSpeed	5	4	F32	217136	0x35030	1		0x00680ab0	0x005e3670	0x00680b28	vtable-init
+PrecipitationData	GameBaseData	soundProfile	34	4	AudioProfile*	68	0x44	1		0x006801c0	0x005e27d0	0x006801eb	vtable-init
+PrecipitationData	GameBaseData	type	1	4	S32	76	0x4c	1		0x006801c0	0x005e27d0	0x00680200	vtable-init
+PrecipitationData	GameBaseData	maxSize	5	4	F32	80	0x50	1		0x006801c0	0x005e27d0	0x00680215	vtable-init
+PrecipitationData	GameBaseData	sizeX	5	4	F32	84	0x54	1		0x006801c0	0x005e27d0	0x0068023f	vtable-init
+PrecipitationData	GameBaseData	sizeY	5	4	F32	88	0x58	1		0x006801c0	0x005e27d0	0x00680254	vtable-init
+PrecipitationData	GameBaseData	materialList	7	4	string(char*)	92	0x5c	1		0x006801c0	0x005e27d0	0x0068022a	vtable-init
+PrecipitationData	GameBaseData	movingBoxPer	5	4	F32	96	0x60	1		0x006801c0	0x005e27d0	0x00680269	vtable-init
+PrecipitationData	GameBaseData	divHeightVal	5	4	F32	100	0x64	1		0x006801c0	0x005e27d0	0x0068027e	vtable-init
+PrecipitationData	GameBaseData	sizeBigBox	5	4	F32	104	0x68	1		0x006801c0	0x005e27d0	0x00680293	vtable-init
+PrecipitationData	GameBaseData	topBoxSpeed	5	4	F32	108	0x6c	1		0x006801c0	0x005e27d0	0x006802a8	vtable-init
+PrecipitationData	GameBaseData	frontBoxSpeed	5	4	F32	112	0x70	1		0x006801c0	0x005e27d0	0x006802bd	vtable-init
+PrecipitationData	GameBaseData	topBoxDrawPer	5	4	F32	116	0x74	1		0x006801c0	0x005e27d0	0x006802d2	vtable-init
+PrecipitationData	GameBaseData	bottomDrawHeight	5	4	F32	120	0x78	1		0x006801c0	0x005e27d0	0x006802e7	vtable-init
+PrecipitationData	GameBaseData	skipIfPer	5	4	F32	124	0x7c	1		0x006801c0	0x005e27d0	0x006802fc	vtable-init
+PrecipitationData	GameBaseData	bottomSpeedPer	5	4	F32	128	0x80	1		0x006801c0	0x005e27d0	0x00680314	vtable-init
+PrecipitationData	GameBaseData	FrontSpeedPer	5	4	F32	132	0x84	1		0x006801c0	0x005e27d0	0x0068032c	vtable-init
+PrecipitationData	GameBaseData	FrontRadiusPer	5	4	F32	136	0x88	1		0x006801c0	0x005e27d0	0x00680344	vtable-init
+Projectile	GameBase	initialPosition	16	12	Point3F(12B)	648	0x288	1		0x00631a50	0x005e3670	0x00631a68	vtable-init
+Projectile	GameBase	initialDirection	16	12	Point3F(12B)	660	0x294	1		0x00631a50	0x005e3670	0x00631a80	vtable-init
+Projectile	GameBase	sourceObject	1	4	S32	672	0x2a0	1		0x00631a50	0x005e3670	0x00631a98	vtable-init
+Projectile	GameBase	vehicleObject	1	4	S32	676	0x2a4	1		0x00631a50	0x005e3670	0x00631ab0	vtable-init
+Projectile	GameBase	sourceSlot	1	4	S32	680	0x2a8	1		0x00631a50	0x005e3670	0x00631ac8	vtable-init
+ProjectileData	GameBaseData	projectileShapeName	7	4	string(char*)	68	0x44	1		0x006303f0	0x005e27d0	0x0063041b	vtable-init
+ProjectileData	GameBaseData	emitterDelay	1	4	S32	72	0x48	1		0x006303f0	0x005e27d0	0x00630430	vtable-init
+ProjectileData	GameBaseData	decalData	41	8	DecalData*	76	0x4c	6		0x006303f0	0x005e27d0	0x0063066d	vtable-init
+ProjectileData	GameBaseData	velInheritFactor	5	4	F32	128	0x80	1		0x006303f0	0x005e27d0	0x00630448	vtable-init
+ProjectileData	GameBaseData	directDamage	5	4	F32	136	0x88	1		0x006303f0	0x005e27d0	0x00630460	vtable-init
+ProjectileData	GameBaseData	hasDamageRadius	3	1	bool(4)	140	0x8c	1		0x006303f0	0x005e27d0	0x00630478	vtable-init
+ProjectileData	GameBaseData	indirectDamage	5	4	F32	144	0x90	1		0x006303f0	0x005e27d0	0x00630490	vtable-init
+ProjectileData	GameBaseData	damageRadius	5	4	F32	148	0x94	1		0x006303f0	0x005e27d0	0x006304a8	vtable-init
+ProjectileData	GameBaseData	radiusDamageType	1	4	S32	152	0x98	1		0x006303f0	0x005e27d0	0x006304c0	vtable-init
+ProjectileData	GameBaseData	kickBackStrength	5	4	F32	156	0x9c	1		0x006303f0	0x005e27d0	0x006304d8	vtable-init
+ProjectileData	GameBaseData	hasLight	3	1	bool(4)	160	0xa0	1		0x006303f0	0x005e27d0	0x006305c8	vtable-init
+ProjectileData	GameBaseData	lightRadius	5	4	F32	164	0xa4	1		0x006303f0	0x005e27d0	0x006305e0	vtable-init
+ProjectileData	GameBaseData	lightColor	12	16	ColorF(16B)	168	0xa8	1		0x006303f0	0x005e27d0	0x006305f8	vtable-init
+ProjectileData	GameBaseData	hasLightUnderwaterColor	3	1	bool(4)	184	0xb8	1		0x006303f0	0x005e27d0	0x00630610	vtable-init
+ProjectileData	GameBaseData	underWaterLightColor	12	16	ColorF(16B)	188	0xbc	1		0x006303f0	0x005e27d0	0x00630628	vtable-init
+ProjectileData	GameBaseData	explodeOnWaterImpact	3	1	bool(4)	204	0xcc	1		0x006303f0	0x005e27d0	0x00630640	vtable-init
+ProjectileData	GameBaseData	bubbleEmitTime	5	4	F32	208	0xd0	1		0x006303f0	0x005e27d0	0x00630685	vtable-init
+ProjectileData	GameBaseData	faceViewer	3	1	bool(4)	212	0xd4	1		0x006303f0	0x005e27d0	0x0063069d	vtable-init
+ProjectileData	GameBaseData	scale	16	12	Point3F(12B)	216	0xd8	1		0x006303f0	0x005e27d0	0x006306b5	vtable-init
+ProjectileData	GameBaseData	depthTolerance	5	4	F32	228	0xe4	1		0x006303f0	0x005e27d0	0x00630658	vtable-init
+ProjectileData	GameBaseData	baseEmitter	32	8	ParticleEmitterData*	232	0xe8	1		0x006303f0	0x005e27d0	0x006304f0	vtable-init
+ProjectileData	GameBaseData	delayEmitter	32	8	ParticleEmitterData*	236	0xec	1		0x006303f0	0x005e27d0	0x00630508	vtable-init
+ProjectileData	GameBaseData	bubbleEmitter	32	8	ParticleEmitterData*	240	0xf0	1		0x006303f0	0x005e27d0	0x00630520	vtable-init
+ProjectileData	GameBaseData	explosion	25	4	ExplosionData*	244	0xf4	1		0x006303f0	0x005e27d0	0x00630538	vtable-init
+ProjectileData	GameBaseData	underwaterExplosion	25	4	ExplosionData*	248	0xf8	1		0x006303f0	0x005e27d0	0x00630550	vtable-init
+ProjectileData	GameBaseData	splash	27	8	SplashData*	252	0xfc	1		0x006303f0	0x005e27d0	0x00630568	vtable-init
+ProjectileData	GameBaseData	sound	34	4	AudioProfile*	256	0x100	1		0x006303f0	0x005e27d0	0x00630580	vtable-init
+ProjectileData	GameBaseData	wetFireSound	34	4	AudioProfile*	260	0x104	1		0x006303f0	0x005e27d0	0x00630598	vtable-init
+ProjectileData	GameBaseData	fireSound	34	4	AudioProfile*	264	0x108	1		0x006303f0	0x005e27d0	0x006305b0	vtable-init
+RepairProjectile	Projectile	targetObject	1	4	S32	860	0x35c	1		0x00644e90	0x00631a50	0x00644ea8	vtable-init
+RepairProjectileData	ProjectileData	beamRange	5	4	F32	312	0x138	1		0x00644910	0x006303f0	0x00644928	vtable-init
+RepairProjectileData	ProjectileData	beamWidth	5	4	F32	316	0x13c	1		0x00644910	0x006303f0	0x00644940	vtable-init
+RepairProjectileData	ProjectileData	numSegments	1	4	S32	320	0x140	1		0x00644910	0x006303f0	0x006449a0	vtable-init
+RepairProjectileData	ProjectileData	texRepeat	5	4	F32	324	0x144	1		0x00644910	0x006303f0	0x00644970	vtable-init
+RepairProjectileData	ProjectileData	beamSpeed	5	4	F32	328	0x148	1		0x00644910	0x006303f0	0x00644958	vtable-init
+RepairProjectileData	ProjectileData	blurFreq	5	4	F32	332	0x14c	1		0x00644910	0x006303f0	0x006449b8	vtable-init
+RepairProjectileData	ProjectileData	blurLifetime	5	4	F32	336	0x150	1		0x00644910	0x006303f0	0x006449d0	vtable-init
+RepairProjectileData	ProjectileData	cutoffAngle	5	4	F32	340	0x154	1		0x00644910	0x006303f0	0x006449e8	vtable-init
+RepairProjectileData	ProjectileData	textures	7	4	string(char*)	344	0x158	2		0x00644910	0x006303f0	0x00644988	vtable-init
+RunningLightData	GameBaseData	type	1	4	S32	68	0x44	1		0x006a08f0	0x005e27d0	0x006a0984	vtable-init
+RunningLightData	GameBaseData	radius	5	4	F32	72	0x48	1		0x006a08f0	0x005e27d0	0x006a0930	vtable-init
+RunningLightData	GameBaseData	color	12	16	ColorF(16B)	76	0x4c	1		0x006a08f0	0x005e27d0	0x006a0945	vtable-init
+RunningLightData	GameBaseData	nodeName	7	4	string(char*)	92	0x5c	1		0x006a08f0	0x005e27d0	0x006a095a	vtable-init
+RunningLightData	GameBaseData	direction	16	12	Point3F(12B)	96	0x60	1		0x006a08f0	0x005e27d0	0x006a096f	vtable-init
+RunningLightData	GameBaseData	offset	16	12	Point3F(12B)	108	0x6c	1		0x006a08f0	0x005e27d0	0x006a0999	vtable-init
+RunningLightData	GameBaseData	length	5	4	F32	120	0x78	1		0x006a08f0	0x005e27d0	0x006a09ae	vtable-init
+RunningLightData	GameBaseData	texture	7	4	string(char*)	124	0x7c	1		0x006a08f0	0x005e27d0	0x006a091b	vtable-init
+SceneObject	NetObject	position	20		Point3F?	156	0x9c	1		0x0058c7f0		0x0058c808	vtable-init
+SceneObject	NetObject	rotation	21	64	AngAxisF/Rot	156	0x9c	1		0x0058c7f0		0x0058c820	vtable-init
+SceneObject	NetObject	scale	16	12	Point3F(12B)	284	0x11c	1		0x0058c7f0		0x0058c838	vtable-init
+ScriptObject	SimObject	class	7	4	string(char*)	48	0x30	1		0x00434b90		0x00434ba0	vtable-init
+ScriptObject	SimObject	superClass	7	4	string(char*)	52	0x34	1		0x00434b90		0x00434bb5	vtable-init
+SeekerProjectileData	ProjectileData	lifetimeMS	1	4	S32	312	0x138	1		0x006370d0	0x006303f0	0x006370e8	vtable-init
+SeekerProjectileData	ProjectileData	muzzleVelocity	5	4	F32	316	0x13c	1		0x006370d0	0x006303f0	0x00637100	vtable-init
+SeekerProjectileData	ProjectileData	turningSpeed	5	4	F32	320	0x140	1		0x006370d0	0x006303f0	0x00637118	vtable-init
+SeekerProjectileData	ProjectileData	maxVelocity	5	4	F32	324	0x144	1		0x006370d0	0x006303f0	0x006371d8	vtable-init
+SeekerProjectileData	ProjectileData	acceleration	5	4	F32	328	0x148	1		0x006370d0	0x006303f0	0x006371f0	vtable-init
+SeekerProjectileData	ProjectileData	terrainAvoidanceSpeed	5	4	F32	336	0x150	1		0x006370d0	0x006303f0	0x00637130	vtable-init
+SeekerProjectileData	ProjectileData	terrainScanAhead	5	4	F32	340	0x154	1		0x006370d0	0x006303f0	0x00637148	vtable-init
+SeekerProjectileData	ProjectileData	terrainHeightFail	5	4	F32	344	0x158	1		0x006370d0	0x006303f0	0x00637160	vtable-init
+SeekerProjectileData	ProjectileData	terrainAvoidanceRadius	5	4	F32	348	0x15c	1		0x006370d0	0x006303f0	0x00637178	vtable-init
+SeekerProjectileData	ProjectileData	flareDistance	5	4	F32	352	0x160	1		0x006370d0	0x006303f0	0x00637190	vtable-init
+SeekerProjectileData	ProjectileData	flareAngle	5	4	F32	356	0x164	1		0x006370d0	0x006303f0	0x006371a8	vtable-init
+SeekerProjectileData	ProjectileData	useFlechette	3	1	bool(4)	360	0x168	1		0x006370d0	0x006303f0	0x006371c0	vtable-init
+SeekerProjectileData	ProjectileData	flechetteDelayMs	1	4	S32	364	0x16c	1		0x006370d0	0x006303f0	0x00637208	vtable-init
+SeekerProjectileData	ProjectileData	puffEmitter	32	8	ParticleEmitterData*	368	0x170	1		0x006370d0	0x006303f0	0x00637268	vtable-init
+SeekerProjectileData	ProjectileData	exhaustEmitter	32	8	ParticleEmitterData*	376	0x178	1		0x006370d0	0x006303f0	0x00637280	vtable-init
+SeekerProjectileData	ProjectileData	exhaustTimeMs	1	4	S32	384	0x180	1		0x006370d0	0x006303f0	0x00637220	vtable-init
+SeekerProjectileData	ProjectileData	exhaustNodeName	7	4	string(char*)	388	0x184	1		0x006370d0	0x006303f0	0x00637238	vtable-init
+SeekerProjectileData	ProjectileData	casingDeb	39	8	DebrisData*	392	0x188	1		0x006370d0	0x006303f0	0x00637298	vtable-init
+SeekerProjectileData	ProjectileData	casingShapeName	7	4	string(char*)	400	0x190	1		0x006370d0	0x006303f0	0x00637250	vtable-init
+SensorData	SimDataBlock	detects	3	1	bool(4)	60	0x3c	1		0x0066a270		0x0066a285	vtable-init
+SensorData	SimDataBlock	detectsUsingLOS	3	1	bool(4)	61	0x3d	1		0x0066a270		0x0066a29a	vtable-init
+SensorData	SimDataBlock	detectsPassiveJammed	3	1	bool(4)	62	0x3e	1		0x0066a270		0x0066a2c4	vtable-init
+SensorData	SimDataBlock	detectsActiveJammed	3	1	bool(4)	63	0x3f	1		0x0066a270		0x0066a2af	vtable-init
+SensorData	SimDataBlock	detectsCloaked	3	1	bool(4)	64	0x40	1		0x0066a270		0x0066a2d9	vtable-init
+SensorData	SimDataBlock	detectionPings	3	1	bool(4)	65	0x41	1		0x0066a270		0x0066a2ee	vtable-init
+SensorData	SimDataBlock	detectsFOVOnly	3	1	bool(4)	66	0x42	1		0x0066a270		0x0066a303	vtable-init
+SensorData	SimDataBlock	detectMinVelocity	5	4	F32	68	0x44	1		0x0066a270		0x0066a396	vtable-init
+SensorData	SimDataBlock	detectRadius	5	4	F32	76	0x4c	1		0x0066a270		0x0066a381	vtable-init
+SensorData	SimDataBlock	detectFOV	5	4	F32	84	0x54	1		0x0066a270		0x0066a36c	vtable-init
+SensorData	SimDataBlock	jams	3	1	bool(4)	92	0x5c	1		0x0066a270		0x0066a318	vtable-init
+SensorData	SimDataBlock	jamsOnlyGroup	3	1	bool(4)	93	0x5d	1		0x0066a270		0x0066a32d	vtable-init
+SensorData	SimDataBlock	jamsUsingLOS	3	1	bool(4)	94	0x5e	1		0x0066a270		0x0066a342	vtable-init
+SensorData	SimDataBlock	jamRadius	5	4	F32	96	0x60	1		0x0066a270		0x0066a357	vtable-init
+SensorData	SimDataBlock	detectFOVPercent	5	4	F32	104	0x68	1		0x0066a270		0x0066a3ab	vtable-init
+SensorData	SimDataBlock	useObjectFOV	3	1	bool(4)	108	0x6c	1		0x0066a270		0x0066a3c0	vtable-init
+ShapeBaseData	GameBaseData	shapeFile	8	4	string-ptr	68	0x44	1		0x005e4c20	0x005e27d0	0x005e4c35	vtable-init
+ShapeBaseData	GameBaseData	debrisShapeName	7	4	string(char*)	72	0x48	1		0x005e4c20	0x005e27d0	0x005e4e30	vtable-init
+ShapeBaseData	GameBaseData	heatSignature	5	4	F32	80	0x50	1		0x005e4c20	0x005e27d0	0x005e4f4a	vtable-init
+ShapeBaseData	GameBaseData	debris	39	8	DebrisData*	84	0x54	1		0x005e4c20	0x005e27d0	0x005e4c74	vtable-init
+ShapeBaseData	GameBaseData	explosion	25	4	ExplosionData*	92	0x5c	1		0x005e4c20	0x005e27d0	0x005e4c4a	vtable-init
+ShapeBaseData	GameBaseData	underwaterExplosion	25	4	ExplosionData*	100	0x64	1		0x005e4c20	0x005e27d0	0x005e4c5f	vtable-init
+ShapeBaseData	GameBaseData	cmdIcon	40	8	?	108	0x6c	1		0x005e4c20	0x005e27d0	0x005e4ebd	vtable-init
+ShapeBaseData	GameBaseData	mass	5	4	F32	116	0x74	1		0x005e4c20	0x005e27d0	0x005e4c89	vtable-init
+ShapeBaseData	GameBaseData	drag	5	4	F32	120	0x78	1		0x005e4c20	0x005e27d0	0x005e4c9e	vtable-init
+ShapeBaseData	GameBaseData	density	5	4	F32	124	0x7c	1		0x005e4c20	0x005e27d0	0x005e4cb3	vtable-init
+ShapeBaseData	GameBaseData	maxEnergy	5	4	F32	128	0x80	1		0x005e4c20	0x005e27d0	0x005e4ccb	vtable-init
+ShapeBaseData	GameBaseData	maxDamage	5	4	F32	132	0x84	1		0x005e4c20	0x005e27d0	0x005e4ce3	vtable-init
+ShapeBaseData	GameBaseData	repairRate	5	4	F32	136	0x88	1		0x005e4c20	0x005e27d0	0x005e4d2b	vtable-init
+ShapeBaseData	GameBaseData	disabledLevel	5	4	F32	140	0x8c	1		0x005e4c20	0x005e27d0	0x005e4cfb	vtable-init
+ShapeBaseData	GameBaseData	destroyedLevel	5	4	F32	144	0x90	1		0x005e4c20	0x005e27d0	0x005e4d13	vtable-init
+ShapeBaseData	GameBaseData	shieldEffectLifetimeMS	1	4	S32	148	0x94	1		0x005e4c20	0x005e27d0	0x005e4f62	vtable-init
+ShapeBaseData	GameBaseData	shieldEffectScale	16	12	Point3F(12B)	152	0x98	1		0x005e4c20	0x005e27d0	0x005e4f7a	vtable-init
+ShapeBaseData	GameBaseData	cameraMaxDist	5	4	F32	164	0xa4	1		0x005e4c20	0x005e27d0	0x005e4d43	vtable-init
+ShapeBaseData	GameBaseData	cameraMinDist	5	4	F32	168	0xa8	1		0x005e4c20	0x005e27d0	0x005e4d5b	vtable-init
+ShapeBaseData	GameBaseData	cameraDefaultFov	5	4	F32	172	0xac	1		0x005e4c20	0x005e27d0	0x005e4d73	vtable-init
+ShapeBaseData	GameBaseData	cameraMinFov	5	4	F32	176	0xb0	1		0x005e4c20	0x005e27d0	0x005e4d8b	vtable-init
+ShapeBaseData	GameBaseData	cameraMaxFov	5	4	F32	180	0xb4	1		0x005e4c20	0x005e27d0	0x005e4da3	vtable-init
+ShapeBaseData	GameBaseData	computeCRC	3	1	bool(4)	192	0xc0	1		0x005e4c20	0x005e27d0	0x005e4f35	vtable-init
+ShapeBaseData	GameBaseData	sensorRadius	5	4	F32	348	0x15c	1		0x005e4c20	0x005e27d0	0x005e4e78	vtable-init
+ShapeBaseData	GameBaseData	sensorColor	11	4	ColorI(4B)	352	0x160	1		0x005e4c20	0x005e27d0	0x005e4e90	vtable-init
+ShapeBaseData	GameBaseData	cmdCategory	7	4	string(char*)	356	0x164	1		0x005e4c20	0x005e27d0	0x005e4ea8	vtable-init
+ShapeBaseData	GameBaseData	cmdMiniIconName	7	4	string(char*)	360	0x168	1		0x005e4c20	0x005e27d0	0x005e4ed5	vtable-init
+ShapeBaseData	GameBaseData	canControl	3	1	bool(4)	364	0x16c	1		0x005e4c20	0x005e27d0	0x005e4eed	vtable-init
+ShapeBaseData	GameBaseData	canObserve	3	1	bool(4)	365	0x16d	1		0x005e4c20	0x005e27d0	0x005e4f05	vtable-init
+ShapeBaseData	GameBaseData	observeThroughObject	3	1	bool(4)	366	0x16e	1		0x005e4c20	0x005e27d0	0x005e4f1d	vtable-init
+ShapeBaseData	GameBaseData	hudImageName	7	4	string(char*)	372	0x174	8		0x005e4c20	0x005e27d0	0x005e4f92	vtable-init
+ShapeBaseData	GameBaseData	hudImageNameFriendly	7	4	string(char*)	372	0x174	8		0x005e4c20	0x005e27d0	0x005e4faa	vtable-init
+ShapeBaseData	GameBaseData	hudImageNameEnemy	7	4	string(char*)	404	0x194	8		0x005e4c20	0x005e27d0	0x005e4fc2	vtable-init
+ShapeBaseData	GameBaseData	hudRenderCenter	3	1	bool(4)	500	0x1f4	8		0x005e4c20	0x005e27d0	0x005e4fda	vtable-init
+ShapeBaseData	GameBaseData	hudRenderModulated	3	1	bool(4)	508	0x1fc	8		0x005e4c20	0x005e27d0	0x005e4ff2	vtable-init
+ShapeBaseData	GameBaseData	hudRenderAlways	3	1	bool(4)	516	0x204	8		0x005e4c20	0x005e27d0	0x005e500a	vtable-init
+ShapeBaseData	GameBaseData	hudRenderDistance	3	1	bool(4)	524	0x20c	8		0x005e4c20	0x005e27d0	0x005e5022	vtable-init
+ShapeBaseData	GameBaseData	hudRenderName	3	1	bool(4)	532	0x214	8		0x005e4c20	0x005e27d0	0x005e503a	vtable-init
+ShapeBaseData	GameBaseData	emap	3	1	bool(4)	805	0x325	1		0x005e4c20	0x005e27d0	0x005e4dbb	vtable-init
+ShapeBaseData	GameBaseData	firstPersonOnly	3	1	bool(4)	806	0x326	1		0x005e4c20	0x005e27d0	0x005e4e48	vtable-init
+ShapeBaseData	GameBaseData	useEyePoint	3	1	bool(4)	807	0x327	1		0x005e4c20	0x005e27d0	0x005e4e60	vtable-init
+ShapeBaseData	GameBaseData	aiAvoidThis	3	1	bool(4)	808	0x328	1		0x005e4c20	0x005e27d0	0x005e4dd3	vtable-init
+ShapeBaseData	GameBaseData	isInvincible	3	1	bool(4)	809	0x329	1		0x005e4c20	0x005e27d0	0x005e4deb	vtable-init
+ShapeBaseData	GameBaseData	renderWhenDestroyed	3	1	bool(4)	810	0x32a	1		0x005e4c20	0x005e27d0	0x005e4e1b	vtable-init
+ShapeBaseData	GameBaseData	inheritEnergyFromMount	3	1	bool(4)	811	0x32b	1		0x005e4c20	0x005e27d0	0x005e4e03	vtable-init
+ShapeBaseImageData	GameBaseData	stateName	8	4	string-ptr	68	0x44	31		0x005f4d90	0x005e27d0	0x005f5018	vtable-init
+ShapeBaseImageData	GameBaseData	stateTransitionOnLoaded	7	4	string(char*)	192	0xc0	31		0x005f4d90	0x005e27d0	0x005f5030	vtable-init
+ShapeBaseImageData	GameBaseData	stateTransitionOnNotLoaded	7	4	string(char*)	316	0x13c	31		0x005f4d90	0x005e27d0	0x005f5048	vtable-init
+ShapeBaseImageData	GameBaseData	stateTransitionOnAmmo	7	4	string(char*)	440	0x1b8	31		0x005f4d90	0x005e27d0	0x005f5060	vtable-init
+ShapeBaseImageData	GameBaseData	stateTransitionOnNoAmmo	7	4	string(char*)	564	0x234	31		0x005f4d90	0x005e27d0	0x005f5078	vtable-init
+ShapeBaseImageData	GameBaseData	stateTransitionOnTarget	7	4	string(char*)	688	0x2b0	31		0x005f4d90	0x005e27d0	0x005f5090	vtable-init
+ShapeBaseImageData	GameBaseData	stateTransitionOnNoTarget	7	4	string(char*)	812	0x32c	31		0x005f4d90	0x005e27d0	0x005f50a8	vtable-init
+ShapeBaseImageData	GameBaseData	stateTransitionOnWet	7	4	string(char*)	936	0x3a8	31		0x005f4d90	0x005e27d0	0x005f50c0	vtable-init
+ShapeBaseImageData	GameBaseData	stateTransitionOnNotWet	7	4	string(char*)	1060	0x424	31		0x005f4d90	0x005e27d0	0x005f50d8	vtable-init
+ShapeBaseImageData	GameBaseData	stateTransitionOnTriggerUp	7	4	string(char*)	1184	0x4a0	31		0x005f4d90	0x005e27d0	0x005f50f0	vtable-init
+ShapeBaseImageData	GameBaseData	stateTransitionOnTriggerDown	7	4	string(char*)	1308	0x51c	31		0x005f4d90	0x005e27d0	0x005f5108	vtable-init
+ShapeBaseImageData	GameBaseData	stateTransitionOnTimeout	7	4	string(char*)	1432	0x598	31		0x005f4d90	0x005e27d0	0x005f5120	vtable-init
+ShapeBaseImageData	GameBaseData	stateTimeoutValue	5	4	F32	1556	0x614	31		0x005f4d90	0x005e27d0	0x005f5138	vtable-init
+ShapeBaseImageData	GameBaseData	stateWaitForTimeout	3	1	bool(4)	1680	0x690	31		0x005f4d90	0x005e27d0	0x005f5150	vtable-init
+ShapeBaseImageData	GameBaseData	stateFire	3	1	bool(4)	1711	0x6af	31		0x005f4d90	0x005e27d0	0x005f5168	vtable-init
+ShapeBaseImageData	GameBaseData	stateEjectShell	3	1	bool(4)	1742	0x6ce	31		0x005f4d90	0x005e27d0	0x005f5180	vtable-init
+ShapeBaseImageData	GameBaseData	stateShockwave	3	1	bool(4)	1773	0x6ed	31		0x005f4d90	0x005e27d0	0x005f5198	vtable-init
+ShapeBaseImageData	GameBaseData	stateEnergyDrain	5	4	F32	1804	0x70c	31		0x005f4d90	0x005e27d0	0x005f51b0	vtable-init
+ShapeBaseImageData	GameBaseData	stateAllowImageChange	3	1	bool(4)	1928	0x788	31		0x005f4d90	0x005e27d0	0x005f51c8	vtable-init
+ShapeBaseImageData	GameBaseData	stateDirection	3	1	bool(4)	1990	0x7c6	31		0x005f4d90	0x005e27d0	0x005f51e0	vtable-init
+ShapeBaseImageData	GameBaseData	stateLoadedFlag	9	4	enum(S32)+table	2024	0x7e8	31	0x840858	0x005f4d90	0x005e27d0	0x005f51fb	vtable-init
+ShapeBaseImageData	GameBaseData	stateSpinThread	9	4	enum(S32)+table	2148	0x864	31	0x840860	0x005f4d90	0x005e27d0	0x005f5216	vtable-init
+ShapeBaseImageData	GameBaseData	stateRecoil	9	4	enum(S32)+table	2272	0x8e0	31	0x840868	0x005f4d90	0x005e27d0	0x005f5231	vtable-init
+ShapeBaseImageData	GameBaseData	stateSequence	7	4	string(char*)	2396	0x95c	31		0x005f4d90	0x005e27d0	0x005f5249	vtable-init
+ShapeBaseImageData	GameBaseData	stateSequenceRandomFlash	3	1	bool(4)	2520	0x9d8	31		0x005f4d90	0x005e27d0	0x005f5261	vtable-init
+ShapeBaseImageData	GameBaseData	stateIgnoreLoadedForReady	3	1	bool(4)	2551	0x9f7	31		0x005f4d90	0x005e27d0	0x005f52f1	vtable-init
+ShapeBaseImageData	GameBaseData	stateSound	34	4	AudioProfile*	2584	0xa18	31		0x005f4d90	0x005e27d0	0x005f5279	vtable-init
+ShapeBaseImageData	GameBaseData	stateScript	8	4	string-ptr	2708	0xa94	31		0x005f4d90	0x005e27d0	0x005f5291	vtable-init
+ShapeBaseImageData	GameBaseData	stateEmitter	32	8	ParticleEmitterData*	2836	0xb14	31		0x005f4d90	0x005e27d0	0x005f52a9	vtable-init
+ShapeBaseImageData	GameBaseData	stateEmitterTime	5	4	F32	2960	0xb90	31		0x005f4d90	0x005e27d0	0x005f52c1	vtable-init
+ShapeBaseImageData	GameBaseData	stateEmitterNode	1	4	S32	3084	0xc0c	31		0x005f4d90	0x005e27d0	0x005f52d9	vtable-init
+ShapeBaseImageData	GameBaseData	emap	3	1	bool(4)	3208	0xc88	1		0x005f4d90	0x005e27d0	0x005f4da8	vtable-init
+ShapeBaseImageData	GameBaseData	shapeFile	8	4	string-ptr	3212	0xc8c	1		0x005f4d90	0x005e27d0	0x005f4dc0	vtable-init
+ShapeBaseImageData	GameBaseData	mountPoint	1	4	S32	3216	0xc90	1		0x005f4d90	0x005e27d0	0x005f4e98	vtable-init
+ShapeBaseImageData	GameBaseData	offset	20		Point3F?	3220	0xc94	1		0x005f4d90	0x005e27d0	0x005f4eb0	vtable-init
+ShapeBaseImageData	GameBaseData	rotation	21	64	AngAxisF/Rot	3220	0xc94	1		0x005f4d90	0x005e27d0	0x005f4ec8	vtable-init
+ShapeBaseImageData	GameBaseData	firstPerson	3	1	bool(4)	3284	0xcd4	1		0x005f4d90	0x005e27d0	0x005f4ee0	vtable-init
+ShapeBaseImageData	GameBaseData	projectile	36	8	ProjectileData*	3288	0xcd8	1		0x005f4d90	0x005e27d0	0x005f4dd8	vtable-init
+ShapeBaseImageData	GameBaseData	muzzleFlash	26	8	ShockwaveData*	3296	0xce0	1		0x005f4d90	0x005e27d0	0x005f5339	vtable-init
+ShapeBaseImageData	GameBaseData	isSeeker	3	1	bool(4)	3304	0xce8	1		0x005f4d90	0x005e27d0	0x005f4df0	vtable-init
+ShapeBaseImageData	GameBaseData	useTargetAudio	3	1	bool(4)	3305	0xce9	1		0x005f4d90	0x005e27d0	0x005f4e08	vtable-init
+ShapeBaseImageData	GameBaseData	seekRadius	5	4	F32	3308	0xcec	1		0x005f4d90	0x005e27d0	0x005f4e20	vtable-init
+ShapeBaseImageData	GameBaseData	maxSeekAngle	5	4	F32	3312	0xcf0	1		0x005f4d90	0x005e27d0	0x005f4e38	vtable-init
+ShapeBaseImageData	GameBaseData	seekTime	5	4	F32	3316	0xcf4	1		0x005f4d90	0x005e27d0	0x005f4e50	vtable-init
+ShapeBaseImageData	GameBaseData	minSeekHeat	5	4	F32	3320	0xcf8	1		0x005f4d90	0x005e27d0	0x005f4e68	vtable-init
+ShapeBaseImageData	GameBaseData	minTargetingDistance	5	4	F32	3324	0xcfc	1		0x005f4d90	0x005e27d0	0x005f5309	vtable-init
+ShapeBaseImageData	GameBaseData	mass	5	4	F32	3328	0xd00	1		0x005f4d90	0x005e27d0	0x005f4ef8	vtable-init
+ShapeBaseImageData	GameBaseData	usesEnergy	3	1	bool(4)	3332	0xd04	1		0x005f4d90	0x005e27d0	0x005f4f10	vtable-init
+ShapeBaseImageData	GameBaseData	minEnergy	5	4	F32	3336	0xd08	1		0x005f4d90	0x005e27d0	0x005f4f28	vtable-init
+ShapeBaseImageData	GameBaseData	accuFire	3	1	bool(4)	3340	0xd0c	1		0x005f4d90	0x005e27d0	0x005f4f40	vtable-init
+ShapeBaseImageData	GameBaseData	cloakable	3	1	bool(4)	3341	0xd0d	1		0x005f4d90	0x005e27d0	0x005f4e80	vtable-init
+ShapeBaseImageData	GameBaseData	lightType	9	4	enum(S32)+table	3344	0xd10	1	0x8408f0	0x005f4d90	0x005e27d0	0x005f4f5b	vtable-init
+ShapeBaseImageData	GameBaseData	lightColor	12	16	ColorF(16B)	3348	0xd14	1		0x005f4d90	0x005e27d0	0x005f4f73	vtable-init
+ShapeBaseImageData	GameBaseData	lightTime	1	4	S32	3364	0xd24	1		0x005f4d90	0x005e27d0	0x005f4f8b	vtable-init
+ShapeBaseImageData	GameBaseData	lightRadius	5	4	F32	3368	0xd28	1		0x005f4d90	0x005e27d0	0x005f4fa3	vtable-init
+ShapeBaseImageData	GameBaseData	computeCRC	3	1	bool(4)	3448	0xd78	1		0x005f4d90	0x005e27d0	0x005f5321	vtable-init
+ShapeBaseImageData	GameBaseData	casing	39	8	DebrisData*	3544	0xdd8	1		0x005f4d90	0x005e27d0	0x005f4fbb	vtable-init
+ShapeBaseImageData	GameBaseData	shellExitDir	16	12	Point3F(12B)	3552	0xde0	1		0x005f4d90	0x005e27d0	0x005f4fd3	vtable-init
+ShapeBaseImageData	GameBaseData	shellExitVariance	5	4	F32	3564	0xdec	1		0x005f4d90	0x005e27d0	0x005f4feb	vtable-init
+ShapeBaseImageData	GameBaseData	shellVelocity	5	4	F32	3568	0xdf0	1		0x005f4d90	0x005e27d0	0x005f5003	vtable-init
+ShellBitmapButton	GuiButtonCtrl	simpleStyle	3	1	bool(4)	308	0x134	1		0x004e0d10	0x004adcc0	0x004e0d28	vtable-init
+ShellFancyArray	GuiControl	headerBitmap	7	4	string(char*)	292	0x124	1		0x004eb9e0	0x004b6960	0x004eba10	vtable-init
+ShellFancyArray	GuiControl	sortArrowBitmap	7	4	string(char*)	300	0x12c	1		0x004eb9e0	0x004b6960	0x004eba28	vtable-init
+ShellFancyArray	GuiControl	barBase	7	4	string(char*)	308	0x134	1		0x004eb9e0	0x004b6960	0x004eba58	vtable-init
+ShellFancyArray	GuiControl	fieldBase	7	4	string(char*)	320	0x140	1		0x004eb9e0	0x004b6960	0x004eba40	vtable-init
+ShellFancyArray	GuiControl	rowHeight	1	4	S32	380	0x17c	1		0x004eb9e0	0x004b6960	0x004eba88	vtable-init
+ShellFancyArray	GuiControl	glowOffset	1	4	S32	388	0x184	1		0x004eb9e0	0x004b6960	0x004eba70	vtable-init
+ShellFancyArray	GuiControl	startScrollRegion	14	8	Point2I(8B)	396	0x18c	1		0x004eb9e0	0x004b6960	0x004eb9f8	vtable-init
+ShellFancyArray	GuiControl	headerFontType	7	4	string(char*)	412	0x19c	1		0x004eb9e0	0x004b6960	0x004ebaa0	vtable-init
+ShellFancyArray	GuiControl	headerFontSize	1	4	S32	416	0x1a0	1		0x004eb9e0	0x004b6960	0x004ebab8	vtable-init
+ShellFancyArray	GuiControl	headerFontColor	11	4	ColorI(4B)	432	0x1b0	1		0x004eb9e0	0x004b6960	0x004ebad0	vtable-init
+ShellFancyArray	GuiControl	headerFontColorHL	11	4	ColorI(4B)	436	0x1b4	1		0x004eb9e0	0x004b6960	0x004ebae8	vtable-init
+ShellFancyArray	GuiControl	separatorColor	11	4	ColorI(4B)	440	0x1b8	1		0x004eb9e0	0x004b6960	0x004ebb00	vtable-init
+ShellFancyArray	GuiControl	drawSeparators	3	1	bool(4)	444	0x1bc	1		0x004eb9e0	0x004b6960	0x004ebb18	vtable-init
+ShellFancyArray	GuiControl	headerSort	3	1	bool(4)	445	0x1bd	1		0x004eb9e0	0x004b6960	0x004ebb30	vtable-init
+ShellFancyArray	GuiControl	allowReposition	3	1	bool(4)	446	0x1be	1		0x004eb9e0	0x004b6960	0x004ebb48	vtable-init
+ShellFancyArray	GuiControl	noSelect	3	1	bool(4)	447	0x1bf	1		0x004eb9e0	0x004b6960	0x004ebb60	vtable-init
+ShellFancyArrayScrollCtrl	GuiControl	fixedHorizontal	3	1	bool(4)	184	0xb8	1		0x004efef0	0x004b6960	0x004eff08	vtable-init
+ShellFancyArrayScrollCtrl	GuiControl	vertSpacerBitmap	7	4	string(char*)	188	0xbc	1		0x004efef0	0x004b6960	0x004eff20	vtable-init
+ShellFancyArrayScrollCtrl	GuiControl	horzSpacerBitmap	7	4	string(char*)	192	0xc0	1		0x004efef0	0x004b6960	0x004eff38	vtable-init
+ShellFancyTextList	ShellFancyArray	allowColorChars	3	1	bool(4)	556	0x22c	1		0x004f20b0	0x004eb9e0	0x004f20c8	vtable-init
+ShellLaunchMenu	GuiTextCtrl	buttonFontType	7	4	string(char*)	232	0xe8	1		0x004e35b0	0x004c1360	0x004e35c8	vtable-init
+ShellLaunchMenu	GuiTextCtrl	buttonFontSize	1	4	S32	236	0xec	1		0x004e35b0	0x004c1360	0x004e35e0	vtable-init
+ShellLaunchMenu	GuiTextCtrl	buttonFontColor	11	4	ColorI(4B)	240	0xf0	1		0x004e35b0	0x004c1360	0x004e35f8	vtable-init
+ShellLaunchMenu	GuiTextCtrl	buttonFontColorHL	11	4	ColorI(4B)	244	0xf4	1		0x004e35b0	0x004c1360	0x004e3610	vtable-init
+ShellLaunchMenu	GuiTextCtrl	rolloverBarBitmap	7	4	string(char*)	252	0xfc	1		0x004e35b0	0x004c1360	0x004e3628	vtable-init
+ShellLaunchMenu	GuiTextCtrl	selectedBarBitmap	7	4	string(char*)	256	0x100	1		0x004e35b0	0x004c1360	0x004e3640	vtable-init
+ShellLaunchMenu	GuiTextCtrl	separatorBitmap	7	4	string(char*)	260	0x104	1		0x004e35b0	0x004c1360	0x004e3658	vtable-init
+ShellLaunchMenu	GuiTextCtrl	vWipeFillBmp	7	4	string(char*)	264	0x108	1		0x004e35b0	0x004c1360	0x004e3670	vtable-init
+ShellLaunchMenu	GuiTextCtrl	vWipeBarBmp	7	4	string(char*)	268	0x10c	1		0x004e35b0	0x004c1360	0x004e3688	vtable-init
+ShellPaneCtrl	GuiTextCtrl	noTitleBar	3	1	bool(4)	224	0xe0	1		0x004e91a0	0x004c1360	0x004e91b8	vtable-init
+ShellPopupMenu	GuiPopUpMenuCtrl	buttonBitmap	7	4	string(char*)	260	0x104	1		0x004e7d70	0x004c8ae0	0x004e7d88	vtable-init
+ShellPopupMenu	GuiPopUpMenuCtrl	rolloverBarBitmap	7	4	string(char*)	412	0x19c	1		0x004e7d70	0x004c8ae0	0x004e7da0	vtable-init
+ShellPopupMenu	GuiPopUpMenuCtrl	selectedBarBitmap	7	4	string(char*)	416	0x1a0	1		0x004e7d70	0x004c8ae0	0x004e7db8	vtable-init
+ShellPopupMenu	GuiPopUpMenuCtrl	noButtonStyle	3	1	bool(4)	428	0x1ac	1		0x004e7d70	0x004c8ae0	0x004e7dd0	vtable-init
+ShellProgressBar	GuiProgressCtrl	glowOffset	14	8	Point2I(8B)	236	0xec	1		0x004ea760	0x004b6960	0x004ea778	vtable-init
+ShellProgressBar	GuiProgressCtrl	text	8	4	string-ptr	244	0xf4	1		0x004ea760	0x004b6960	0x004ea790	vtable-init
+ShellScrollCtrl	GuiScrollCtrl	fieldBase	7	4	string(char*)	600	0x258	1		0x004e5d70	0x004be6e0	0x004e5d88	vtable-init
+ShellSliderCtrl	GuiSliderCtrl	usePlusMinus	3	1	bool(4)	504	0x1f8	1		0x004f3550	0x004c0800	0x004f3568	vtable-init
+ShellTabFrame	GuiControl	isVertical	3	1	bool(4)	185	0xb9	1		0x004f5c10	0x004b6960	0x004f5c28	vtable-init
+ShellTabFrame	GuiControl	useCloseButton	3	1	bool(4)	186	0xba	1		0x004f5c10	0x004b6960	0x004f5c40	vtable-init
+ShellTabFrame	GuiControl	edgeInset	1	4	S32	188	0xbc	1		0x004f5c10	0x004b6960	0x004f5c58	vtable-init
+ShellTabGroupCtrl	GuiControl	glowOffset	1	4	S32	172	0xac	1		0x004f85e0	0x004b6960	0x004f85f8	vtable-init
+ShellTabGroupCtrl	GuiControl	tabSpacing	1	4	S32	188	0xbc	1		0x004f85e0	0x004b6960	0x004f8610	vtable-init
+ShellTabGroupCtrl	GuiControl	maxTabWidth	1	4	S32	196	0xc4	1		0x004f85e0	0x004b6960	0x004f8628	vtable-init
+ShellTabGroupCtrl	GuiControl	stretchToFit	3	1	bool(4)	204	0xcc	1		0x004f85e0	0x004b6960	0x004f8640	vtable-init
+ShellTextEditCtrl	GuiTextEditCtrl	glowOffset	14	8	Point2I(8B)	372	0x174	1		0x004e5190	0x004c1c50	0x004e51a8	vtable-init
+ShellTextList	ShellFancyTextList	expression	8	4	string-ptr	148	0x94	1		0x004e01a0	0x004b6960	0x004e01b8	inferred-by-elimination
+ShellWindowCtrl	GuiTextCtrl	frameBase	7	4	string(char*)	252	0xfc	1		0x004f6cc0	0x004c1360	0x004f6cd8	vtable-init
+ShellWindowCtrl	GuiTextCtrl	resizeWidth	3	1	bool(4)	292	0x124	1		0x004f6cc0	0x004c1360	0x004f6d08	vtable-init
+ShellWindowCtrl	GuiTextCtrl	resizeHeight	3	1	bool(4)	293	0x125	1		0x004f6cc0	0x004c1360	0x004f6d20	vtable-init
+ShellWindowCtrl	GuiTextCtrl	canMove	3	1	bool(4)	294	0x126	1		0x004f6cc0	0x004c1360	0x004f6d38	vtable-init
+ShellWindowCtrl	GuiTextCtrl	canClose	3	1	bool(4)	295	0x127	1		0x004f6cc0	0x004c1360	0x004f6d50	vtable-init
+ShellWindowCtrl	GuiTextCtrl	closeCommand	7	4	string(char*)	296	0x128	1		0x004f6cc0	0x004c1360	0x004f6d68	vtable-init
+ShellWindowCtrl	GuiTextCtrl	borderWidth	1	4	S32	300	0x12c	1		0x004f6cc0	0x004c1360	0x004f6cf0	vtable-init
+ShockLanceProjectile	Projectile	targetId	1	4	S32	2080	0x820	1		0x0064ebe0	0x00631a50	0x0064ebf8	vtable-init
+ShockLanceProjectileData	ProjectileData	zapDuration	5	4	F32	312	0x138	1		0x0064e2b0	0x006303f0	0x0064e2c8	vtable-init
+ShockLanceProjectileData	ProjectileData	boltLength	5	4	F32	316	0x13c	1		0x0064e2b0	0x006303f0	0x0064e2e0	vtable-init
+ShockLanceProjectileData	ProjectileData	startWidth	5	4	F32	320	0x140	2		0x0064e2b0	0x006303f0	0x0064e310	vtable-init
+ShockLanceProjectileData	ProjectileData	endWidth	5	4	F32	328	0x148	2		0x0064e2b0	0x006303f0	0x0064e328	vtable-init
+ShockLanceProjectileData	ProjectileData	boltSpeed	5	4	F32	336	0x150	2		0x0064e2b0	0x006303f0	0x0064e340	vtable-init
+ShockLanceProjectileData	ProjectileData	texWrap	5	4	F32	344	0x158	2		0x0064e2b0	0x006303f0	0x0064e358	vtable-init
+ShockLanceProjectileData	ProjectileData	numParts	1	4	S32	352	0x160	1		0x0064e2b0	0x006303f0	0x0064e370	vtable-init
+ShockLanceProjectileData	ProjectileData	lightningFreq	5	4	F32	356	0x164	1		0x0064e2b0	0x006303f0	0x0064e388	vtable-init
+ShockLanceProjectileData	ProjectileData	lightningDensity	5	4	F32	360	0x168	1		0x0064e2b0	0x006303f0	0x0064e3a0	vtable-init
+ShockLanceProjectileData	ProjectileData	lightningAmp	5	4	F32	364	0x16c	1		0x0064e2b0	0x006303f0	0x0064e3b8	vtable-init
+ShockLanceProjectileData	ProjectileData	lightningWidth	5	4	F32	368	0x170	1		0x0064e2b0	0x006303f0	0x0064e3d0	vtable-init
+ShockLanceProjectileData	ProjectileData	texture	7	4	string(char*)	372	0x174	4		0x0064e2b0	0x006303f0	0x0064e2f8	vtable-init
+ShockLanceProjectileData	ProjectileData	emitter	32	8	ParticleEmitterData*	388	0x184	1		0x0064e2b0	0x006303f0	0x0064e3e8	vtable-init
+ShockLanceProjectileData	ProjectileData	shockwave	26	8	ShockwaveData*	396	0x18c	1		0x0064e2b0	0x006303f0	0x0064e400	vtable-init
+Shockwave	GameBase	pos	16	12	Point3F(12B)	700	0x2bc	1		0x0068ced0	0x005e3670	0x0068cee8	vtable-init
+Shockwave	GameBase	normal	16	12	Point3F(12B)	712	0x2c8	1		0x0068ced0	0x005e3670	0x0068cf00	vtable-init
+ShockwaveData	GameBaseData	emitter	32	8	ParticleEmitterData*	68	0x44	3		0x0068c4b0	0x005e27d0	0x0068c4f0	vtable-init
+ShockwaveData	GameBaseData	delayMS	1	4	S32	92	0x5c	1		0x0068c4b0	0x005e27d0	0x0068c505	vtable-init
+ShockwaveData	GameBaseData	delayVariance	1	4	S32	96	0x60	1		0x0068c4b0	0x005e27d0	0x0068c51a	vtable-init
+ShockwaveData	GameBaseData	lifetimeMS	1	4	S32	100	0x64	1		0x0068c4b0	0x005e27d0	0x0068c52f	vtable-init
+ShockwaveData	GameBaseData	lifetimeVariance	1	4	S32	104	0x68	1		0x0068c4b0	0x005e27d0	0x0068c544	vtable-init
+ShockwaveData	GameBaseData	scale	16	12	Point3F(12B)	108	0x6c	1		0x0068c4b0	0x005e27d0	0x0068c4db	vtable-init
+ShockwaveData	GameBaseData	width	5	4	F32	120	0x78	1		0x0068c4b0	0x005e27d0	0x0068c559	vtable-init
+ShockwaveData	GameBaseData	height	5	4	F32	124	0x7c	1		0x0068c4b0	0x005e27d0	0x0068c5b6	vtable-init
+ShockwaveData	GameBaseData	numSegments	1	4	S32	128	0x80	1		0x0068c4b0	0x005e27d0	0x0068c571	vtable-init
+ShockwaveData	GameBaseData	velocity	5	4	F32	132	0x84	1		0x0068c4b0	0x005e27d0	0x0068c5a1	vtable-init
+ShockwaveData	GameBaseData	numVertSegments	1	4	S32	136	0x88	1		0x0068c4b0	0x005e27d0	0x0068c589	vtable-init
+ShockwaveData	GameBaseData	verticalCurve	5	4	F32	140	0x8c	1		0x0068c4b0	0x005e27d0	0x0068c5ce	vtable-init
+ShockwaveData	GameBaseData	acceleration	5	4	F32	144	0x90	1		0x0068c4b0	0x005e27d0	0x0068c5e6	vtable-init
+ShockwaveData	GameBaseData	texWrap	5	4	F32	148	0x94	1		0x0068c4b0	0x005e27d0	0x0068c646	vtable-init
+ShockwaveData	GameBaseData	is2D	3	1	bool(4)	152	0x98	1		0x0068c4b0	0x005e27d0	0x0068c65e	vtable-init
+ShockwaveData	GameBaseData	mapToTerrain	3	1	bool(4)	153	0x99	1		0x0068c4b0	0x005e27d0	0x0068c676	vtable-init
+ShockwaveData	GameBaseData	orientToNormal	3	1	bool(4)	154	0x9a	1		0x0068c4b0	0x005e27d0	0x0068c68e	vtable-init
+ShockwaveData	GameBaseData	renderBottom	3	1	bool(4)	155	0x9b	1		0x0068c4b0	0x005e27d0	0x0068c6a6	vtable-init
+ShockwaveData	GameBaseData	renderSquare	3	1	bool(4)	156	0x9c	1		0x0068c4b0	0x005e27d0	0x0068c6be	vtable-init
+ShockwaveData	GameBaseData	times	5	4	F32	160	0xa0	4		0x0068c4b0	0x005e27d0	0x0068c5fe	vtable-init
+ShockwaveData	GameBaseData	colors	12	16	ColorF(16B)	176	0xb0	4		0x0068c4b0	0x005e27d0	0x0068c616	vtable-init
+ShockwaveData	GameBaseData	texture	7	4	string(char*)	240	0xf0	2		0x0068c4b0	0x005e27d0	0x0068c62e	vtable-init
+Sky	SceneObject	cloudText	7	4	string(char*)	696	0x2b8	3		0x005ab310	0x0058c7f0	0x005ab328	vtable-init
+Sky	SceneObject	cloudHeightPer	5	4	F32	708	0x2c4	3		0x005ab310	0x0058c7f0	0x005ab340	vtable-init
+Sky	SceneObject	cloudSpeed1	5	4	F32	720	0x2d0	1		0x005ab310	0x0058c7f0	0x005ab358	vtable-init
+Sky	SceneObject	cloudSpeed2	5	4	F32	724	0x2d4	1		0x005ab310	0x0058c7f0	0x005ab370	vtable-init
+Sky	SceneObject	cloudSpeed3	5	4	F32	728	0x2d8	1		0x005ab310	0x0058c7f0	0x005ab388	vtable-init
+Sky	SceneObject	materialList	7	4	string(char*)	3504	0xdb0	1		0x005ab310	0x0058c7f0	0x005ab478	vtable-init
+Sky	SceneObject	fogColor	12	16	ColorF(16B)	3588	0xe04	1		0x005ab310	0x0058c7f0	0x005ab418	vtable-init
+Sky	SceneObject	useSkyTextures	3	1	bool(4)	3604	0xe14	1		0x005ab310	0x0058c7f0	0x005ab3b8	vtable-init
+Sky	SceneObject	renderBottomTexture	3	1	bool(4)	3605	0xe15	1		0x005ab310	0x0058c7f0	0x005ab3d0	vtable-init
+Sky	SceneObject	SkySolidColor	12	16	ColorF(16B)	3608	0xe18	1		0x005ab310	0x0058c7f0	0x005ab3e8	vtable-init
+Sky	SceneObject	fogDistance	5	4	F32	3624	0xe28	1		0x005ab310	0x0058c7f0	0x005ab400	vtable-init
+Sky	SceneObject	visibleDistance	5	4	F32	3628	0xe2c	1		0x005ab310	0x0058c7f0	0x005ab3a0	vtable-init
+Sky	SceneObject	fogVolume1	16	12	Point3F(12B)	3636	0xe34	1		0x005ab310	0x0058c7f0	0x005ab430	vtable-init
+Sky	SceneObject	fogVolumeColor1	12	16	ColorF(16B)	3652	0xe44	1		0x005ab310	0x0058c7f0	0x005ab4c0	vtable-init
+Sky	SceneObject	fogVolume2	16	12	Point3F(12B)	3668	0xe54	1		0x005ab310	0x0058c7f0	0x005ab448	vtable-init
+Sky	SceneObject	fogVolumeColor2	12	16	ColorF(16B)	3684	0xe64	1		0x005ab310	0x0058c7f0	0x005ab4d8	vtable-init
+Sky	SceneObject	fogVolume3	16	12	Point3F(12B)	3700	0xe74	1		0x005ab310	0x0058c7f0	0x005ab460	vtable-init
+Sky	SceneObject	fogVolumeColor3	12	16	ColorF(16B)	3716	0xe84	1		0x005ab310	0x0058c7f0	0x005ab4f0	vtable-init
+Sky	SceneObject	high_fogDistance	5	4	F32	3764	0xeb4	1		0x005ab310	0x0058c7f0	0x005ab520	vtable-init
+Sky	SceneObject	high_visibleDistance	5	4	F32	3768	0xeb8	1		0x005ab310	0x0058c7f0	0x005ab508	vtable-init
+Sky	SceneObject	high_fogVolume1	16	12	Point3F(12B)	3776	0xec0	1		0x005ab310	0x0058c7f0	0x005ab538	vtable-init
+Sky	SceneObject	high_fogVolume2	16	12	Point3F(12B)	3788	0xecc	1		0x005ab310	0x0058c7f0	0x005ab550	vtable-init
+Sky	SceneObject	high_fogVolume3	16	12	Point3F(12B)	3800	0xed8	1		0x005ab310	0x0058c7f0	0x005ab568	vtable-init
+Sky	SceneObject	windVelocity	16	12	Point3F(12B)	3824	0xef0	1		0x005ab310	0x0058c7f0	0x005ab490	vtable-init
+Sky	SceneObject	windEffectPrecipitation	3	1	bool(4)	3843	0xf03	1		0x005ab310	0x0058c7f0	0x005ab4a8	vtable-init
+SniperProjectileData	ProjectileData	maxRifleRange	5	4	F32	312	0x138	1		0x00641480	0x006303f0	0x00641498	vtable-init
+SniperProjectileData	ProjectileData	rifleHeadMultiplier	5	4	F32	316	0x13c	1		0x00641480	0x006303f0	0x006414b0	vtable-init
+SniperProjectileData	ProjectileData	beamColor	12	16	ColorF(16B)	320	0x140	1		0x00641480	0x006303f0	0x006414c8	vtable-init
+SniperProjectileData	ProjectileData	fadeTime	5	4	F32	336	0x150	1		0x00641480	0x006303f0	0x006414e0	vtable-init
+SniperProjectileData	ProjectileData	startBeamWidth	5	4	F32	340	0x154	1		0x00641480	0x006303f0	0x00641510	vtable-init
+SniperProjectileData	ProjectileData	endBeamWidth	5	4	F32	344	0x158	1		0x00641480	0x006303f0	0x00641528	vtable-init
+SniperProjectileData	ProjectileData	beamFlareAngle	5	4	F32	348	0x15c	1		0x00641480	0x006303f0	0x00641558	vtable-init
+SniperProjectileData	ProjectileData	minFlareSize	5	4	F32	352	0x160	1		0x00641480	0x006303f0	0x00641570	vtable-init
+SniperProjectileData	ProjectileData	maxFlareSize	5	4	F32	356	0x164	1		0x00641480	0x006303f0	0x00641588	vtable-init
+SniperProjectileData	ProjectileData	pulseBeamWidth	5	4	F32	360	0x168	1		0x00641480	0x006303f0	0x00641540	vtable-init
+SniperProjectileData	ProjectileData	pulseSpeed	5	4	F32	364	0x16c	1		0x00641480	0x006303f0	0x006415a0	vtable-init
+SniperProjectileData	ProjectileData	pulseLength	5	4	F32	368	0x170	1		0x00641480	0x006303f0	0x006415b8	vtable-init
+SniperProjectileData	ProjectileData	lightRadius	5	4	F32	372	0x174	1		0x00641480	0x006303f0	0x006415e8	vtable-init
+SniperProjectileData	ProjectileData	lightColor	12	16	ColorF(16B)	376	0x178	1		0x00641480	0x006303f0	0x006415d0	vtable-init
+SniperProjectileData	ProjectileData	textureName	7	4	string(char*)	392	0x188	12		0x00641480	0x006303f0	0x006414f8	vtable-init
+SpawnSphere	MissionMarker	radius	5	4	F32	2184	0x888	1		0x0066b000		0x0066b018	vtable-init
+SpawnSphere	MissionMarker	sphereWeight	5	4	F32	2188	0x88c	1		0x0066b000		0x0066b030	vtable-init
+SpawnSphere	MissionMarker	indoorWeight	5	4	F32	2192	0x890	1		0x0066b000		0x0066b048	vtable-init
+SpawnSphere	MissionMarker	outdoorWeight	5	4	F32	2196	0x894	1		0x0066b000		0x0066b060	vtable-init
+SplashData	GameBaseData	emitter	32	8	ParticleEmitterData*	68	0x44	3		0x00691690	0x005e27d0	0x006916d0	vtable-init
+SplashData	GameBaseData	delayMS	1	4	S32	92	0x5c	1		0x00691690	0x005e27d0	0x006916e5	vtable-init
+SplashData	GameBaseData	delayVariance	1	4	S32	96	0x60	1		0x00691690	0x005e27d0	0x006916fa	vtable-init
+SplashData	GameBaseData	lifetimeMS	1	4	S32	100	0x64	1		0x00691690	0x005e27d0	0x0069170f	vtable-init
+SplashData	GameBaseData	lifetimeVariance	1	4	S32	104	0x68	1		0x00691690	0x005e27d0	0x00691724	vtable-init
+SplashData	GameBaseData	scale	16	12	Point3F(12B)	108	0x6c	1		0x00691690	0x005e27d0	0x006916bb	vtable-init
+SplashData	GameBaseData	width	5	4	F32	120	0x78	1		0x00691690	0x005e27d0	0x00691739	vtable-init
+SplashData	GameBaseData	height	5	4	F32	124	0x7c	1		0x00691690	0x005e27d0	0x0069177e	vtable-init
+SplashData	GameBaseData	numSegments	1	4	S32	128	0x80	1		0x00691690	0x005e27d0	0x00691751	vtable-init
+SplashData	GameBaseData	velocity	5	4	F32	132	0x84	1		0x00691690	0x005e27d0	0x00691769	vtable-init
+SplashData	GameBaseData	acceleration	5	4	F32	136	0x88	1		0x00691690	0x005e27d0	0x00691796	vtable-init
+SplashData	GameBaseData	texWrap	5	4	F32	140	0x8c	1		0x00691690	0x005e27d0	0x006917f6	vtable-init
+SplashData	GameBaseData	texFactor	5	4	F32	144	0x90	1		0x00691690	0x005e27d0	0x0069180e	vtable-init
+SplashData	GameBaseData	ejectionFreq	5	4	F32	148	0x94	1		0x00691690	0x005e27d0	0x00691826	vtable-init
+SplashData	GameBaseData	ejectionAngle	5	4	F32	152	0x98	1		0x00691690	0x005e27d0	0x0069183e	vtable-init
+SplashData	GameBaseData	ringLifetime	5	4	F32	156	0x9c	1		0x00691690	0x005e27d0	0x00691856	vtable-init
+SplashData	GameBaseData	startRadius	5	4	F32	160	0xa0	1		0x00691690	0x005e27d0	0x0069186e	vtable-init
+SplashData	GameBaseData	times	5	4	F32	164	0xa4	4		0x00691690	0x005e27d0	0x006917ae	vtable-init
+SplashData	GameBaseData	colors	12	16	ColorF(16B)	180	0xb4	4		0x00691690	0x005e27d0	0x006917c6	vtable-init
+SplashData	GameBaseData	texture	7	4	string(char*)	244	0xf4	2		0x00691690	0x005e27d0	0x006917de	vtable-init
+SplashData	GameBaseData	explosion	25	4	ExplosionData*	260	0x104	1		0x00691690	0x005e27d0	0x00691886	vtable-init
+StaticShapeData	ShapeBaseData	noIndividualDamage	3	1	bool(4)	812	0x32c	1		0x00602940	0x005e4c20	0x00602958	vtable-init
+StaticShapeData	ShapeBaseData	dynamicType	1	4	S32	816	0x330	1		0x00602940	0x005e4c20	0x00602970	vtable-init
+StationFXPersonal	GameBase	stationObject	1	4	S32	652	0x28c	1		0x0069c170	0x005e3670	0x0069c188	vtable-init
+StationFXPersonalData	GameBaseData	delay	5	4	F32	68	0x44	1		0x0069bd10	0x005e27d0	0x0069bd25	vtable-init
+StationFXPersonalData	GameBaseData	fadeDelay	5	4	F32	72	0x48	1		0x0069bd10	0x005e27d0	0x0069bd3a	vtable-init
+StationFXPersonalData	GameBaseData	lifetime	5	4	F32	76	0x4c	1		0x0069bd10	0x005e27d0	0x0069bd4f	vtable-init
+StationFXPersonalData	GameBaseData	height	5	4	F32	80	0x50	1		0x0069bd10	0x005e27d0	0x0069bd64	vtable-init
+StationFXPersonalData	GameBaseData	leftRadius	5	4	F32	84	0x54	1		0x0069bd10	0x005e27d0	0x0069bdb8	vtable-init
+StationFXPersonalData	GameBaseData	rightRadius	5	4	F32	88	0x58	1		0x0069bd10	0x005e27d0	0x0069bdcd	vtable-init
+StationFXPersonalData	GameBaseData	numArcSegments	1	4	S32	92	0x5c	1		0x0069bd10	0x005e27d0	0x0069bd79	vtable-init
+StationFXPersonalData	GameBaseData	numDegrees	5	4	F32	96	0x60	1		0x0069bd10	0x005e27d0	0x0069bd8e	vtable-init
+StationFXPersonalData	GameBaseData	trailFadeTime	5	4	F32	100	0x64	1		0x0069bd10	0x005e27d0	0x0069bda3	vtable-init
+StationFXPersonalData	GameBaseData	leftNodeName	7	4	string(char*)	104	0x68	1		0x0069bd10	0x005e27d0	0x0069bde2	vtable-init
+StationFXPersonalData	GameBaseData	rightNodeName	7	4	string(char*)	108	0x6c	1		0x0069bd10	0x005e27d0	0x0069bdf7	vtable-init
+StationFXPersonalData	GameBaseData	texture	7	4	string(char*)	112	0x70	2		0x0069bd10	0x005e27d0	0x0069be0c	vtable-init
+StationFXVehicle	GameBase	stationObject	1	4	S32	652	0x28c	1		0x0069d790	0x005e3670	0x0069d7a8	vtable-init
+StationFXVehicleData	GameBaseData	glowTopHeight	5	4	F32	68	0x44	1		0x0069d0e0	0x005e27d0	0x0069d0f5	vtable-init
+StationFXVehicleData	GameBaseData	glowBottomHeight	5	4	F32	72	0x48	1		0x0069d0e0	0x005e27d0	0x0069d10a	vtable-init
+StationFXVehicleData	GameBaseData	glowTopRadius	5	4	F32	76	0x4c	1		0x0069d0e0	0x005e27d0	0x0069d11f	vtable-init
+StationFXVehicleData	GameBaseData	glowBottomRadius	5	4	F32	80	0x50	1		0x0069d0e0	0x005e27d0	0x0069d134	vtable-init
+StationFXVehicleData	GameBaseData	numGlowSegments	1	4	S32	84	0x54	1		0x0069d0e0	0x005e27d0	0x0069d149	vtable-init
+StationFXVehicleData	GameBaseData	glowFadeTime	5	4	F32	88	0x58	1		0x0069d0e0	0x005e27d0	0x0069d15e	vtable-init
+StationFXVehicleData	GameBaseData	armLightDelay	5	4	F32	92	0x5c	1		0x0069d0e0	0x005e27d0	0x0069d173	vtable-init
+StationFXVehicleData	GameBaseData	armLightLifetime	5	4	F32	96	0x60	1		0x0069d0e0	0x005e27d0	0x0069d188	vtable-init
+StationFXVehicleData	GameBaseData	armLightFadeTime	5	4	F32	100	0x64	1		0x0069d0e0	0x005e27d0	0x0069d19d	vtable-init
+StationFXVehicleData	GameBaseData	lifetime	5	4	F32	104	0x68	1		0x0069d0e0	0x005e27d0	0x0069d227	vtable-init
+StationFXVehicleData	GameBaseData	numArcSegments	1	4	S32	108	0x6c	1		0x0069d0e0	0x005e27d0	0x0069d23c	vtable-init
+StationFXVehicleData	GameBaseData	sphereColor	12	16	ColorF(16B)	112	0x70	1		0x0069d0e0	0x005e27d0	0x0069d1b2	vtable-init
+StationFXVehicleData	GameBaseData	spherePhiSegments	1	4	S32	128	0x80	1		0x0069d0e0	0x005e27d0	0x0069d1ca	vtable-init
+StationFXVehicleData	GameBaseData	sphereThetaSegments	1	4	S32	132	0x84	1		0x0069d0e0	0x005e27d0	0x0069d1e2	vtable-init
+StationFXVehicleData	GameBaseData	sphereRadius	5	4	F32	136	0x88	1		0x0069d0e0	0x005e27d0	0x0069d1fa	vtable-init
+StationFXVehicleData	GameBaseData	sphereScale	16	12	Point3F(12B)	140	0x8c	1		0x0069d0e0	0x005e27d0	0x0069d212	vtable-init
+StationFXVehicleData	GameBaseData	glowNodeName	7	4	string(char*)	152	0x98	1		0x0069d0e0	0x005e27d0	0x0069d254	vtable-init
+StationFXVehicleData	GameBaseData	leftNodeName	7	4	string(char*)	156	0x9c	4		0x0069d0e0	0x005e27d0	0x0069d26c	vtable-init
+StationFXVehicleData	GameBaseData	rightNodeName	7	4	string(char*)	172	0xac	4		0x0069d0e0	0x005e27d0	0x0069d284	vtable-init
+StationFXVehicleData	GameBaseData	texture	7	4	string(char*)	188	0xbc	2		0x0069d0e0	0x005e27d0	0x0069d29c	vtable-init
+Sun	SceneObject	direction	16	12	Point3F(12B)	600	0x258	1		0x005b12e0	0x0058c7f0	0x005b12f8	vtable-init
+Sun	SceneObject	color	12	16	ColorF(16B)	612	0x264	1		0x005b12e0	0x0058c7f0	0x005b1310	vtable-init
+Sun	SceneObject	ambient	12	16	ColorF(16B)	628	0x274	1		0x005b12e0	0x0058c7f0	0x005b1328	vtable-init
+Sun	SceneObject	frontFlareSize	5	4	F32	660	0x294	1		0x005b12e0	0x0058c7f0	0x005b1388	vtable-init
+Sun	SceneObject	backFlareSize	5	4	F32	664	0x298	1		0x005b12e0	0x0058c7f0	0x005b13a0	vtable-init
+Sun	SceneObject	lensFlareScale	5	4	F32	668	0x29c	1		0x005b12e0	0x0058c7f0	0x005b1358	vtable-init
+Sun	SceneObject	lensFlareIntensity	5	4	F32	704	0x2c0	1		0x005b12e0	0x0058c7f0	0x005b1370	vtable-init
+Sun	SceneObject	flareColor	12	16	ColorF(16B)	708	0x2c4	1		0x005b12e0	0x0058c7f0	0x005b13b8	vtable-init
+Sun	SceneObject	texture	7	4	string(char*)	724	0x2d4	5		0x005b12e0	0x0058c7f0	0x005b1340	vtable-init
+TSShapeConstructor	SimDataBlock	baseShape	7	4	string(char*)	60	0x3c	1		0x006bd5d0		0x006bd5ea	vtable-init
+TSStatic	SceneObject	shapeName	7	4	string(char*)	588	0x24c	1		0x0068f560	0x0058c7f0	0x0068f578	vtable-init
+TargetProjectileData	ProjectileData	maxRifleRange	5	4	F32	312	0x138	1		0x006470d0	0x006303f0	0x006470e8	vtable-init
+TargetProjectileData	ProjectileData	beamColor	12	16	ColorF(16B)	316	0x13c	1		0x006470d0	0x006303f0	0x00647100	vtable-init
+TargetProjectileData	ProjectileData	startBeamWidth	5	4	F32	332	0x14c	1		0x006470d0	0x006303f0	0x00647130	vtable-init
+TargetProjectileData	ProjectileData	beamFlareAngle	5	4	F32	336	0x150	1		0x006470d0	0x006303f0	0x00647160	vtable-init
+TargetProjectileData	ProjectileData	minFlareSize	5	4	F32	340	0x154	1		0x006470d0	0x006303f0	0x00647178	vtable-init
+TargetProjectileData	ProjectileData	maxFlareSize	5	4	F32	344	0x158	1		0x006470d0	0x006303f0	0x00647190	vtable-init
+TargetProjectileData	ProjectileData	pulseBeamWidth	5	4	F32	348	0x15c	1		0x006470d0	0x006303f0	0x00647148	vtable-init
+TargetProjectileData	ProjectileData	pulseSpeed	5	4	F32	352	0x160	1		0x006470d0	0x006303f0	0x006471a8	vtable-init
+TargetProjectileData	ProjectileData	pulseLength	5	4	F32	356	0x164	1		0x006470d0	0x006303f0	0x006471c0	vtable-init
+TargetProjectileData	ProjectileData	coupleBeam	3	1	bool(4)	360	0x168	1		0x006470d0	0x006303f0	0x006471d8	vtable-init
+TargetProjectileData	ProjectileData	textureName	7	4	string(char*)	364	0x16c	4		0x006470d0	0x006303f0	0x00647118	vtable-init
+TerrainBlock	SceneObject	detailTexture	7	4	string(char*)	744	0x2e8	1		0x0059a870	0x0058c7f0	0x0059a888	vtable-init
+TerrainBlock	SceneObject	terrainFile	7	4	string(char*)	752	0x2f0	1		0x0059a870	0x0058c7f0	0x0059a8a0	vtable-init
+TerrainBlock	SceneObject	emptySquares	2	12	S32?	756	0x2f4	1		0x0059a870	0x0058c7f0	0x0059a8d0	vtable-init
+TerrainBlock	SceneObject	squareSize	1	4	S32	864	0x360	1		0x0059a870	0x0058c7f0	0x0059a8b8	vtable-init
+TerrainEditor	EditTSCtrl	paintMaterial	8	4	string-ptr	708	0x2c4	1		0x0045a540	0x00467320	0x0045a738	vtable-init
+TerrainEditor	EditTSCtrl	isDirty	3	1	bool(4)	764	0x2fc	1		0x0045a540	0x00467320	0x0045a558	vtable-init
+TerrainEditor	EditTSCtrl	isMissionDirty	3	1	bool(4)	765	0x2fd	1		0x0045a540	0x00467320	0x0045a570	vtable-init
+TerrainEditor	EditTSCtrl	renderBorder	3	1	bool(4)	766	0x2fe	1		0x0045a540	0x00467320	0x0045a588	vtable-init
+TerrainEditor	EditTSCtrl	borderHeight	5	4	F32	768	0x300	1		0x0045a540	0x00467320	0x0045a5a0	vtable-init
+TerrainEditor	EditTSCtrl	borderFillColor	11	4	ColorI(4B)	772	0x304	1		0x0045a540	0x00467320	0x0045a5b8	vtable-init
+TerrainEditor	EditTSCtrl	borderFrameColor	11	4	ColorI(4B)	776	0x308	1		0x0045a540	0x00467320	0x0045a5d0	vtable-init
+TerrainEditor	EditTSCtrl	borderLineMode	3	1	bool(4)	780	0x30c	1		0x0045a540	0x00467320	0x0045a5e8	vtable-init
+TerrainEditor	EditTSCtrl	selectionHidden	3	1	bool(4)	781	0x30d	1		0x0045a540	0x00467320	0x0045a600	vtable-init
+TerrainEditor	EditTSCtrl	enableSoftBrushes	3	1	bool(4)	782	0x30e	1		0x0045a540	0x00467320	0x0045a618	vtable-init
+TerrainEditor	EditTSCtrl	renderVertexSelection	3	1	bool(4)	783	0x30f	1		0x0045a540	0x00467320	0x0045a630	vtable-init
+TerrainEditor	EditTSCtrl	processUsesBrush	3	1	bool(4)	784	0x310	1		0x0045a540	0x00467320	0x0045a648	vtable-init
+TerrainEditor	EditTSCtrl	adjustHeightVal	5	4	F32	788	0x314	1		0x0045a540	0x00467320	0x0045a660	vtable-init
+TerrainEditor	EditTSCtrl	setHeightVal	5	4	F32	792	0x318	1		0x0045a540	0x00467320	0x0045a678	vtable-init
+TerrainEditor	EditTSCtrl	scaleVal	5	4	F32	796	0x31c	1		0x0045a540	0x00467320	0x0045a690	vtable-init
+TerrainEditor	EditTSCtrl	smoothFactor	5	4	F32	800	0x320	1		0x0045a540	0x00467320	0x0045a6a8	vtable-init
+TerrainEditor	EditTSCtrl	materialGroup	1	4	S32	804	0x324	1		0x0045a540	0x00467320	0x0045a6c0	vtable-init
+TerrainEditor	EditTSCtrl	softSelectRadius	5	4	F32	808	0x328	1		0x0045a540	0x00467320	0x0045a6d8	vtable-init
+TerrainEditor	EditTSCtrl	softSelectFilter	7	4	string(char*)	812	0x32c	1		0x0045a540	0x00467320	0x0045a6f0	vtable-init
+TerrainEditor	EditTSCtrl	softSelectDefaultFilter	7	4	string(char*)	816	0x330	1		0x0045a540	0x00467320	0x0045a708	vtable-init
+TerrainEditor	EditTSCtrl	adjustHeightMouseScale	5	4	F32	820	0x334	1		0x0045a540	0x00467320	0x0045a720	vtable-init
+TracerProjectileData	LinearProjectileData	tracerLength	5	4	F32	360	0x168	1		0x0063fcb0	0x0062b3c0	0x0063fcc8	vtable-init
+TracerProjectileData	LinearProjectileData	tracerAlpha	3	1	bool(4)	364	0x16c	1		0x0063fcb0	0x0062b3c0	0x0063fcf8	vtable-init
+TracerProjectileData	LinearProjectileData	tracerMinPixels	5	4	F32	368	0x170	1		0x0063fcb0	0x0062b3c0	0x0063fce0	vtable-init
+TracerProjectileData	LinearProjectileData	tracerColor	12	16	ColorF(16B)	372	0x174	1		0x0063fcb0	0x0062b3c0	0x0063fd10	vtable-init
+TracerProjectileData	LinearProjectileData	tracerWidth	5	4	F32	388	0x184	1		0x0063fcb0	0x0062b3c0	0x0063fd40	vtable-init
+TracerProjectileData	LinearProjectileData	crossViewAng	5	4	F32	392	0x188	1		0x0063fcb0	0x0062b3c0	0x0063fd58	vtable-init
+TracerProjectileData	LinearProjectileData	crossSize	5	4	F32	396	0x18c	1		0x0063fcb0	0x0062b3c0	0x0063fd70	vtable-init
+TracerProjectileData	LinearProjectileData	renderCross	3	1	bool(4)	400	0x190	1		0x0063fcb0	0x0062b3c0	0x0063fd88	vtable-init
+TracerProjectileData	LinearProjectileData	tracerTex	7	4	string(char*)	404	0x194	2		0x0063fcb0	0x0062b3c0	0x0063fd28	vtable-init
+Trigger	GameBase	polyhedron	35		polyhedron	644	0x284	1		0x0061c7b0	0x005e3670	0x0061c7de	vtable-init
+TriggerData	GameBaseData	tickPeriodMS	1	4	S32	68	0x44	1		0x0061ba50	0x005e27d0	0x0061ba65	vtable-init
+Turret	StaticShape	initialBarrel	7	4	string(char*)	2208	0x8a0	1		0x00654ae0		0x00654af8	vtable-init
+TurretData	StaticShapeData	thetaMin	5	4	F32	828	0x33c	1		0x00653e10	0x00602940	0x00653e28	vtable-init
+TurretData	StaticShapeData	thetaMax	5	4	F32	832	0x340	1		0x00653e10	0x00602940	0x00653e40	vtable-init
+TurretData	StaticShapeData	thetaNull	5	4	F32	836	0x344	1		0x00653e10	0x00602940	0x00653e58	vtable-init
+TurretData	StaticShapeData	primaryAxis	9	4	enum(S32)+table	840	0x348	1	0x84158c	0x00653e10	0x00602940	0x00653e8b	vtable-init
+TurretData	StaticShapeData	neverUpdateControl	3	1	bool(4)	844	0x34c	1		0x00653e10	0x00602940	0x00653e70	vtable-init
+TurretData	StaticShapeData	maxCapacitorEnergy	5	4	F32	860	0x35c	1		0x00653e10	0x00602940	0x00653ea3	vtable-init
+TurretData	StaticShapeData	capacitorRechargeRate	5	4	F32	864	0x360	1		0x00653e10	0x00602940	0x00653ebb	vtable-init
+TurretImageData	ShapeBaseImageData	activationMS	1	4	S32	7172	0x1c04	1		0x00654330	0x005f4d90	0x00654348	vtable-init
+TurretImageData	ShapeBaseImageData	deactivateDelayMS	1	4	S32	7176	0x1c08	1		0x00654330	0x005f4d90	0x00654360	vtable-init
+TurretImageData	ShapeBaseImageData	thinkTimeMS	1	4	S32	7180	0x1c0c	1		0x00654330	0x005f4d90	0x00654378	vtable-init
+TurretImageData	ShapeBaseImageData	degPerSecTheta	5	4	F32	7184	0x1c10	1		0x00654330	0x005f4d90	0x00654390	vtable-init
+TurretImageData	ShapeBaseImageData	degPerSecPhi	5	4	F32	7188	0x1c14	1		0x00654330	0x005f4d90	0x006543a8	vtable-init
+TurretImageData	ShapeBaseImageData	attackRadius	5	4	F32	7192	0x1c18	1		0x00654330	0x005f4d90	0x006543c0	vtable-init
+TurretImageData	ShapeBaseImageData	dontFireInsideDamageRadius	3	1	bool(4)	7196	0x1c1c	1		0x00654330	0x005f4d90	0x006543f0	vtable-init
+TurretImageData	ShapeBaseImageData	damageRadius	5	4	F32	7200	0x1c20	1		0x00654330	0x005f4d90	0x006543d8	vtable-init
+TurretImageData	ShapeBaseImageData	useCapacitor	3	1	bool(4)	7204	0x1c24	1		0x00654330	0x005f4d90	0x00654408	vtable-init
+TurretImageData	ShapeBaseImageData	yawVariance	5	4	F32	7208	0x1c28	1		0x00654330	0x005f4d90	0x00654420	vtable-init
+TurretImageData	ShapeBaseImageData	pitchVariance	5	4	F32	7212	0x1c2c	1		0x00654330	0x005f4d90	0x00654438	vtable-init
+Vehicle	ShapeBase	disableMove	3	1	bool(4)	2434	0x982	1		0x0060e540		0x0060e558	vtable-init
+VehicleBlocker	SceneObject	dimensions	16	12	Point3F(12B)	588	0x24c	1		0x005b9b40	0x0058c7f0	0x005b9b58	vtable-init
+VehicleData	ShapeBaseData	softImpactSound	34	4	AudioProfile*	812	0x32c	1		0x006099e0	0x005e4c20	0x00609a70	vtable-init
+VehicleData	ShapeBaseData	hardImpactSound	34	4	AudioProfile*	816	0x330	1		0x006099e0	0x005e4c20	0x00609a88	vtable-init
+VehicleData	ShapeBaseData	bodyRestitution	5	4	F32	828	0x33c	1		0x006099e0	0x005e4c20	0x00609a40	vtable-init
+VehicleData	ShapeBaseData	bodyFriction	5	4	F32	832	0x340	1		0x006099e0	0x005e4c20	0x00609a58	vtable-init
+VehicleData	ShapeBaseData	exitingWater	34	4	AudioProfile*	836	0x344	1		0x006099e0	0x005e4c20	0x00609cc8	vtable-init
+VehicleData	ShapeBaseData	impactWaterEasy	34	4	AudioProfile*	840	0x348	1		0x006099e0	0x005e4c20	0x00609ce0	vtable-init
+VehicleData	ShapeBaseData	impactWaterMedium	34	4	AudioProfile*	844	0x34c	1		0x006099e0	0x005e4c20	0x00609cf8	vtable-init
+VehicleData	ShapeBaseData	impactWaterHard	34	4	AudioProfile*	848	0x350	1		0x006099e0	0x005e4c20	0x00609d10	vtable-init
+VehicleData	ShapeBaseData	waterWakeSound	34	4	AudioProfile*	852	0x354	1		0x006099e0	0x005e4c20	0x00609d28	vtable-init
+VehicleData	ShapeBaseData	exitSplashSoundVelocity	5	4	F32	876	0x36c	1		0x006099e0	0x005e4c20	0x00609c68	vtable-init
+VehicleData	ShapeBaseData	softSplashSoundVelocity	5	4	F32	880	0x370	1		0x006099e0	0x005e4c20	0x00609c80	vtable-init
+VehicleData	ShapeBaseData	mediumSplashSoundVelocity	5	4	F32	884	0x374	1		0x006099e0	0x005e4c20	0x00609c98	vtable-init
+VehicleData	ShapeBaseData	hardSplashSoundVelocity	5	4	F32	888	0x378	1		0x006099e0	0x005e4c20	0x00609cb0	vtable-init
+VehicleData	ShapeBaseData	minImpactSpeed	5	4	F32	892	0x37c	1		0x006099e0	0x005e4c20	0x00609aa0	vtable-init
+VehicleData	ShapeBaseData	softImpactSpeed	5	4	F32	896	0x380	1		0x006099e0	0x005e4c20	0x00609ab8	vtable-init
+VehicleData	ShapeBaseData	hardImpactSpeed	5	4	F32	900	0x384	1		0x006099e0	0x005e4c20	0x00609ad0	vtable-init
+VehicleData	ShapeBaseData	minRollSpeed	5	4	F32	904	0x388	1		0x006099e0	0x005e4c20	0x00609ae8	vtable-init
+VehicleData	ShapeBaseData	maxSteerinAngle	5	4	F32	908	0x38c	1		0x006099e0	0x005e4c20	0x00609b00	vtable-init
+VehicleData	ShapeBaseData	collDamageThresholdVel	5	4	F32	912	0x390	1		0x006099e0	0x005e4c20	0x00609d40	vtable-init
+VehicleData	ShapeBaseData	collDamageMultiplier	5	4	F32	916	0x394	1		0x006099e0	0x005e4c20	0x00609d58	vtable-init
+VehicleData	ShapeBaseData	cameraLag	5	4	F32	920	0x398	1		0x006099e0	0x005e4c20	0x00609b60	vtable-init
+VehicleData	ShapeBaseData	cameraOffset	5	4	F32	924	0x39c	1		0x006099e0	0x005e4c20	0x00609b48	vtable-init
+VehicleData	ShapeBaseData	minDrag	5	4	F32	928	0x3a0	1		0x006099e0	0x005e4c20	0x00609b30	vtable-init
+VehicleData	ShapeBaseData	maxDrag	5	4	F32	932	0x3a4	1		0x006099e0	0x005e4c20	0x00609b18	vtable-init
+VehicleData	ShapeBaseData	jetForce	5	4	F32	936	0x3a8	1		0x006099e0	0x005e4c20	0x006099f8	vtable-init
+VehicleData	ShapeBaseData	jetEnergyDrain	5	4	F32	940	0x3ac	1		0x006099e0	0x005e4c20	0x00609a10	vtable-init
+VehicleData	ShapeBaseData	minJetEnergy	5	4	F32	944	0x3b0	1		0x006099e0	0x005e4c20	0x00609a28	vtable-init
+VehicleData	ShapeBaseData	stuckTimerTicks	1	4	S32	948	0x3b4	1		0x006099e0	0x005e4c20	0x00609d70	vtable-init
+VehicleData	ShapeBaseData	stuckTimerAngle	5	4	F32	952	0x3b8	1		0x006099e0	0x005e4c20	0x00609d88	vtable-init
+VehicleData	ShapeBaseData	dustEmitter	32	8	ParticleEmitterData*	960	0x3c0	1		0x006099e0	0x005e4c20	0x00609b78	vtable-init
+VehicleData	ShapeBaseData	triggerDustHeight	5	4	F32	968	0x3c8	1		0x006099e0	0x005e4c20	0x00609b90	vtable-init
+VehicleData	ShapeBaseData	dustHeight	5	4	F32	972	0x3cc	1		0x006099e0	0x005e4c20	0x00609ba8	vtable-init
+VehicleData	ShapeBaseData	damageEmitter	32	8	ParticleEmitterData*	976	0x3d0	3		0x006099e0	0x005e4c20	0x00609bc0	vtable-init
+VehicleData	ShapeBaseData	damageEmitterOffset	16	12	Point3F(12B)	1000	0x3e8	2		0x006099e0	0x005e4c20	0x00609bf0	vtable-init
+VehicleData	ShapeBaseData	damageLevelTolerance	5	4	F32	1024	0x400	2		0x006099e0	0x005e4c20	0x00609c08	vtable-init
+VehicleData	ShapeBaseData	numDmgEmitterAreas	5	4	F32	1032	0x408	1		0x006099e0	0x005e4c20	0x00609c20	vtable-init
+VehicleData	ShapeBaseData	splashEmitter	32	8	ParticleEmitterData*	1036	0x40c	2		0x006099e0	0x005e4c20	0x00609bd8	vtable-init
+VehicleData	ShapeBaseData	splashFreqMod	5	4	F32	1052	0x41c	1		0x006099e0	0x005e4c20	0x00609c38	vtable-init
+VehicleData	ShapeBaseData	splashVelEpsilon	5	4	F32	1056	0x420	1		0x006099e0	0x005e4c20	0x00609c50	vtable-init
+WaterBlock	SceneObject	liquidType	9	4	enum(S32)+table	1172	0x494	1	0x83db24	0x005b4f60	0x0058c7f0	0x005b4f7b	vtable-init
+WaterBlock	SceneObject	density	5	4	F32	1176	0x498	1		0x005b4f60	0x0058c7f0	0x005b4f93	vtable-init
+WaterBlock	SceneObject	viscosity	5	4	F32	1180	0x49c	1		0x005b4f60	0x0058c7f0	0x005b4fab	vtable-init
+WaterBlock	SceneObject	waveMagnitude	5	4	F32	1184	0x4a0	1		0x005b4f60	0x0058c7f0	0x005b4fc3	vtable-init
+WaterBlock	SceneObject	surfaceTexture	7	4	string(char*)	1188	0x4a4	1		0x005b4f60	0x0058c7f0	0x005b4fdb	vtable-init
+WaterBlock	SceneObject	surfaceOpacity	5	4	F32	1192	0x4a8	1		0x005b4f60	0x0058c7f0	0x005b4ff3	vtable-init
+WaterBlock	SceneObject	envMapTexture	7	4	string(char*)	1196	0x4ac	1		0x005b4f60	0x0058c7f0	0x005b500b	vtable-init
+WaterBlock	SceneObject	envMapIntensity	5	4	F32	1200	0x4b0	1		0x005b4f60	0x0058c7f0	0x005b5023	vtable-init
+WaterBlock	SceneObject	submergeTexture	7	4	string(char*)	1204	0x4b4	2		0x005b4f60	0x0058c7f0	0x005b503b	vtable-init
+WaterBlock	SceneObject	removeWetEdges	3	1	bool(4)	1212	0x4bc	1		0x005b4f60	0x0058c7f0	0x005b5053	vtable-init
+WaterBlock	SceneObject	audioEnvironment	43		AudioEnvironment*	1216	0x4c0	1		0x005b4f60	0x0058c7f0	0x005b506b	vtable-init
+WayPoint	MissionMarker	name	8	4	string-ptr	2184	0x888	1		0x0066ad60		0x0066ad78	vtable-init
+WayPoint	MissionMarker	team	38		?	2188	0x88c	1		0x0066ad60		0x0066ada6	vtable-init
+WheeledVehicleData	VehicleData	jetSound	34	4	AudioProfile*	1072	0x430	1		0x00612400	0x006099e0	0x00612418	vtable-init
+WheeledVehicleData	VehicleData	engineSound	34	4	AudioProfile*	1076	0x434	1		0x00612400	0x006099e0	0x00612430	vtable-init
+WheeledVehicleData	VehicleData	squeelSound	34	4	AudioProfile*	1080	0x438	1		0x00612400	0x006099e0	0x00612448	vtable-init
+WheeledVehicleData	VehicleData	WheelImpactSound	34	4	AudioProfile*	1084	0x43c	1		0x00612400	0x006099e0	0x00612460	vtable-init
+WheeledVehicleData	VehicleData	tireFriction	5	4	F32	1104	0x450	1		0x00612400	0x006099e0	0x00612490	vtable-init
+WheeledVehicleData	VehicleData	tireRestitution	5	4	F32	1108	0x454	1		0x00612400	0x006099e0	0x006124a8	vtable-init
+WheeledVehicleData	VehicleData	tireRadius	5	4	F32	1112	0x458	1		0x00612400	0x006099e0	0x00612478	vtable-init
+WheeledVehicleData	VehicleData	tireLateralForce	5	4	F32	1116	0x45c	1		0x00612400	0x006099e0	0x006124c0	vtable-init
+WheeledVehicleData	VehicleData	tireLateralDamping	5	4	F32	1120	0x460	1		0x00612400	0x006099e0	0x006124d8	vtable-init
+WheeledVehicleData	VehicleData	tireLateralRelaxation	5	4	F32	1124	0x464	1		0x00612400	0x006099e0	0x006124f0	vtable-init
+WheeledVehicleData	VehicleData	tireLongitudinalForce	5	4	F32	1128	0x468	1		0x00612400	0x006099e0	0x00612508	vtable-init
+WheeledVehicleData	VehicleData	tireLongitudinalDamping	5	4	F32	1132	0x46c	1		0x00612400	0x006099e0	0x00612520	vtable-init
+WheeledVehicleData	VehicleData	tireLogitudinalRelaxation	5	4	F32	1136	0x470	1		0x00612400	0x006099e0	0x00612538	vtable-init
+WheeledVehicleData	VehicleData	tireEmitter	32	8	ParticleEmitterData*	1140	0x474	1		0x00612400	0x006099e0	0x00612550	vtable-init
+WheeledVehicleData	VehicleData	staticLoadScale	5	4	F32	1148	0x47c	1		0x00612400	0x006099e0	0x006125b0	vtable-init
+WheeledVehicleData	VehicleData	springForce	5	4	F32	1152	0x480	1		0x00612400	0x006099e0	0x006125c8	vtable-init
+WheeledVehicleData	VehicleData	springDamping	5	4	F32	1156	0x484	1		0x00612400	0x006099e0	0x006125e0	vtable-init
+WheeledVehicleData	VehicleData	antiSwayForce	5	4	F32	1160	0x488	1		0x00612400	0x006099e0	0x006125f8	vtable-init
+WheeledVehicleData	VehicleData	antiRockForce	5	4	F32	1164	0x48c	1		0x00612400	0x006099e0	0x00612610	vtable-init
+WheeledVehicleData	VehicleData	maxWheelSpeed	5	4	F32	1168	0x490	1		0x00612400	0x006099e0	0x00612568	vtable-init
+WheeledVehicleData	VehicleData	engineTorque	5	4	F32	1172	0x494	1		0x00612400	0x006099e0	0x00612580	vtable-init
+WheeledVehicleData	VehicleData	breakTorque	5	4	F32	1176	0x498	1		0x00612400	0x006099e0	0x00612598	vtable-init
+WheeledVehicleData	VehicleData	stabilizerForce	5	4	F32	1180	0x49c	1		0x00612400	0x006099e0	0x00612628	vtable-init
+WheeledVehicleData	VehicleData	gyroForce	5	4	F32	1184	0x4a0	1		0x00612400	0x006099e0	0x00612640	vtable-init
+WheeledVehicleData	VehicleData	gyroDamping	5	4	F32	1188	0x4a4	1		0x00612400	0x006099e0	0x00612658	vtable-init
+WorldEditor	EditTSCtrl	isDirty	3	1	bool(4)	673	0x2a1	1		0x004639f0	0x00467320	0x00463a08	vtable-init
+WorldEditor	EditTSCtrl	planarMovement	3	1	bool(4)	1060	0x424	1		0x004639f0	0x00467320	0x00463a20	vtable-init
+WorldEditor	EditTSCtrl	undoLimit	1	4	S32	1064	0x428	1		0x004639f0	0x00467320	0x00463a38	vtable-init
+WorldEditor	EditTSCtrl	dropType	9	4	enum(S32)+table	1068	0x42c	1	0x7ed828	0x004639f0	0x00467320	0x00463a53	vtable-init
+WorldEditor	EditTSCtrl	projectDistance	5	4	F32	1072	0x430	1		0x004639f0	0x00467320	0x00463a6b	vtable-init
+WorldEditor	EditTSCtrl	boundingBoxCollision	3	1	bool(4)	1076	0x434	1		0x004639f0	0x00467320	0x00463a83	vtable-init
+WorldEditor	EditTSCtrl	renderPlane	3	1	bool(4)	1077	0x435	1		0x004639f0	0x00467320	0x00463a9b	vtable-init
+WorldEditor	EditTSCtrl	renderPlaneHashes	3	1	bool(4)	1078	0x436	1		0x004639f0	0x00467320	0x00463ab3	vtable-init
+WorldEditor	EditTSCtrl	gridColor	11	4	ColorI(4B)	1079	0x437	1		0x004639f0	0x00467320	0x00463acb	vtable-init
+WorldEditor	EditTSCtrl	planeDim	5	4	F32	1084	0x43c	1		0x004639f0	0x00467320	0x00463ae3	vtable-init
+WorldEditor	EditTSCtrl	gridSize	16	12	Point3F(12B)	1088	0x440	1		0x004639f0	0x00467320	0x00463afb	vtable-init
+WorldEditor	EditTSCtrl	renderPopupBackground	3	1	bool(4)	1100	0x44c	1		0x004639f0	0x00467320	0x00463b13	vtable-init
+WorldEditor	EditTSCtrl	popupBackgroundColor	11	4	ColorI(4B)	1101	0x44d	1		0x004639f0	0x00467320	0x00463b2b	vtable-init
+WorldEditor	EditTSCtrl	popupTextColor	11	4	ColorI(4B)	1105	0x451	1		0x004639f0	0x00467320	0x00463b43	vtable-init
+WorldEditor	EditTSCtrl	selectHandle	7	4	string(char*)	1112	0x458	1		0x004639f0	0x00467320	0x00463dcb	vtable-init
+WorldEditor	EditTSCtrl	defaultHandle	7	4	string(char*)	1116	0x45c	1		0x004639f0	0x00467320	0x00463de3	vtable-init
+WorldEditor	EditTSCtrl	lockedHandle	7	4	string(char*)	1120	0x460	1		0x004639f0	0x00467320	0x00463dfb	vtable-init
+WorldEditor	EditTSCtrl	objectTextColor	11	4	ColorI(4B)	1124	0x464	1		0x004639f0	0x00467320	0x00463b5b	vtable-init
+WorldEditor	EditTSCtrl	objectsUseBoxCenter	3	1	bool(4)	1128	0x468	1		0x004639f0	0x00467320	0x00463b73	vtable-init
+WorldEditor	EditTSCtrl	axisGizmoMaxScreenLen	1	4	S32	1132	0x46c	1		0x004639f0	0x00467320	0x00463b8b	vtable-init
+WorldEditor	EditTSCtrl	axisGizmoActive	3	1	bool(4)	1136	0x470	1		0x004639f0	0x00467320	0x00463ba3	vtable-init
+WorldEditor	EditTSCtrl	mouseMoveScale	5	4	F32	1140	0x474	1		0x004639f0	0x00467320	0x00463bbb	vtable-init
+WorldEditor	EditTSCtrl	mouseRotateScale	5	4	F32	1144	0x478	1		0x004639f0	0x00467320	0x00463bd3	vtable-init
+WorldEditor	EditTSCtrl	mouseScaleScale	5	4	F32	1148	0x47c	1		0x004639f0	0x00467320	0x00463beb	vtable-init
+WorldEditor	EditTSCtrl	minScaleFactor	5	4	F32	1152	0x480	1		0x004639f0	0x00467320	0x00463c03	vtable-init
+WorldEditor	EditTSCtrl	maxScaleFactor	5	4	F32	1156	0x484	1		0x004639f0	0x00467320	0x00463c1b	vtable-init
+WorldEditor	EditTSCtrl	objSelectColor	11	4	ColorI(4B)	1160	0x488	1		0x004639f0	0x00467320	0x00463c33	vtable-init
+WorldEditor	EditTSCtrl	objMouseOverSelectColor	11	4	ColorI(4B)	1164	0x48c	1		0x004639f0	0x00467320	0x00463c4b	vtable-init
+WorldEditor	EditTSCtrl	objMouseOverColor	11	4	ColorI(4B)	1168	0x490	1		0x004639f0	0x00467320	0x00463c63	vtable-init
+WorldEditor	EditTSCtrl	showMousePopupInfo	3	1	bool(4)	1172	0x494	1		0x004639f0	0x00467320	0x00463c7b	vtable-init
+WorldEditor	EditTSCtrl	dragRectColor	11	4	ColorI(4B)	1173	0x495	1		0x004639f0	0x00467320	0x00463c93	vtable-init
+WorldEditor	EditTSCtrl	renderObjText	3	1	bool(4)	1177	0x499	1		0x004639f0	0x00467320	0x00463cab	vtable-init
+WorldEditor	EditTSCtrl	renderObjHandle	3	1	bool(4)	1178	0x49a	1		0x004639f0	0x00467320	0x00463cc3	vtable-init
+WorldEditor	EditTSCtrl	objTextFormat	7	4	string(char*)	1180	0x49c	1		0x004639f0	0x00467320	0x00463cdb	vtable-init
+WorldEditor	EditTSCtrl	faceSelectColor	11	4	ColorI(4B)	1184	0x4a0	1		0x004639f0	0x00467320	0x00463cf3	vtable-init
+WorldEditor	EditTSCtrl	renderSelectionBox	3	1	bool(4)	1188	0x4a4	1		0x004639f0	0x00467320	0x00463d0b	vtable-init
+WorldEditor	EditTSCtrl	selectionBoxColor	11	4	ColorI(4B)	1189	0x4a5	1		0x004639f0	0x00467320	0x00463d23	vtable-init
+WorldEditor	EditTSCtrl	selectionLocked	3	1	bool(4)	1193	0x4a9	1		0x004639f0	0x00467320	0x00463d3b	vtable-init
+WorldEditor	EditTSCtrl	snapToGrid	3	1	bool(4)	1194	0x4aa	1		0x004639f0	0x00467320	0x00463d53	vtable-init
+WorldEditor	EditTSCtrl	snapRotations	3	1	bool(4)	1195	0x4ab	1		0x004639f0	0x00467320	0x00463d6b	vtable-init
+WorldEditor	EditTSCtrl	rotationSnap	5	4	F32	1196	0x4ac	1		0x004639f0	0x00467320	0x00463d83	vtable-init
+WorldEditor	EditTSCtrl	toggleIgnoreList	3	1	bool(4)	1200	0x4b0	1		0x004639f0	0x00467320	0x00463d9b	vtable-init
+WorldEditor	EditTSCtrl	renderNav	3	1	bool(4)	1201	0x4b1	1		0x004639f0	0x00467320	0x00463db3	vtable-init

@@ -39,11 +39,12 @@ are entries in the console registration table. Registered functions are *script-
 wrappers*; engine code does not call them. The usable direction is the reverse: follow what
 they **call**.
 
-**Field-registry heuristic (unresolved).** Searching for an `addField`-shaped registrar
-(one string plus small integers) selected `0x00401fe0`, which has 796 call sites but yields
-no field names — almost certainly a generic runtime helper matched by coincidence. The
-datablock field registry is still unlocated; the physics *parameter names* are known from
-the string survey, but their **offsets** are not.
+**Field-registry heuristic (failed, then solved a different way).** Searching for an
+`addField`-shaped registrar by call-site *shape* selected `0x00401fe0` — 796 call sites, zero
+field names, a generic runtime helper matched by coincidence. Shape alone is too weak a
+signal. What worked instead was **string cross-reference**: take the virtual addresses of
+field-name strings already known to exist, find every `push` of those addresses, and see
+where they converge. See "Datablock field registry" below.
 
 ## Findings
 
@@ -60,11 +61,53 @@ the string survey, but their **offsets** are not.
 string literal. Both transform paths converge on it and it is reached from 147 sites, which
 is the profile of a central object-state routine rather than a leaf utility.
 
+## Datablock field registry (resolved)
+
+**Registrar: `0x00423F20`**, cdecl with five arguments and `add esp, 0x14` at every site:
+
+```
+addField(const char *name, U32 typeCode, U32 offset, U32 elementCount, EnumTable *table)
+```
+
+Found by string cross-reference rather than by call-site shape: locate the addresses of
+known field-name strings, find every `push` of them, and observe that all converge on one
+target. Verified independently — 1,416 call sites, and 400 of 400 sampled resolve a real
+nul-terminated string as the first argument, which a generic helper could not.
+
+The structural lock that makes this certain: the fifth argument is non-NULL for exactly 19
+fields, and **every one of those has type code 9** — the `EnumTable *` slot is populated if
+and only if the field is the enum type. Nothing coincidental produces that correspondence.
+
+**1,415 fields across 156 classes** are recorded in `Sim/RecoveredDatablockFields.tsv`
+(name, type code, size, offset, element count, owning class, parent class, registrar).
+
+Class attribution is not guessed. Each class-rep stores its name, its vtable slot 2 is
+`init()`, and `init()` calls that class's `initPersistFields` — so class to registrar falls
+out of the vtable. The parent link comes from `init()` calling the parent's class-rep
+accessor, which is what disambiguates registrars shared by inheritance.
+
+**Independent cross-check:** across the 119 class pairs where both child and parent register
+fields, every child's lowest offset sits above its parent's highest offset plus size —
+**zero violations**. That check played no part in building the mapping, so it is genuine
+corroboration, and it also reproduces the expected lineage on its own
+(`PlayerData -> ShapeBaseData -> GameBaseData -> SimDataBlock`).
+
+Type codes with sizes derived from consecutive offset deltas: 1=S32(4), 3=bool(1), 5=F32(4),
+7=char*(4), 8=StringTable(4), 9=enum(4), 11=ColorI(4), 12=ColorF(16), 14=Point2I(8),
+16=Point3F(12), 18=RectI(16), plus a family of datablock/profile pointers. The type *names*
+are labels applied here, not the engine's own.
+
+Known gaps: the 17 `EnumTable` pointers all target `.bss`, so they are built at runtime and
+their string-to-value mappings cannot be read statically; one site in `TSShapeConstructor`
+passes its arguments in registers and is not statically recoverable; and nothing has been
+checked against a live process.
+
 ## Next steps
 
 1. Characterise `0x0055b640` — its callees and the vtable slots it dispatches through.
-2. Locate the datablock field registrar properly, to recover field **offsets** and with them
-   the physics parameter block layout.
+2. Decode the two opaque handshake trailers (684 bytes client-side, 130 bytes server-side).
+   The server-authored one blocks everything: until it is understood, a managed server cannot
+   emit a challenge response the stock client will accept.
 3. Cross-reference the 440 vtable candidates against the class names recovered from the
    string survey, to attach hierarchy to the dispatch surface.
 4. Reach the tick path from the object model rather than from strings: it has no literals,
