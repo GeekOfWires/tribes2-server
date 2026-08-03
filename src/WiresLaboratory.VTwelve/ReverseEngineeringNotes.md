@@ -54,12 +54,22 @@ where they converge. See "Datablock field registry" below.
 | Registrations recovered | 372 (see the address manifest) |
 | Vtables (RTTI-backed) | 774, from descriptors at `vtable-8` |
 | ~~Virtual dispatch slots 19,407~~ | **Corrected** — that counted 209 non-vtable runs. `0x00787428` (386 entries) is a jump table with no descriptor. See `Sim/EngineClassLayout.md`. |
-| Object-model hub | **`0x0055b640`** — shared callee of both transform setters, **147 call sites engine-wide** |
+| ~~Object-model hub `0x0055b640`~~ | **RETRACTED — it is `sscanf`.** See the correction below. |
 | Transform arg helpers | `0x0054f0f0`, `0x0054f120` (called only by `setTransform`) |
 
-`0x0055b640` is the first internal engine function identified by navigation rather than by a
-string literal. Both transform paths converge on it and it is reached from 147 sites, which
-is the profile of a central object-state routine rather than a leaf utility.
+**Retraction: `0x0055b640` is `sscanf`.** It was reported here as "the first internal engine
+function identified by navigation" and as "a central object-state routine". That was wrong.
+It is a variadic forwarder to a `vsscanf` core, and its 147 call sites are console argument
+parsers, not object-model code. Verified: 143 of those sites pass a format string, every one
+scanf-style, including five distinct `%[...]`/`%*` conversions that exist only in scanf.
+
+The lesson is that *call-site count is not evidence of significance*. `0x0055b640` is central
+the way `memcpy` is central. Reaching it from two transform setters looked meaningful only
+because both parse string arguments. Identify a function before inferring importance from its
+degree.
+
+`0x0054f0f0` and `0x0054f120` are likewise math helpers, not parsers: `AngAxisF::set(const
+MatrixF&)` and its inverse, used for the seven-float transform string format.
 
 ## Datablock field registry (resolved)
 
@@ -111,6 +121,8 @@ checked against a live process.
 3. (done) Class hierarchy and virtual dispatch are recovered via RTTI — see
    `Sim/EngineClassLayout.md`. The tick path is located: slots 54/55/56 are
    `processTick`/`interpolateTick`/`advanceTime`, and 17/18/19 are the ghosting entry points.
-4. Disassemble `Player::processTick` (`0x005d1d70`) and `Player::packUpdate` (`0x005dae80`)
-   to recover the movement integrator and the ghost field layout — the two remaining
-   behavioural unknowns.
+4. The tick loop is now mapped end to end — see `Sim/EngineTickLoop.md`. What remains is
+   behavioural: decompile `0x005d7220` (the 1,686-instruction Player movement/collision
+   integrator) and `Player::packUpdate` (`0x005dae80`) for the ghost field layout.
+5. Resolve the datablock-offset conflict recorded in `Sim/EngineTickLoop.md` (`+0x248` from
+   slot 53 versus `+0x2d0` along the tick path) before building against either.
