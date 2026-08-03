@@ -27,7 +27,7 @@ export default function Login() {
   return (
     <div className="login-wrap">
       <form className="card login" onSubmit={submit}>
-        <h2>Tribes<span style={{ color: "var(--primary)" }}>NEXT</span> Panel</h2>
+        <h2>Tribes<span style={{ color: "var(--primary)" }}>SERVER</span> Panel</h2>
         <label>Username</label>
         <input value={u} onChange={(e) => setU(e.target.value)} autoComplete="username" />
         <label>Password</label>
