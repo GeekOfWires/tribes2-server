@@ -1,4 +1,4 @@
-export type Me = { userName: string; role: string; rank: number; isDeveloper: boolean };
+export type Me = { userName: string; role: string; rank: number; isDeveloper: boolean; editorFont: string | null };
 export type Status = {
   state: string;
   desired: string;
@@ -62,6 +62,9 @@ export const api = {
   login: (username: string, password: string) =>
     req<Me>("/api/account/login", { method: "POST", body: JSON.stringify({ username, password }) }),
   logout: () => req<void>("/api/account/logout", { method: "POST" }),
+  // Persist the editor font on the caller's own profile (null = back to the default).
+  setEditorFont: (font: string | null) =>
+    req<void>("/api/account/editor-font", { method: "POST", body: JSON.stringify({ font }) }),
 
   status: () => req<Status>("/api/server/status"),
   restart: () => req<void>("/api/server/restart", { method: "POST" }),

@@ -12,6 +12,10 @@ public class ApplicationUser : IdentityUser
     // Additive capability, assignable on top of any base role: grants file editing
     // under GameData. root has this implicitly. Orthogonal to the rank-based roles.
     public bool IsDeveloper { get; set; }
+
+    // Preferred file-editor font (a Google Fonts family name). Null = the bundled
+    // default. Purely a personal display setting; every user manages their own.
+    public string? EditorFont { get; set; }
 }
 
 public class ApplicationRole : IdentityRole

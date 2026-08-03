@@ -20,6 +20,7 @@ public static class Endpoints
     public record CompleteConfigDto(bool AutoStart, string? LaunchParams, string? Ruleset);
     public record AutoStartDto(bool Enabled);
     public record RulesetDto(string? Ruleset);
+    public record EditorFontDto(string? Font);
 
     private static (string name, string role) Actor(ClaimsPrincipal u) =>
         (u.Identity?.Name ?? "?", u.FindFirstValue(ClaimTypes.Role) ?? Roles.User);
@@ -53,8 +54,36 @@ public static class Endpoints
         account.MapGet("/me", async (ClaimsPrincipal u, UserManager<ApplicationUser> users) =>
         {
             var (name, role) = Actor(u);
-            var dev = (await users.GetUserAsync(u))?.IsDeveloper ?? false;
-            return Results.Ok(new { userName = name, role, rank = Roles.Rank(role), isDeveloper = dev });
+            var me = await users.GetUserAsync(u);
+            return Results.Ok(new
+            {
+                userName = name,
+                role,
+                rank = Roles.Rank(role),
+                isDeveloper = me?.IsDeveloper ?? false,
+                editorFont = me?.EditorFont,
+            });
+        }).RequireAuthorization();
+
+        // Personal display setting: each user sets their own editor font. Null/empty
+        // restores the bundled default. Not audited — it changes nothing on the server.
+        account.MapPost("/editor-font", async (EditorFontDto dto, ClaimsPrincipal u,
+                                               UserManager<ApplicationUser> users) =>
+        {
+            var me = await users.GetUserAsync(u);
+            if (me is null) return Results.Unauthorized();
+
+            var font = (dto.Font ?? "").Trim();
+            // The value ends up in a Google Fonts URL and a CSS font-family, so keep it to
+            // letters/digits/spaces/hyphens rather than trusting the client's validation.
+            if (font.Length > 0 && !IsValidFontFamily(font))
+                return Results.BadRequest(new { error = "invalid font family" });
+
+            me.EditorFont = font.Length == 0 ? null : font;
+            var res = await users.UpdateAsync(me);
+            return res.Succeeded
+                ? Results.Ok()
+                : Results.BadRequest(new { error = string.Join("; ", res.Errors.Select(e => e.Description)) });
         }).RequireAuthorization();
 
         // ---- live console (SSE), viewable by any authenticated user --------
@@ -337,6 +366,14 @@ public static class Endpoints
 
     private static async Task<bool> IsLastRoot(UserManager<ApplicationUser> users)
         => (await users.GetUsersInRoleAsync(Roles.Root)).Count(x => x.IsActive) <= 1;
+
+    // A Google Fonts family name: letters, digits, spaces and hyphens only. The value is
+    // interpolated into a stylesheet URL and a CSS font-family in the browser, so quotes,
+    // semicolons and angle brackets must never get through.
+    private static bool IsValidFontFamily(string family) =>
+        family.Length <= 48
+        && char.IsLetterOrDigit(family[0])
+        && family.All(c => char.IsLetterOrDigit(c) || c == ' ' || c == '-');
 
     private static async Task WriteSse(HttpContext ctx, string line)
         => await ctx.Response.Body.WriteAsync(Encoding.UTF8.GetBytes($"data: {line}\n\n"));

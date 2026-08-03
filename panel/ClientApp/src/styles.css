@@ -9,6 +9,13 @@
   font-style: normal; font-weight: 400; font-display: swap;
   src: url("/fonts/sharetechmono.woff2") format("woff2");
 }
+/* Default editor font, bundled so the code editor works with no internet access.
+   Variable weight 400-700 in one file; other editor fonts come from Google Fonts. */
+@font-face {
+  font-family: "Fira Code";
+  font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url("/fonts/firacode.woff2") format("woff2");
+}
 
 /* PlayT2-derived dark/mint theme */
 :root {

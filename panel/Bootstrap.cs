@@ -57,6 +57,9 @@ public static class Bootstrap
         try { await db.Database.ExecuteSqlRawAsync(@"ALTER TABLE ""ServerSettings"" ADD COLUMN ""Ruleset"" TEXT NULL;"); }
         catch (Microsoft.Data.Sqlite.SqliteException) { /* column already exists */ }
 
+        try { await db.Database.ExecuteSqlRawAsync(@"ALTER TABLE ""AspNetUsers"" ADD COLUMN ""EditorFont"" TEXT NULL;"); }
+        catch (Microsoft.Data.Sqlite.SqliteException) { /* column already exists */ }
+
         // Ensure the single server-settings row exists (unconfigured by default).
         if (await db.ServerSettings.FindAsync(1) is null)
         {

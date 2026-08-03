@@ -2,6 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
 import { api, type DirListing, type FileRead } from "../api";
 import { DARK_PLUS, langFor, setupMonaco } from "../monaco-setup";
+import {
+  DEFAULT_EDITOR_FONT, EDITOR_FONTS, ensureFontLoaded, fontStack, isValidFamily,
+} from "../editor-fonts";
 
 const join = (dir: string, name: string) => dir.replace(/\/+$/, "") + "/" + name;
 
@@ -15,7 +18,41 @@ export default function Files() {
   const [busy, setBusy] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
 
+  // Editor font, loaded from (and saved back to) the signed-in user's profile.
+  const [font, setFont] = useState<string>(DEFAULT_EDITOR_FONT);
+  const [customFont, setCustomFont] = useState("");
+
   const dirty = read?.content !== undefined && content !== orig;
+
+  // Adopt the saved preference on mount and make sure its webfont is requested.
+  useEffect(() => {
+    api.me()
+      .then((m) => {
+        const f = m.editorFont && isValidFamily(m.editorFont) ? m.editorFont : DEFAULT_EDITOR_FONT;
+        setFont(f);
+        if (!EDITOR_FONTS.includes(f)) setCustomFont(f);
+        ensureFontLoaded(f);
+      })
+      .catch(() => ensureFontLoaded(DEFAULT_EDITOR_FONT));
+  }, []);
+
+  // Apply + persist. The font is per-user, so a failed save is a notice, not an error:
+  // the choice still applies for this session.
+  const applyFont = async (family: string) => {
+    const f = family.trim();
+    if (!isValidFamily(f)) {
+      setMsg({ ok: false, t: "Font name may only contain letters, digits, spaces and hyphens." });
+      return;
+    }
+    ensureFontLoaded(f);
+    setFont(f);
+    try {
+      await api.setEditorFont(f === DEFAULT_EDITOR_FONT ? null : f);
+      setMsg({ ok: true, t: `Editor font set to ${f}.` });
+    } catch (e) {
+      setMsg({ ok: false, t: `Applied for this session, but saving failed: ${(e as Error).message}` });
+    }
+  };
 
   const loadDir = useCallback(async (path?: string) => {
     try { setListing(await api.listDir(path)); }
@@ -121,6 +158,30 @@ export default function Files() {
                   <button className="btn danger" onClick={() => del(sel, false)}>Delete</button>
                 </span>
               </div>
+
+              {/* Editor font: preset list + any Google Fonts family. Saved to your profile. */}
+              <div className="row" style={{ gap: 8, marginBottom: 8, flexWrap: "wrap", alignItems: "center" }}>
+                <label className="muted" htmlFor="editor-font">Font</label>
+                <select
+                  id="editor-font"
+                  value={EDITOR_FONTS.includes(font) ? font : "__custom"}
+                  onChange={(e) => { if (e.target.value !== "__custom") applyFont(e.target.value); }}
+                >
+                  {EDITOR_FONTS.map((f) => (
+                    <option key={f} value={f}>{f}{f === DEFAULT_EDITOR_FONT ? " (default, bundled)" : ""}</option>
+                  ))}
+                  <option value="__custom">Custom…</option>
+                </select>
+                <input
+                  placeholder="Any Google Fonts family"
+                  value={customFont}
+                  onChange={(e) => setCustomFont(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter" && customFont.trim()) applyFont(customFont); }}
+                  style={{ minWidth: 190 }}
+                />
+                <button className="btn" disabled={!customFont.trim()} onClick={() => applyFont(customFont)}>Apply</button>
+                <span className="muted" style={{ fontFamily: fontStack(font) }}>{font} — 0O1lI {"{}"} =&gt;</span>
+              </div>
               <Editor
                 height="62vh"
                 theme={DARK_PLUS}
@@ -129,7 +190,7 @@ export default function Files() {
                 value={content}
                 onChange={(v) => setContent(v ?? "")}
                 beforeMount={setupMonaco}
-                options={{ fontSize: 13, fontFamily: '"Share Tech Mono", ui-monospace, monospace', minimap: { enabled: false }, tabSize: 3, renderWhitespace: "selection", scrollBeyondLastLine: false }}
+                options={{ fontSize: 13, fontFamily: fontStack(font), fontLigatures: true, minimap: { enabled: false }, tabSize: 3, renderWhitespace: "selection", scrollBeyondLastLine: false }}
               />
             </>
           )}
