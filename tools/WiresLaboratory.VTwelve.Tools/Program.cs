@@ -16,6 +16,14 @@ public class Program
         if (args.Contains("--tickcheck"))
             return TickLoopSelfCheck.Run(args);
 
+        // --ghostcheck: run the Net/Ghost wire-format round-trip self-check.
+        if (args.Contains("--ghostcheck"))
+            return GhostProtocolSelfCheck.Run(args);
+
+        // --physicscheck: run the Sim/Physics player movement model self-check.
+        if (args.Contains("--physicscheck"))
+            return PlayerPhysicsSelfCheck.Run(args);
+
         // --pcap <file>: replay a captured client session through the wire-format types.
         var pcapIndex = Array.IndexOf(args, "--pcap");
         if (pcapIndex >= 0 && pcapIndex + 1 < args.Length)
