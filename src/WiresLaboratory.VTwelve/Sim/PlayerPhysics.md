@@ -90,6 +90,25 @@ engine compares cosines.
 - The binary was built with **Metrowerks CodeWarrior**, which explains CRT shapes that do not
   match MSVC expectations (`0x6f73d0` is `__register_global_object`, not `atexit`).
 
+## What the implementation had to guess
+
+`Sim/Physics/` implements this model, but three things it needs are **not** in this document
+because they were never recovered from the disassembly. They are inferred, and they are
+load-bearing:
+
+- **The resist curve's shape.** This document establishes that the horizontal/vertical resist
+  stage exists, where it sits in the order, and that it is the *only* speed limiter on land —
+  but not its formula. The implementation uses a hard clamp at `*MaxSpeed` with a geometric
+  decay above `*ResistSpeed`, which is conventional for this lineage and **unverified**. Since
+  nothing else bounds ground speed, an error here is an error in every player's top speed.
+- **The jump speed clamp.** `minJumpSpeed`/`maxJumpSpeed` exist as `PlayerData` fields but play
+  no part in the recovered jump description. A post-impulse clamp is inferred from the names.
+- **Buoyancy.** Only its existence and position in the order are recovered. It is present but
+  numerically inert.
+
+Recovering `Player::updateMove`'s resist arithmetic is therefore the highest-value remaining
+physics work, ahead of anything in the list below.
+
 ## Gaps
 
 - ~~`ExtrudedPolyList`'s clipper was not analysed~~ **— now recovered, see
